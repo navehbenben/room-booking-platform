@@ -1,0 +1,468 @@
+{
+  "common": {
+    "loading": "Chargement…",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "back": "← Retour",
+    "retry": "Réessayer",
+    "from": "Du",
+    "to": "Au",
+    "duration": "Durée",
+    "search": "Rechercher",
+    "confirm": "Confirmer",
+    "edit": "Modifier",
+    "close": "Fermer"
+  },
+
+  "nav": {
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "searchAndBook": "Rechercher et réserver",
+    "myBookings": "Mes réservations"
+  },
+
+  "header": {
+    "searchRooms": "Rechercher des salles",
+    "myBookings": "Mes réservations",
+    "myProfile": "Mon profil",
+    "signOut": "Se déconnecter",
+    "signIn": "Se connecter",
+    "register": "S'inscrire",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+
+  "footer": {
+    "brandDesc": "Trouvez et réservez la salle de réunion idéale pour votre équipe. Propulsé par NestJS, PostgreSQL et Redis.",
+    "platform": "Plateforme",
+    "searchRooms": "Rechercher des salles",
+    "myBookings": "Mes réservations",
+    "privacyGdpr": "Confidentialité & RGPD",
+    "techStack": "Stack technique",
+    "allRightsReserved": "© {{year}} RoomBook. Tous droits réservés."
+  },
+
+  "landing": {
+    "hero": {
+      "title": "Trouvez votre salle de réunion idéale",
+      "subtitle": "Réservez des salles de conférence, des espaces événementiels et des lieux de collaboration — instantanément.",
+      "checkIn": "Arrivée",
+      "checkOut": "Départ",
+      "guests": "Participants",
+      "search": "Rechercher",
+      "trustInstant": "✓ Confirmation immédiate",
+      "trustFree": "✓ Annulation gratuite",
+      "trust500": "✓ Plus de 500 salles",
+      "trustNoCard": "✓ Sans carte bancaire",
+      "errorPastStart": "L'arrivée doit être aujourd'hui ou dans le futur.",
+      "errorInvalidRange": "Le départ doit être le jour de l'arrivée ou après."
+    },
+    "promo": {
+      "sectionTitle": "Offres et espaces à la une",
+      "scrollLeft": "Défiler à gauche",
+      "scrollRight": "Défiler à droite",
+      "earlyBird": {
+        "title": "Lève-tôt",
+        "subtitle": "Réservez des salles 48 h à l'avance et évitez la cohue",
+        "badge": "Réservation gratuite",
+        "cta": "Réserver en avance"
+      },
+      "teamBundle": {
+        "title": "Salles d'équipe",
+        "subtitle": "Espaces pour 10+ personnes — parfaits pour les ateliers",
+        "badge": "Populaire",
+        "cta": "Trouver de grandes salles"
+      },
+      "videoReady": {
+        "title": "Prête pour la visio",
+        "subtitle": "Configuration AV complète — webcam, partage d'écran, appel",
+        "badge": "Nouveau",
+        "cta": "Explorer"
+      },
+      "focusPods": {
+        "title": "Cabines de concentration",
+        "subtitle": "Cabines insonorisées pour 1–2 personnes, idéales pour le travail en profondeur",
+        "badge": "Limité",
+        "cta": "Vérifier la disponibilité"
+      },
+      "naturalLight": {
+        "title": "Lumière naturelle",
+        "subtitle": "Salles ensoleillées — stimulez la concentration et la créativité",
+        "badge": "Mieux noté",
+        "cta": "Voir les options"
+      }
+    },
+    "featuredStrip": {
+      "title": "Disponible dès maintenant",
+      "scrollLeft": "Défiler à gauche",
+      "scrollRight": "Défiler à droite"
+    },
+    "whyUs": {
+      "sectionTitle": "Pourquoi les équipes choisissent RoomBook",
+      "rooms500Title": "Plus de 500 salles",
+      "rooms500Desc": "Des cabines individuelles aux grandes salles de conseil — plus de 500 espaces au choix.",
+      "instantTitle": "Réservation instantanée",
+      "instantDesc": "Bloquez avec une réservation provisoire, confirmez à la validation. Zéro double réservation.",
+      "secureTitle": "Sécurisé et privé",
+      "secureDesc": "Conforme au RGPD. Vos données vous appartiennent — exportez ou supprimez à tout moment.",
+      "smartTitle": "Filtres intelligents",
+      "smartDesc": "Filtrez par capacité, équipements et disponibilité. Trouvez la bonne salle en quelques secondes."
+    },
+    "amenities": {
+      "sectionTitle": "Parcourir par équipement"
+    },
+    "cta": {
+      "title": "Prêt à réserver votre prochaine salle ?",
+      "subtitle": "Rejoignez des milliers d'équipes qui utilisent RoomBook chaque jour.",
+      "searchBtn": "Rechercher des salles disponibles",
+      "createAccountBtn": "Créer un compte gratuit"
+    }
+  },
+
+  "search": {
+    "title_loading": "Recherche en cours…",
+    "title_results_one": "{{count}} salle disponible",
+    "title_results_other": "{{count}} salles disponibles",
+    "title_empty": "Rechercher des salles",
+    "sortBy": "Trier par :",
+    "sortAriaLabel": "Trier les salles",
+    "loginBanner": "Connectez-vous pour réserver des salles instantanément.",
+    "loginBannerLink": "Se connecter →",
+    "filterToggleOpen": "⚙ Filtres",
+    "filterToggleClose": "✕ Masquer les filtres",
+    "noRoomsTitle": "Aucune salle trouvée",
+    "noRoomsSubtitle": "Essayez d'ajuster vos filtres ou de rechercher sur une autre plage horaire",
+    "allShown_one": "{{count}} salle affichée au total",
+    "allShown_other": "{{count}} salles affichées au total"
+  },
+
+  "sort": {
+    "recommended": "Recommandé",
+    "capacityAsc": "Capacité : petite en premier",
+    "capacityDesc": "Capacité : grande en premier"
+  },
+
+  "filters": {
+    "heading": "Filtrer les salles",
+    "checkIn": "Arrivée",
+    "checkOut": "Départ",
+    "checkInError": "L'arrivée doit être aujourd'hui ou plus tard",
+    "checkOutError": "Le départ doit être le jour de l'arrivée ou après",
+    "minCapacity": "Cap. min.",
+    "capacityPlaceholder": "Peu importe",
+    "amenities": "Équipements",
+    "clearAmenities": "Effacer les équipements ×",
+    "searchBtn": "Rechercher des salles"
+  },
+
+  "roomCard": {
+    "available": "Disponible",
+    "capacity_one": "Jusqu'à {{count}} personne",
+    "capacity_other": "Jusqu'à {{count}} personnes",
+    "moreFeatures": "+{{count}} de plus",
+    "seeAvailability": "Voir la disponibilité →",
+    "viewAriaLabel": "Voir {{name}}"
+  },
+
+  "roomDetail": {
+    "loadingText": "Chargement des détails de la salle…",
+    "notFound": "Salle introuvable",
+    "backToResults": "← Retour aux résultats",
+    "capacity_one": "{{count}} personne",
+    "capacity_other": "{{count}} personnes",
+    "availabilityAvailable": "Disponible",
+    "availabilityHeld": "Bloquée",
+    "availabilityBooked": "Réservée",
+    "timesInTz": "Horaires affichés en",
+    "yourBooking": "Votre réservation :",
+    "amenitiesTitle": "Équipements",
+    "policiesTitle": "Conditions",
+    "policy1": "Les réservations peuvent être annulées jusqu'à 30 minutes avant l'heure de début.",
+    "policy2": "Veuillez laisser la salle dans le même état que vous l'avez trouvée.",
+    "policy3": "L'occupation maximale ne doit pas dépasser la capacité indiquée.",
+    "ctaTitle": "Réserver cette salle",
+    "noDatesMsg": "Revenez en arrière et sélectionnez des dates pour réserver cette salle.",
+    "loginCtaText": "Créez un compte gratuit ou connectez-vous pour réserver cette salle.",
+    "signInToBook": "Se connecter pour réserver",
+    "createAccount": "Créer un compte",
+    "roomNotAvailable": "Salle indisponible",
+    "reserveNow": "Réserver maintenant →"
+  },
+
+  "recentlyViewed": {
+    "title": "Consultées récemment",
+    "clearAll": "Tout effacer",
+    "clearAriaLabel": "Effacer les consultations récentes",
+    "viewAriaLabel": "Voir {{name}}",
+    "capacity_one": "{{count}} personne",
+    "capacity_other": "{{count}} personnes"
+  },
+
+  "imageGallery": {
+    "altRoom": "Salle",
+    "altView": "Vue de la salle {{number}}",
+    "altFullscreen": "Salle en plein écran",
+    "clickToEnlarge": "Cliquez pour agrandir"
+  },
+
+  "checkout": {
+    "loading": "Chargement de la réservation…",
+    "warningBanner": "⚠ Moins de 60 secondes restantes — finalisez votre réservation maintenant.",
+    "success": {
+      "title": "Réservation confirmée !",
+      "bookingId": "ID de réservation :",
+      "viewBookings": "Voir mes réservations",
+      "findMoreRooms": "Trouver d'autres salles"
+    },
+    "expired": {
+      "title": "Réservation expirée",
+      "message": "Cette réservation a déjà expiré. Veuillez effectuer une nouvelle recherche.",
+      "searchBtn": "Rechercher des salles"
+    },
+    "notFound": "Réservation introuvable",
+    "backToSearch": "Retour à la recherche",
+    "noRoom": {
+      "start": "Début :",
+      "end": "Fin :"
+    }
+  },
+
+  "bookingSummary": {
+    "capacity_one": "{{count}} personne",
+    "capacity_other": "{{count}} personnes",
+    "timesIn": "Horaires en"
+  },
+
+  "checkoutForm": {
+    "title": "Vos coordonnées",
+    "name": "Nom",
+    "namePlaceholder": "Votre nom complet",
+    "nameRequired": "Le nom est obligatoire",
+    "email": "E-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "emailRequired": "L'e-mail est obligatoire",
+    "emailInvalid": "Format d'e-mail invalide",
+    "notes": "Notes (facultatif)",
+    "notesPlaceholder": "Toute demande particulière...",
+    "confirmBtn": "Confirmer la réservation"
+  },
+
+  "expiryModal": {
+    "title": "Réservation expirée",
+    "message": "Le délai de votre réservation est écoulé. Cette salle est maintenant disponible pour d'autres.",
+    "recheckBtn": "Vérifier à nouveau la disponibilité de cette salle"
+  },
+
+  "countdown": {
+    "expiresIn": "La réservation expire dans"
+  },
+
+  "bookings": {
+    "title": "Mes réservations",
+    "refresh": "Actualiser",
+    "emptyTitle": "Aucune réservation pour l'instant",
+    "emptySubtitle": "Recherchez une salle et réservez-en une pour la voir ici"
+  },
+
+  "bookingCard": {
+    "roomFallback": "Salle #{{id}}",
+    "booked": "Réservée :",
+    "id": "ID :",
+    "cancelBtn": "Annuler la réservation"
+  },
+
+  "auth": {
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Connectez-vous à votre compte",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "newHere": "Nouveau ici ?",
+      "createAccount": "Créer un compte →",
+      "submitBtn": "Se connecter"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Commencez à réserver des salles en quelques secondes",
+      "nameLabel": "Nom complet (facultatif)",
+      "namePlaceholder": "Votre nom",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "••••••••",
+      "passwordHint": "Minimum 8 caractères",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "signIn": "Se connecter →",
+      "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères.",
+      "submitBtn": "Créer un compte",
+      "strength": {
+        "tooShort": "Trop court",
+        "weak": "Faible",
+        "fair": "Moyen",
+        "strong": "Fort"
+      }
+    },
+    "google": {
+      "continueWith": "Continuer avec Google"
+    }
+  },
+
+  "profile": {
+    "memberSince": "Membre depuis {{date}}",
+    "profileSettings": "Paramètres du profil",
+    "fullName": "Nom complet",
+    "noNameSet": "Aucun nom défini",
+    "savedBadge": "✓ Enregistré",
+    "editNameAriaLabel": "Modifier le nom",
+    "editProfile": "Modifier le profil",
+    "email": "E-mail",
+    "emailLocked": "L'adresse e-mail ne peut pas être modifiée",
+    "security": "Sécurité",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "changingPassword": "Modification…",
+    "changePasswordBtn": "Changer le mot de passe",
+    "passwordChangedSuccess": "✓ Mot de passe modifié avec succès",
+    "googleOnly": "Votre compte utilise Google Sign-In — aucun mot de passe à modifier.",
+    "connectedAccounts": "Comptes connectés",
+    "googleConnected": "Connecté ✓",
+    "googleNotConnected": "Non connecté ✗",
+    "privacyLink": "🔒 Confidentialité & droits sur les données →",
+    "failedToLoad": "Impossible de charger le profil.",
+    "failedToSaveName": "Impossible d'enregistrer le nom. Veuillez réessayer.",
+    "failedToChangePassword": "Impossible de changer le mot de passe."
+  },
+
+  "gdpr": {
+    "backToProfile": "← Retour au profil",
+    "back": "← Retour",
+    "title": "Confidentialité & droits sur les données",
+    "intro": "En vertu du Règlement général sur la protection des données (RGPD), vous avez le droit d'accéder à vos données personnelles, de les contrôler et de les supprimer. Cette page vous permet d'exercer l'ensemble de ces droits.",
+    "consent": {
+      "title": "Préférences de consentement",
+      "desc": "Choisissez les activités de traitement facultatives auxquelles vous consentez. Les opérations essentielles (gestion des réservations, authentification) s'appliquent toujours et ne peuvent pas être désactivées.",
+      "analyticsLabel": "Analytique — Aidez-nous à comprendre l'utilisation de l'application pour l'améliorer",
+      "marketingLabel": "Marketing — Recevez des actualités produit et des offres spéciales",
+      "lastUpdated": "Dernière mise à jour : {{date}}"
+    },
+    "restriction": {
+      "title": "Droit à la limitation et droit d'opposition",
+      "desc": "Vous pouvez demander que nous limitions le traitement de vos données ou vous y opposer pour certains usages, tels que le profilage et la prise de décision automatisée.",
+      "restrictLabel": "Limiter le traitement — Restreindre l'utilisation des données au minimum requis pour le service"
+    },
+    "access": {
+      "title": "Droit d'accès et portabilité des données",
+      "desc": "Téléchargez une copie lisible par machine de toutes les données personnelles que nous détenons sur vous — votre profil et votre historique de réservations — sous forme de fichier JSON.",
+      "exportBtn": "Exporter mes données",
+      "exportingBtn": "Préparation de l'export…",
+      "loginHint": "pour exporter vos données.",
+      "loginLink": "Se connecter"
+    },
+    "erasure": {
+      "title": "Droit à l'effacement",
+      "desc": "Supprimez définitivement votre compte. Cela efface votre profil, toutes les réservations et toutes les données de session.",
+      "descStrong": "Cette action est irréversible.",
+      "confirmMsg": "Êtes-vous sûr ? Cliquez sur",
+      "confirmMsgStrong": "Confirmer la suppression",
+      "confirmMsgSuffix": "pour effacer définitivement votre compte.",
+      "deleteBtn": "Supprimer mon compte",
+      "confirmDeleteBtn": "Confirmer la suppression",
+      "deletingBtn": "Suppression…",
+      "loginHint": "pour supprimer votre compte.",
+      "loginLink": "Se connecter"
+    },
+    "contact": {
+      "title": "Contact & réclamations",
+      "desc": "Pour exercer des droits non couverts ci-dessus — ou pour déposer une réclamation — contactez notre Délégué à la Protection des Données à",
+      "descSuffix": ". Vous avez également le droit de déposer une réclamation auprès de l'autorité de contrôle compétente.",
+      "email": "privacy@roombooking.example"
+    }
+  },
+
+  "amenities": {
+    "projector": "Projecteur",
+    "whiteboard": "Tableau blanc",
+    "video_conf": "Appel vidéo",
+    "tv": "Écran TV",
+    "phone": "Tél. conf.",
+    "standing_desk": "Bureau debout",
+    "natural_light": "Lumière naturelle",
+    "ac": "Clim.",
+    "webcam": "Webcam",
+    "soundproof": "Insonorisée",
+    "lounge_seating": "Lounge",
+    "dual_screen": "Double écran",
+    "grid": {
+      "projector": "Projecteur",
+      "whiteboard": "Tableau blanc",
+      "tv": "Écran TV",
+      "video_conf": "Vidéoconférence",
+      "phone": "Téléphone de conférence",
+      "standing_desk": "Bureaux debout",
+      "natural_light": "Lumière naturelle",
+      "ac": "Climatisation",
+      "webcam": "Webcam"
+    },
+    "landing": {
+      "projector": "Projecteur",
+      "whiteboard": "Tableau blanc",
+      "video_conf": "Vidéoconférence",
+      "natural_light": "Lumière naturelle",
+      "standing_desk": "Bureaux debout",
+      "tv": "Écran TV",
+      "soundproof": "Insonorisée",
+      "ac": "Climatisation"
+    }
+  },
+
+  "errors": {
+    "EMAIL_NOT_FOUND": "Aucun compte trouvé avec cet e-mail. Vérifiez l'adresse ou créez un compte.",
+    "WRONG_PASSWORD": "Mot de passe incorrect. Veuillez réessayer.",
+    "GOOGLE_ACCOUNT_ONLY": "Cet e-mail est lié à un compte Google. Veuillez utiliser \"Se connecter avec Google\".",
+    "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect. Veuillez réessayer.",
+    "SESSION_EXPIRED": "Votre session a expiré. Veuillez vous reconnecter.",
+    "INVALID_REFRESH_TOKEN": "Votre session a expiré. Veuillez vous reconnecter.",
+    "MISSING_REFRESH_TOKEN": "Vous n'êtes pas connecté. Veuillez vous connecter pour continuer.",
+    "USER_NOT_FOUND": "Compte introuvable. Il a peut-être été supprimé.",
+    "EMAIL_ALREADY_EXISTS": "Un compte avec cet e-mail existe déjà. Essayez de vous connecter.",
+    "HOLD_EXPIRED": "Votre réservation provisoire a expiré. Veuillez revenir en arrière et réserver à nouveau.",
+    "HOLD_NOT_FOUND": "Réservation introuvable. Veuillez commencer une nouvelle réservation.",
+    "BOOKING_CONFLICT": "Ce créneau n'est plus disponible. Veuillez choisir un autre horaire.",
+    "BOOKING_NOT_FOUND": "Réservation introuvable.",
+    "BOOKING_ALREADY_CANCELLED": "Cette réservation a déjà été annulée.",
+    "MISSING_FIELDS": "Veuillez remplir tous les champs obligatoires.",
+    "INVALID_TIME_RANGE": "L'heure de fin doit être postérieure à l'heure de début.",
+    "ROOM_NOT_FOUND": "Cette salle n'est plus disponible.",
+    "HOLDS_UNAVAILABLE": "Le système de réservation est temporairement indisponible. Veuillez réessayer dans quelques instants.",
+    "NO_PASSWORD": "Votre compte utilise Google Sign-In et n'a pas de mot de passe. Vous pouvez en définir un dans les paramètres du compte.",
+    "WRONG_PASSWORD_CHANGE": "Le mot de passe actuel saisi est incorrect.",
+    "FORBIDDEN": "Vous n'avez pas la permission d'effectuer cette action.",
+    "THROTTLE": "Trop de tentatives. Veuillez patienter une minute et réessayer.",
+    "TOO_MANY_REQUESTS": "Trop de tentatives. Veuillez patienter une minute et réessayer.",
+    "RATE_LIMIT_EXCEEDED": "Trop de tentatives. Veuillez patienter une minute et réessayer.",
+    "VALIDATION_ERROR": "Certains champs sont invalides. Veuillez vérifier votre saisie.",
+    "NETWORK_ERROR": "Impossible de se connecter. Vérifiez votre connexion internet.",
+    "INTERNAL_ERROR": "Une erreur s'est produite de notre côté. Veuillez réessayer.",
+    "http400": "La requête est invalide. Veuillez vérifier votre saisie.",
+    "http401": "Vous devez être connecté pour effectuer cette action.",
+    "http403": "Vous n'avez pas la permission d'effectuer cette action.",
+    "http404": "L'élément demandé est introuvable.",
+    "http409": "Un conflit s'est produit — l'élément est peut-être déjà pris.",
+    "http422": "Certains champs sont invalides. Veuillez vérifier votre saisie.",
+    "http429": "Trop de tentatives. Veuillez patienter un moment et réessayer.",
+    "http500": "Une erreur s'est produite de notre côté. Veuillez réessayer.",
+    "http503": "Le service est temporairement indisponible. Veuillez réessayer dans quelques instants.",
+    "default": "Une erreur s'est produite. Veuillez réessayer."
+  },
+
+  "languageSwitcher": {
+    "ariaLabel": "Sélectionner la langue"
+  },
+
+  "app": {
+    "loading": "Chargement…"
+  }
+}

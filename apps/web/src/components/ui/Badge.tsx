@@ -1,0 +1,14 @@
+import React from 'react';
+
+type BadgeVariant = 'success' | 'warning' | 'cancelled' | 'neutral';
+
+interface BadgeProps {
+  variant?: BadgeVariant;
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const Badge = React.memo(function Badge({ variant = 'neutral', children, className = '' }: BadgeProps) {
+  const classes = ['badge', `badge--${variant}`, className].filter(Boolean).join(' ');
+  return <span className={classes}>{children}</span>;
+});

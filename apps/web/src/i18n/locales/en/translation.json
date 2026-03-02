@@ -1,0 +1,468 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving…",
+    "back": "← Back",
+    "retry": "Retry",
+    "from": "From",
+    "to": "To",
+    "duration": "Duration",
+    "search": "Search",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "close": "Close"
+  },
+
+  "nav": {
+    "login": "Login",
+    "register": "Register",
+    "searchAndBook": "Search & Book",
+    "myBookings": "My Bookings"
+  },
+
+  "header": {
+    "searchRooms": "Search Rooms",
+    "myBookings": "My Bookings",
+    "myProfile": "My Profile",
+    "signOut": "Sign out",
+    "signIn": "Sign in",
+    "register": "Register",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+
+  "footer": {
+    "brandDesc": "Find and book the perfect meeting room for your team. Powered by NestJS, PostgreSQL, and Redis.",
+    "platform": "Platform",
+    "searchRooms": "Search Rooms",
+    "myBookings": "My Bookings",
+    "privacyGdpr": "Privacy & GDPR",
+    "techStack": "Tech Stack",
+    "allRightsReserved": "© {{year}} RoomBook. All rights reserved."
+  },
+
+  "landing": {
+    "hero": {
+      "title": "Find your perfect meeting room",
+      "subtitle": "Book conference rooms, event spaces, and collaboration hubs — instantly.",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "guests": "Guests",
+      "search": "Search",
+      "trustInstant": "✓ Instant confirmation",
+      "trustFree": "✓ Free cancellation",
+      "trust500": "✓ 500+ rooms",
+      "trustNoCard": "✓ No credit card required",
+      "errorPastStart": "Check-in must be today or in the future.",
+      "errorInvalidRange": "Check-out must be on or after check-in."
+    },
+    "promo": {
+      "sectionTitle": "Deals & featured spaces",
+      "scrollLeft": "Scroll left",
+      "scrollRight": "Scroll right",
+      "earlyBird": {
+        "title": "Early Bird",
+        "subtitle": "Book rooms 48 h in advance and skip the rush",
+        "badge": "Free hold",
+        "cta": "Book early"
+      },
+      "teamBundle": {
+        "title": "Team Rooms",
+        "subtitle": "Spaces for 10+ people — perfect for workshops",
+        "badge": "Popular",
+        "cta": "Find large rooms"
+      },
+      "videoReady": {
+        "title": "Video-Ready",
+        "subtitle": "Full AV setup — webcam, screen share, call",
+        "badge": "New",
+        "cta": "Explore"
+      },
+      "focusPods": {
+        "title": "Focus Pods",
+        "subtitle": "Soundproof 1–2 person booths for deep work",
+        "badge": "Limited",
+        "cta": "Check availability"
+      },
+      "naturalLight": {
+        "title": "Natural Light",
+        "subtitle": "Sun-filled rooms — boost focus and creativity",
+        "badge": "Top rated",
+        "cta": "See options"
+      }
+    },
+    "featuredStrip": {
+      "title": "Available right now",
+      "scrollLeft": "Scroll left",
+      "scrollRight": "Scroll right"
+    },
+    "whyUs": {
+      "sectionTitle": "Why teams choose RoomBook",
+      "rooms500Title": "500+ Rooms",
+      "rooms500Desc": "From intimate focus booths to large boardrooms — 500+ spaces to choose from.",
+      "instantTitle": "Instant Booking",
+      "instantDesc": "Reserve with a hold, confirm at checkout. No double-bookings, ever.",
+      "secureTitle": "Secure & Private",
+      "secureDesc": "GDPR compliant. Your data stays yours — export or delete any time.",
+      "smartTitle": "Smart Filters",
+      "smartDesc": "Filter by capacity, amenities, and availability. Find the right room in seconds."
+    },
+    "amenities": {
+      "sectionTitle": "Browse by amenity"
+    },
+    "cta": {
+      "title": "Ready to book your next room?",
+      "subtitle": "Join thousands of teams who use RoomBook every day.",
+      "searchBtn": "Search available rooms",
+      "createAccountBtn": "Create free account"
+    }
+  },
+
+  "search": {
+    "title_loading": "Searching…",
+    "title_results_one": "{{count}} room available",
+    "title_results_other": "{{count}} rooms available",
+    "title_empty": "Search for rooms",
+    "sortBy": "Sort by:",
+    "sortAriaLabel": "Sort rooms",
+    "loginBanner": "Sign in to reserve rooms instantly.",
+    "loginBannerLink": "Sign in →",
+    "filterToggleOpen": "⚙ Filters",
+    "filterToggleClose": "✕ Hide filters",
+    "noRoomsTitle": "No rooms found",
+    "noRoomsSubtitle": "Try adjusting your filters or searching a different time range",
+    "allShown_one": "All {{count}} room shown",
+    "allShown_other": "All {{count}} rooms shown"
+  },
+
+  "sort": {
+    "recommended": "Recommended",
+    "capacityAsc": "Capacity: small first",
+    "capacityDesc": "Capacity: large first"
+  },
+
+  "filters": {
+    "heading": "Filter rooms",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "checkInError": "Check-in must be today or later",
+    "checkOutError": "Check-out must be on or after check-in",
+    "minCapacity": "Min. capacity",
+    "capacityPlaceholder": "Any",
+    "amenities": "Amenities",
+    "clearAmenities": "Clear amenities ×",
+    "searchBtn": "Search rooms"
+  },
+
+  "roomCard": {
+    "available": "Available",
+    "capacity_one": "Up to {{count}} person",
+    "capacity_other": "Up to {{count}} people",
+    "moreFeatures": "+{{count}} more",
+    "seeAvailability": "See availability →",
+    "viewAriaLabel": "View {{name}}"
+  },
+
+  "roomDetail": {
+    "loadingText": "Loading room details…",
+    "notFound": "Room not found",
+    "backToResults": "← Back to results",
+    "capacity_one": "{{count}} person",
+    "capacity_other": "{{count}} people",
+    "availabilityAvailable": "Available",
+    "availabilityHeld": "Held",
+    "availabilityBooked": "Booked",
+    "timesInTz": "All times shown in",
+    "yourBooking": "Your booking:",
+    "amenitiesTitle": "Amenities",
+    "policiesTitle": "Policies",
+    "policy1": "Bookings can be cancelled up to 30 minutes before the start time.",
+    "policy2": "Please leave the room in the same condition as you found it.",
+    "policy3": "Maximum occupancy must not exceed the listed capacity.",
+    "ctaTitle": "Reserve this room",
+    "noDatesMsg": "Go back and select dates to reserve this room.",
+    "loginCtaText": "Create a free account or sign in to reserve this room.",
+    "signInToBook": "Sign in to book",
+    "createAccount": "Create account",
+    "roomNotAvailable": "Room Not Available",
+    "reserveNow": "Reserve Now →"
+  },
+
+  "recentlyViewed": {
+    "title": "Recently viewed",
+    "clearAll": "Clear all",
+    "clearAriaLabel": "Clear recently viewed",
+    "viewAriaLabel": "View {{name}}",
+    "capacity_one": "{{count}} person",
+    "capacity_other": "{{count}} people"
+  },
+
+  "imageGallery": {
+    "altRoom": "Room",
+    "altView": "Room view {{number}}",
+    "altFullscreen": "Room fullscreen",
+    "clickToEnlarge": "Click to enlarge"
+  },
+
+  "checkout": {
+    "loading": "Loading reservation…",
+    "warningBanner": "⚠ Less than 60 seconds left — complete your booking now.",
+    "success": {
+      "title": "Booking confirmed!",
+      "bookingId": "Booking ID:",
+      "viewBookings": "View my bookings",
+      "findMoreRooms": "Find more rooms"
+    },
+    "expired": {
+      "title": "Reservation expired",
+      "message": "This reservation has already expired. Please search again.",
+      "searchBtn": "Search rooms"
+    },
+    "notFound": "Reservation not found",
+    "backToSearch": "Back to search",
+    "noRoom": {
+      "start": "Start:",
+      "end": "End:"
+    }
+  },
+
+  "bookingSummary": {
+    "capacity_one": "{{count}} person",
+    "capacity_other": "{{count}} persons",
+    "timesIn": "Times in"
+  },
+
+  "checkoutForm": {
+    "title": "Your Details",
+    "name": "Name",
+    "namePlaceholder": "Your full name",
+    "nameRequired": "Name is required",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email format",
+    "notes": "Notes (optional)",
+    "notesPlaceholder": "Any special requirements...",
+    "confirmBtn": "Confirm Booking"
+  },
+
+  "expiryModal": {
+    "title": "Reservation expired",
+    "message": "Your reservation timer has ended. This room is now available for others.",
+    "recheckBtn": "Check availability again for this room"
+  },
+
+  "countdown": {
+    "expiresIn": "Reservation expires in"
+  },
+
+  "bookings": {
+    "title": "My Bookings",
+    "refresh": "Refresh",
+    "emptyTitle": "No bookings yet",
+    "emptySubtitle": "Search for a room and book one to see it here"
+  },
+
+  "bookingCard": {
+    "roomFallback": "Room #{{id}}",
+    "booked": "Booked:",
+    "id": "ID:",
+    "cancelBtn": "Cancel booking"
+  },
+
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "newHere": "New here?",
+      "createAccount": "Create an account →",
+      "submitBtn": "Sign in"
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Start booking rooms in seconds",
+      "nameLabel": "Full name (optional)",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "passwordHint": "Minimum 8 characters",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in →",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "submitBtn": "Create account",
+      "strength": {
+        "tooShort": "Too short",
+        "weak": "Weak",
+        "fair": "Fair",
+        "strong": "Strong"
+      }
+    },
+    "google": {
+      "continueWith": "Continue with Google"
+    }
+  },
+
+  "profile": {
+    "memberSince": "Member since {{date}}",
+    "profileSettings": "Profile Settings",
+    "fullName": "Full name",
+    "noNameSet": "No name set",
+    "savedBadge": "✓ Saved",
+    "editNameAriaLabel": "Edit name",
+    "editProfile": "Edit Profile",
+    "email": "Email",
+    "emailLocked": "Email cannot be changed",
+    "security": "Security",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "changingPassword": "Changing…",
+    "changePasswordBtn": "Change Password",
+    "passwordChangedSuccess": "✓ Password changed successfully",
+    "googleOnly": "Your account uses Google Sign-In — no password to change.",
+    "connectedAccounts": "Connected accounts",
+    "googleConnected": "Connected ✓",
+    "googleNotConnected": "Not connected ✗",
+    "privacyLink": "🔒 Privacy & Data Rights →",
+    "failedToLoad": "Failed to load profile.",
+    "failedToSaveName": "Failed to save name. Please try again.",
+    "failedToChangePassword": "Failed to change password."
+  },
+
+  "gdpr": {
+    "backToProfile": "← Back to profile",
+    "back": "← Back",
+    "title": "Privacy & Data Rights",
+    "intro": "Under the General Data Protection Regulation (GDPR) you have the right to access, control, and delete your personal data. This page lets you exercise all of those rights.",
+    "consent": {
+      "title": "Consent Preferences",
+      "desc": "Choose which optional data processing activities you consent to. Essential operations (booking management, authentication) always apply and cannot be disabled.",
+      "analyticsLabel": "Analytics — Help us understand how the app is used to improve it",
+      "marketingLabel": "Marketing — Receive product news and special offers",
+      "lastUpdated": "Last updated: {{date}}"
+    },
+    "restriction": {
+      "title": "Right to Restriction & Right to Object",
+      "desc": "You may request that we restrict how we process your data, or object to certain uses such as profiling and automated decision-making.",
+      "restrictLabel": "Restrict processing — Limit data use to the minimum required for the service"
+    },
+    "access": {
+      "title": "Right to Access & Data Portability",
+      "desc": "Download a machine-readable copy of all personal data we hold about you — your profile and booking history — as a JSON file.",
+      "exportBtn": "Export My Data",
+      "exportingBtn": "Preparing export…",
+      "loginHint": "to export your data.",
+      "loginLink": "Log in"
+    },
+    "erasure": {
+      "title": "Right to Erasure",
+      "desc": "Permanently delete your account. This removes your profile, all bookings, and all session data.",
+      "descStrong": "This action cannot be undone.",
+      "confirmMsg": "Are you sure? Click",
+      "confirmMsgStrong": "Confirm Delete",
+      "confirmMsgSuffix": "to permanently erase your account.",
+      "deleteBtn": "Delete My Account",
+      "confirmDeleteBtn": "Confirm Delete",
+      "deletingBtn": "Deleting…",
+      "loginHint": "to delete your account.",
+      "loginLink": "Log in"
+    },
+    "contact": {
+      "title": "Contact & Complaints",
+      "desc": "To exercise rights not covered above — or to file a complaint — contact our Data Protection Officer at",
+      "descSuffix": ". You also have the right to lodge a complaint with your local supervisory authority.",
+      "email": "privacy@roombooking.example"
+    }
+  },
+
+  "amenities": {
+    "projector": "Projector",
+    "whiteboard": "Whiteboard",
+    "video_conf": "Video Call",
+    "tv": "TV Screen",
+    "phone": "Conf. Phone",
+    "standing_desk": "Standing Desk",
+    "natural_light": "Natural Light",
+    "ac": "A/C",
+    "webcam": "Webcam",
+    "soundproof": "Soundproof",
+    "lounge_seating": "Lounge",
+    "dual_screen": "Dual Screen",
+    "grid": {
+      "projector": "Projector",
+      "whiteboard": "Whiteboard",
+      "tv": "TV Screen",
+      "video_conf": "Video Conferencing",
+      "phone": "Conference Phone",
+      "standing_desk": "Standing Desks",
+      "natural_light": "Natural Light",
+      "ac": "Air Conditioning",
+      "webcam": "Webcam"
+    },
+    "landing": {
+      "projector": "Projector",
+      "whiteboard": "Whiteboard",
+      "video_conf": "Video conferencing",
+      "natural_light": "Natural light",
+      "standing_desk": "Standing desks",
+      "tv": "TV screen",
+      "soundproof": "Soundproof",
+      "ac": "Air conditioning"
+    }
+  },
+
+  "errors": {
+    "EMAIL_NOT_FOUND": "No account found with this email. Please check the address or create an account.",
+    "WRONG_PASSWORD": "Incorrect password. Please try again.",
+    "GOOGLE_ACCOUNT_ONLY": "This email is linked to a Google account. Please use \"Sign in with Google\" instead.",
+    "INVALID_CREDENTIALS": "Incorrect email or password. Please try again.",
+    "SESSION_EXPIRED": "Your session has expired. Please sign in again.",
+    "INVALID_REFRESH_TOKEN": "Your session has expired. Please sign in again.",
+    "MISSING_REFRESH_TOKEN": "You are not signed in. Please sign in to continue.",
+    "USER_NOT_FOUND": "Account not found. It may have been deleted.",
+    "EMAIL_ALREADY_EXISTS": "An account with this email already exists. Try signing in instead.",
+    "HOLD_EXPIRED": "Your reservation timed out. Please go back and reserve again.",
+    "HOLD_NOT_FOUND": "Reservation not found. Please start a new booking.",
+    "BOOKING_CONFLICT": "This time slot is no longer available. Please choose a different time.",
+    "BOOKING_NOT_FOUND": "Booking not found.",
+    "BOOKING_ALREADY_CANCELLED": "This booking has already been cancelled.",
+    "MISSING_FIELDS": "Please fill in all required fields.",
+    "INVALID_TIME_RANGE": "End time must be after start time.",
+    "ROOM_NOT_FOUND": "This room is no longer available.",
+    "HOLDS_UNAVAILABLE": "The reservation system is temporarily unavailable. Please try again shortly.",
+    "NO_PASSWORD": "Your account uses Google Sign-In and has no password. You can set one in account settings.",
+    "WRONG_PASSWORD_CHANGE": "The current password you entered is incorrect.",
+    "FORBIDDEN": "You don't have permission to do that.",
+    "THROTTLE": "Too many attempts. Please wait a minute and try again.",
+    "TOO_MANY_REQUESTS": "Too many attempts. Please wait a minute and try again.",
+    "RATE_LIMIT_EXCEEDED": "Too many attempts. Please wait a minute and try again.",
+    "VALIDATION_ERROR": "Some fields are invalid. Please check your input.",
+    "NETWORK_ERROR": "Unable to connect. Please check your internet connection.",
+    "INTERNAL_ERROR": "Something went wrong on our end. Please try again.",
+    "http400": "The request was invalid. Please check your input.",
+    "http401": "You need to be signed in to do that.",
+    "http403": "You don't have permission to perform this action.",
+    "http404": "The requested item was not found.",
+    "http409": "A conflict occurred — the item may already be taken.",
+    "http422": "Some fields are invalid. Please review your input.",
+    "http429": "Too many attempts. Please wait a moment and try again.",
+    "http500": "Something went wrong on our end. Please try again.",
+    "http503": "The service is temporarily unavailable. Please try again shortly.",
+    "default": "Something went wrong. Please try again."
+  },
+
+  "languageSwitcher": {
+    "ariaLabel": "Select language"
+  },
+
+  "app": {
+    "loading": "Loading…"
+  }
+}
