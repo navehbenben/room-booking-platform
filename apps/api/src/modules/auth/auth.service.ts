@@ -52,7 +52,7 @@ export class AuthService {
     if (!user) {
       this.metrics.recordAuth('login', 'failure');
       this.logger.warn({ event: 'auth.login.no_account', message: 'Login attempt for unknown email' });
-      throw new UnauthorizedException({ code: 'EMAIL_NOT_FOUND', message: 'No account found with this email' });
+      throw new UnauthorizedException({ code: 'INVALID_CREDENTIALS', message: 'Incorrect email or password' });
     }
 
     // Google-only users have no password hash — guide them to the correct flow
@@ -74,7 +74,7 @@ export class AuthService {
         userId: user.id,
         message: 'Login attempt with wrong password',
       });
-      throw new UnauthorizedException({ code: 'WRONG_PASSWORD', message: 'Incorrect password' });
+      throw new UnauthorizedException({ code: 'INVALID_CREDENTIALS', message: 'Incorrect email or password' });
     }
 
     this.metrics.recordAuth('login', 'success');

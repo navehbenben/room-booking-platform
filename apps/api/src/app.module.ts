@@ -21,6 +21,8 @@ import { MetricsModule } from './common/metrics/metrics.module';
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
+      retryAttempts: Number(process.env.TYPEORM_RETRY_ATTEMPTS ?? 10),
+      retryDelay: Number(process.env.TYPEORM_RETRY_DELAY ?? 3000),
       // Connection pool: limit to 20 connections per instance
       extra: {
         max: 20,

@@ -6,11 +6,6 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { HttpErrorFilter } from '../src/common/filters/http-error.filter';
 
-// Set required env vars before module initialisation (overridden by CI env when present)
-process.env.DATABASE_URL ??= 'postgresql://postgres:postgres@localhost:5432/room_booking_test';
-process.env.REDIS_URL ??= 'redis://localhost:6379';
-process.env.JWT_SECRET ??= 'e2e-test-secret-not-for-production';
-
 describe('Room Booking API (e2e)', () => {
   let app: INestApplication;
 

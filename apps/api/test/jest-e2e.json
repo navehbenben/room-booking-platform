@@ -6,6 +6,8 @@
   "transform": {
     "^.+\\.(t|j)s$": ["ts-jest", { "diagnostics": false }]
   },
-  "setupFiles": ["<rootDir>/src/setup-tests.ts"],
+  "globalSetup": "<rootDir>/global-setup.ts",
+  "globalTeardown": "<rootDir>/global-teardown.ts",
+  "setupFiles": ["<rootDir>/env-setup.ts", "<rootDir>/../src/setup-tests.ts"],
   "testTimeout": 30000
 }
