@@ -1,6 +1,7 @@
 # Environment secrets — never commit
 .env
-
+# IDE settings
+.idea
 # Dependencies
 node_modules/
 
