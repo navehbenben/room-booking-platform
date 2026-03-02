@@ -67,10 +67,6 @@ describe('useRoomDetail', () => {
     vi.mocked(api.roomDetail).mockResolvedValue(makeRoom());
     renderHook(() => useRoomDetail());
     await waitFor(() => expect(api.roomDetail).toHaveBeenCalled());
-    expect(api.roomDetail).toHaveBeenCalledWith(
-      'room-123',
-      '2024-01-01T10:00',
-      '2024-01-01T11:00',
-    );
+    expect(api.roomDetail).toHaveBeenCalledWith('room-123', '2024-01-01T10:00', '2024-01-01T11:00');
   });
 });

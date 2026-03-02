@@ -40,14 +40,8 @@ describe('ExpiryModal', () => {
   it('clicking the button navigates to the room detail page with params', () => {
     render(<ExpiryModal {...defaultProps} />);
     fireEvent.click(screen.getByRole('button', { name: /check availability/i }));
-    expect(mockNavigate).toHaveBeenCalledWith(
-      expect.stringContaining('/rooms/room-abc'),
-    );
-    expect(mockNavigate).toHaveBeenCalledWith(
-      expect.stringContaining('start='),
-    );
-    expect(mockNavigate).toHaveBeenCalledWith(
-      expect.stringContaining('end='),
-    );
+    expect(mockNavigate).toHaveBeenCalledWith(expect.stringContaining('/rooms/room-abc'));
+    expect(mockNavigate).toHaveBeenCalledWith(expect.stringContaining('start='));
+    expect(mockNavigate).toHaveBeenCalledWith(expect.stringContaining('end='));
   });
 });

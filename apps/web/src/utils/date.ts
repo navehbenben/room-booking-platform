@@ -69,11 +69,7 @@ export function formatDateRange(start: string, end: string): string {
  * Formats a UTC ISO string in a specific IANA timezone.
  * Falls back to the user's local timezone if the timezone is unknown.
  */
-export function formatInTimezone(
-  isoString: string,
-  timezone: string,
-  opts: Intl.DateTimeFormatOptions = {},
-): string {
+export function formatInTimezone(isoString: string, timezone: string, opts: Intl.DateTimeFormatOptions = {}): string {
   try {
     return new Intl.DateTimeFormat(undefined, {
       timeZone: timezone,

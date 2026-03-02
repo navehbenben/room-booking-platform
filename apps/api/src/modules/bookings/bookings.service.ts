@@ -123,8 +123,8 @@ export class BookingsService implements OnModuleInit {
     if (holdId) {
       const hold = await this.holdsService.getHold(holdId, userId);
       roomId = hold.roomId;
-      start  = new Date(hold.start);
-      end    = new Date(hold.end);
+      start = new Date(hold.start);
+      end = new Date(hold.end);
     }
 
     // ── 2. Input validation ───────────────────────────────────────────────
@@ -219,9 +219,9 @@ export class BookingsService implements OnModuleInit {
           roomId,
           userId,
           startTime: start,
-          endTime:   end,
-          notes:     notes ?? null,
-          status:    'CONFIRMED',
+          endTime: end,
+          notes: notes ?? null,
+          status: 'CONFIRMED',
         });
         const saved = await manager.getRepository(BookingEntity).save(booking);
         this.metrics.recordBooking('created');
@@ -250,10 +250,10 @@ export class BookingsService implements OnModuleInit {
         // concurrent requests both fail and race to write this record.
         this.metrics.recordBooking('conflict');
         this.logger.warn({
-          event:   'booking.conflict',
+          event: 'booking.conflict',
           roomId,
-          start:   start?.toISOString(),
-          end:     end?.toISOString(),
+          start: start?.toISOString(),
+          end: end?.toISOString(),
           message: 'Booking conflict — slot already taken',
         });
 
@@ -274,11 +274,11 @@ export class BookingsService implements OnModuleInit {
     }
 
     this.logger.log({
-      event:     'booking.created',
+      event: 'booking.created',
       bookingId: result.bookingId,
       roomId,
       userId,
-      message:   'Booking created',
+      message: 'Booking created',
     });
 
     // ── 6. Async side effects ─────────────────────────────────────────────
@@ -303,9 +303,9 @@ export class BookingsService implements OnModuleInit {
 
   async getMyBookings(userId: string) {
     const bookings = await this.bookingsRepo.find({
-      where:     { userId },
+      where: { userId },
       relations: ['room'],
-      order:     { createdAt: 'DESC' },
+      order: { createdAt: 'DESC' },
     });
     return bookings.map(formatBooking);
   }
@@ -499,13 +499,13 @@ export class BookingsService implements OnModuleInit {
 function formatBooking(b: BookingEntity) {
   return {
     bookingId: b.id,
-    roomId:    b.roomId,
-    roomName:  b.room?.name,
-    userId:    b.userId,
-    start:     b.startTime,
-    end:       b.endTime,
-    status:    b.status,
-    notes:     b.notes ?? undefined,
+    roomId: b.roomId,
+    roomName: b.room?.name,
+    userId: b.userId,
+    start: b.startTime,
+    end: b.endTime,
+    status: b.status,
+    notes: b.notes ?? undefined,
     createdAt: b.createdAt,
   };
 }

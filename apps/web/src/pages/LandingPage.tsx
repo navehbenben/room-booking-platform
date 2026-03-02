@@ -3,14 +3,22 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PromoBanner } from '../components/landing/PromoBanner';
 import { FeaturedRoomsStrip } from '../components/landing/FeaturedRoomsStrip';
-import { defaultStart, defaultEnd, isStartInPast, isValidDateRange, dateToStartISO, dateToEndISO, localToday } from '../utils/date';
+import {
+  defaultStart,
+  defaultEnd,
+  isStartInPast,
+  isValidDateRange,
+  dateToStartISO,
+  dateToEndISO,
+  localToday,
+} from '../utils/date';
 import { LANDING_AMENITY_PILLS } from '../constants/amenities';
 
 export function LandingPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [start, setStart] = useState(defaultStart());
-  const [end, setEnd]     = useState(defaultEnd());
+  const [end, setEnd] = useState(defaultEnd());
   const [capacity, setCapacity] = useState(2);
   const [dateError, setDateError] = useState('');
 
@@ -31,7 +39,7 @@ export function LandingPage() {
     if (!validate()) return;
     const params = new URLSearchParams({
       start: dateToStartISO(start),
-      end:   dateToEndISO(end),
+      end: dateToEndISO(end),
       capacity: String(capacity),
     });
     navigate(`/search?${params.toString()}`);
@@ -58,7 +66,10 @@ export function LandingPage() {
                 type="date"
                 value={start}
                 min={localToday()}
-                onChange={(e) => { setStart(e.target.value); setDateError(''); }}
+                onChange={(e) => {
+                  setStart(e.target.value);
+                  setDateError('');
+                }}
                 onKeyDown={handleKeyDown}
               />
             </div>
@@ -70,7 +81,10 @@ export function LandingPage() {
                 type="date"
                 value={end}
                 min={start || localToday()}
-                onChange={(e) => { setEnd(e.target.value); setDateError(''); }}
+                onChange={(e) => {
+                  setEnd(e.target.value);
+                  setDateError('');
+                }}
                 onKeyDown={handleKeyDown}
               />
             </div>
@@ -96,7 +110,11 @@ export function LandingPage() {
             </button>
           </div>
 
-          {dateError && <p className="hero-search__error" role="alert">{dateError}</p>}
+          {dateError && (
+            <p className="hero-search__error" role="alert">
+              {dateError}
+            </p>
+          )}
 
           {/* Trust pills */}
           <div className="hero__trust">
@@ -109,7 +127,6 @@ export function LandingPage() {
       </div>
 
       <div className="landing__content">
-
         {/* ── Deals / Promos (horizontal scroll) ────────── */}
         <PromoBanner />
 
@@ -172,7 +189,6 @@ export function LandingPage() {
             </Link>
           </div>
         </div>
-
       </div>
     </div>
   );

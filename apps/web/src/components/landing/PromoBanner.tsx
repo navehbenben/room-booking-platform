@@ -50,7 +50,7 @@ export function PromoBanner() {
   const handleDealClick = (deal: Deal) => {
     const p = new URLSearchParams();
     if (deal.searchParams.featuresText) p.set('amenity', deal.searchParams.featuresText);
-    if (deal.searchParams.capacity)     p.set('capacity', String(deal.searchParams.capacity));
+    if (deal.searchParams.capacity) p.set('capacity', String(deal.searchParams.capacity));
     navigate(`/search?${p.toString()}`);
   };
 
@@ -64,8 +64,20 @@ export function PromoBanner() {
       <div className="promo-banner__header">
         <h2 className="promo-banner__title">{t('landing.promo.sectionTitle')}</h2>
         <div className="promo-banner__nav">
-          <button className="promo-banner__arrow" onClick={() => scroll('left')} aria-label={t('landing.promo.scrollLeft')}>‹</button>
-          <button className="promo-banner__arrow" onClick={() => scroll('right')} aria-label={t('landing.promo.scrollRight')}>›</button>
+          <button
+            className="promo-banner__arrow"
+            onClick={() => scroll('left')}
+            aria-label={t('landing.promo.scrollLeft')}
+          >
+            ‹
+          </button>
+          <button
+            className="promo-banner__arrow"
+            onClick={() => scroll('right')}
+            aria-label={t('landing.promo.scrollRight')}
+          >
+            ›
+          </button>
         </div>
       </div>
 

@@ -22,8 +22,12 @@ let _accessToken = '';
 
 export const tokenStore = {
   getAccess: () => _accessToken,
-  set: (access: string) => { _accessToken = access; },
-  clear: () => { _accessToken = ''; },
+  set: (access: string) => {
+    _accessToken = access;
+  },
+  clear: () => {
+    _accessToken = '';
+  },
 };
 
 // Callback registered by App to handle forced logout on expired session
@@ -43,16 +47,18 @@ async function request<T>(path: string, opts: RequestInit = {}, skipRefresh = fa
   let res: Response;
   try {
     res = await fetch(`${API_BASE}${path}`, {
-    ...opts,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(opts.headers ?? {}),
-    },
-  });
-  } catch (networkErr) {
+      ...opts,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(opts.headers ?? {}),
+      },
+    });
+  } catch {
     // TypeError: Failed to fetch — browser is offline or server unreachable
-    throw { error: { code: 'NETWORK_ERROR', message: 'Unable to connect. Check your internet connection.' } } as ApiError;
+    throw {
+      error: { code: 'NETWORK_ERROR', message: 'Unable to connect. Check your internet connection.' },
+    } as ApiError;
   }
 
   if (res.status === 401 && !skipRefresh) {
@@ -87,7 +93,10 @@ async function request<T>(path: string, opts: RequestInit = {}, skipRefresh = fa
       refreshQueue = [];
       const retryOpts = {
         ...opts,
-        headers: { ...((opts.headers as Record<string, string>) ?? {}), Authorization: `Bearer ${refreshed.accessToken}` },
+        headers: {
+          ...((opts.headers as Record<string, string>) ?? {}),
+          Authorization: `Bearer ${refreshed.accessToken}`,
+        },
       };
       return request<T>(path, retryOpts, true);
     } catch {
@@ -124,32 +133,37 @@ function uuid(): string {
 export const api = {
   // Called on app mount to restore session from the HttpOnly refresh cookie.
   // Returns a new access token if a valid cookie exists, throws otherwise.
-  rehydrate: () =>
-    request<{ accessToken: string }>('/auth/refresh', { method: 'POST', credentials: 'include' }, true),
+  rehydrate: () => request<{ accessToken: string }>('/auth/refresh', { method: 'POST', credentials: 'include' }, true),
 
   register: (body: { email: string; password: string; name?: string }) =>
     // skipRefresh=true: a 401 here means bad credentials, not an expired session —
     // we must not try to refresh and overwrite the real error with SESSION_EXPIRED.
-    request<{ userId: string; accessToken: string }>('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      credentials: 'include',
-    }, true),
+    request<{ userId: string; accessToken: string }>(
+      '/auth/register',
+      {
+        method: 'POST',
+        body: JSON.stringify(body),
+        credentials: 'include',
+      },
+      true,
+    ),
 
   login: (body: { email: string; password: string }) =>
     // skipRefresh=true: same reason as register above.
-    request<{ userId: string; accessToken: string }>('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      credentials: 'include',
-    }, true),
+    request<{ userId: string; accessToken: string }>(
+      '/auth/login',
+      {
+        method: 'POST',
+        body: JSON.stringify(body),
+        credentials: 'include',
+      },
+      true,
+    ),
 
   // No body needed — server reads the HttpOnly cookie and clears it server-side
-  logout: () =>
-    request<void>('/auth/logout', { method: 'POST', credentials: 'include' }, true),
+  logout: () => request<void>('/auth/logout', { method: 'POST', credentials: 'include' }, true),
 
-  rooms: () =>
-    request<Array<{ roomId: string; name: string; capacity: number; features: string[] }>>('/rooms'),
+  rooms: () => request<Array<{ roomId: string; name: string; capacity: number; features: string[] }>>('/rooms'),
 
   search: (params: { start: string; end: string; capacity?: number; features?: string[]; page?: number }) => {
     const q = new URLSearchParams();
@@ -159,7 +173,14 @@ export const api = {
     if (params.features && params.features.length > 0) q.set('features', params.features.join(','));
     if (params.page && params.page > 1) q.set('page', String(params.page));
     return request<{
-      results: Array<{ roomId: string; name: string; capacity: number; features: string[]; timezone: string; status: string }>;
+      results: Array<{
+        roomId: string;
+        name: string;
+        capacity: number;
+        features: string[];
+        timezone: string;
+        status: string;
+      }>;
       total: number;
       page: number;
       limit: number;
@@ -208,10 +229,9 @@ export const api = {
     }),
 
   getHold: (holdId: string) =>
-    request<{ holdId: string; roomId: string; start: string; end: string; expiresAt: string }>(
-      `/holds/${holdId}`,
-      { headers: authHeader() },
-    ),
+    request<{ holdId: string; roomId: string; start: string; end: string; expiresAt: string }>(`/holds/${holdId}`, {
+      headers: authHeader(),
+    }),
 
   createBookingWithHold: (holdId: string, notes?: string) =>
     request<{ bookingId: string; status: string }>('/bookings', {
@@ -222,17 +242,25 @@ export const api = {
 
   /** Returns the authenticated user's profile. */
   getProfile: () =>
-    request<{ id: string; email: string; name: string | null; createdAt: string; hasPassword: boolean; hasGoogleAccount: boolean }>(
-      '/users/me',
-      { headers: authHeader() },
-    ),
+    request<{
+      id: string;
+      email: string;
+      name: string | null;
+      createdAt: string;
+      hasPassword: boolean;
+      hasGoogleAccount: boolean;
+    }>('/users/me', { headers: authHeader() }),
 
   /** Updates the authenticated user's display name. */
   updateProfile: (body: { name: string }) =>
-    request<{ id: string; email: string; name: string | null; createdAt: string; hasPassword: boolean; hasGoogleAccount: boolean }>(
-      '/users/me',
-      { method: 'PATCH', body: JSON.stringify(body), headers: authHeader() },
-    ),
+    request<{
+      id: string;
+      email: string;
+      name: string | null;
+      createdAt: string;
+      hasPassword: boolean;
+      hasGoogleAccount: boolean;
+    }>('/users/me', { method: 'PATCH', body: JSON.stringify(body), headers: authHeader() }),
 
   /** Changes the password for password-based accounts. */
   changePassword: (body: { currentPassword: string; newPassword: string }) =>

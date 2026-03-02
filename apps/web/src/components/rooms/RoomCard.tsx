@@ -20,10 +20,13 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
     if (!disabled) onView(room.roomId);
   }, [disabled, onView, room.roomId]);
 
-  const handleButtonClick = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    onView(room.roomId);
-  }, [onView, room.roomId]);
+  const handleButtonClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onView(room.roomId);
+    },
+    [onView, room.roomId],
+  );
 
   const visibleFeatures = room.features.slice(0, 4);
   const extraCount = room.features.length - visibleFeatures.length;
@@ -34,7 +37,9 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
       onClick={handleCardClick}
       role="button"
       tabIndex={disabled ? -1 : 0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCardClick(); }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') handleCardClick();
+      }}
       aria-label={t('roomCard.viewAriaLabel', { name: room.name })}
       aria-disabled={disabled}
     >
@@ -49,12 +54,12 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="room-card__img-fallback" aria-hidden="true">🏢</div>
+          <div className="room-card__img-fallback" aria-hidden="true">
+            🏢
+          </div>
         )}
         <span className="room-card__badge">{t('roomCard.available')}</span>
-        {urgency && (
-          <span className="room-card__urgency">{urgency}</span>
-        )}
+        {urgency && <span className="room-card__urgency">{urgency}</span>}
       </div>
 
       {/* Card body */}
@@ -103,11 +108,7 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
         )}
 
         <div className="room-card__footer">
-          <button
-            className="room-card__cta"
-            onClick={handleButtonClick}
-            disabled={disabled}
-          >
+          <button className="room-card__cta" onClick={handleButtonClick} disabled={disabled}>
             {t('roomCard.seeAvailability')}
           </button>
         </div>

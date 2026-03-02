@@ -83,7 +83,7 @@ export function useAuth(): AuthState {
 
   const logout = async (): Promise<void> => {
     // Server reads the HttpOnly cookie, revokes the token DB-side, and clears the cookie
-    await api.logout().catch((e) => logger.warn('Logout request failed', { event: 'auth.logout.failure' }));
+    await api.logout().catch((_e) => logger.warn('Logout request failed', { event: 'auth.logout.failure' }));
     tokenStore.clear();
     setIsLoggedIn(false);
     logger.info('User logged out');

@@ -24,22 +24,16 @@ export function MyBookingsPage() {
 
         {loading ? (
           <div className="booking-list">
-            {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
+            {Array.from({ length: 3 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
           </div>
         ) : bookings.length === 0 ? (
-          <EmptyState
-            title={t('bookings.emptyTitle')}
-            subtitle={t('bookings.emptySubtitle')}
-          />
+          <EmptyState title={t('bookings.emptyTitle')} subtitle={t('bookings.emptySubtitle')} />
         ) : (
           <div className="booking-list">
             {bookings.map((booking) => (
-              <BookingCard
-                key={booking.bookingId}
-                booking={booking}
-                cancellingId={cancellingId}
-                onCancel={cancel}
-              />
+              <BookingCard key={booking.bookingId} booking={booking} cancellingId={cancellingId} onCancel={cancel} />
             ))}
           </div>
         )}

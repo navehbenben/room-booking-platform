@@ -49,12 +49,12 @@ export class BookingsController {
   ) {
     const user = req.user as JwtUser;
     return this.bookingsService.createBooking({
-      userId:         user.userId,
-      holdId:         dto.holdId,
-      roomId:         dto.roomId,
-      start:          dto.start ? new Date(dto.start) : undefined,
-      end:            dto.end   ? new Date(dto.end)   : undefined,
-      notes:          dto.notes,
+      userId: user.userId,
+      holdId: dto.holdId,
+      roomId: dto.roomId,
+      start: dto.start ? new Date(dto.start) : undefined,
+      end: dto.end ? new Date(dto.end) : undefined,
+      notes: dto.notes,
       idempotencyKey,
     });
   }
@@ -76,12 +76,12 @@ export class BookingsController {
     }
     return {
       bookingId: b.id,
-      roomId:    b.roomId,
-      userId:    b.userId,
-      start:     b.startTime,
-      end:       b.endTime,
-      status:    b.status,
-      notes:     b.notes ?? undefined,
+      roomId: b.roomId,
+      userId: b.userId,
+      start: b.startTime,
+      end: b.endTime,
+      status: b.status,
+      notes: b.notes ?? undefined,
       createdAt: b.createdAt,
     };
   }

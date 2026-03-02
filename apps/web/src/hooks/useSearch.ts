@@ -7,11 +7,11 @@ import { SEARCH_LIMIT } from '../constants/search';
 
 export function useSearch(initialOverrides: Partial<SearchParams> = {}) {
   const [params, setParams] = useState<SearchParams>({
-    start:        initialOverrides.start        ?? dateToStartISO(defaultStart()),
-    end:          initialOverrides.end          ?? dateToEndISO(defaultEnd()),
-    capacity:     initialOverrides.capacity     ?? 2,
+    start: initialOverrides.start ?? dateToStartISO(defaultStart()),
+    end: initialOverrides.end ?? dateToEndISO(defaultEnd()),
+    capacity: initialOverrides.capacity ?? 2,
     featuresText: initialOverrides.featuresText ?? '',
-    page:         1,
+    page: 1,
   });
   const [results, setResults] = useState<Room[]>([]);
   const [total, setTotal] = useState(0);
@@ -39,8 +39,7 @@ export function useSearch(initialOverrides: Partial<SearchParams> = {}) {
       setError('');
       const currentParams = paramsRef.current;
 
-      if (currentParams.start && currentParams.end &&
-          new Date(currentParams.start) >= new Date(currentParams.end)) {
+      if (currentParams.start && currentParams.end && new Date(currentParams.start) >= new Date(currentParams.end)) {
         setError('Check-out must be after check-in.');
         return;
       }
@@ -53,11 +52,11 @@ export function useSearch(initialOverrides: Partial<SearchParams> = {}) {
           .map((s) => s.trim())
           .filter(Boolean);
         const res = await api.search({
-          start:    new Date(currentParams.start).toISOString(),
-          end:      new Date(currentParams.end).toISOString(),
+          start: new Date(currentParams.start).toISOString(),
+          end: new Date(currentParams.end).toISOString(),
           capacity: currentParams.capacity,
           features,
-          page:     p,
+          page: p,
         });
         setResults((prev) => (p === 1 ? res.results : [...prev, ...res.results]));
         setTotal(res.total);

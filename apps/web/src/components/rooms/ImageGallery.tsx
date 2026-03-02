@@ -44,11 +44,7 @@ export const ImageGallery = React.memo(function ImageGallery({ images }: ImageGa
       )}
       {lightboxOpen && (
         <div className="lightbox" onClick={() => setLightboxOpen(false)}>
-          <img
-            src={images[validIdx]}
-            alt={t('imageGallery.altFullscreen')}
-            onClick={(e) => e.stopPropagation()}
-          />
+          <img src={images[validIdx]} alt={t('imageGallery.altFullscreen')} onClick={(e) => e.stopPropagation()} />
         </div>
       )}
     </div>

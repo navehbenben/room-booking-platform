@@ -8,9 +8,7 @@ interface RecentlyViewedSectionProps {
   onView: (roomId: string) => void;
 }
 
-export const RecentlyViewedSection = React.memo(function RecentlyViewedSection({
-  onView,
-}: RecentlyViewedSectionProps) {
+export const RecentlyViewedSection = React.memo(function RecentlyViewedSection({ onView }: RecentlyViewedSectionProps) {
   const { t } = useTranslation();
   const { rooms, clearAll } = useRecentlyViewed();
 
@@ -38,14 +36,14 @@ export const RecentlyViewedSection = React.memo(function RecentlyViewedSection({
                 src={roomImageUrl(room.name)}
                 alt={room.name}
                 loading="lazy"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                }}
               />
             </div>
             <div className="rv-card__body">
               <div className="rv-card__name">{room.name}</div>
-              <div className="rv-card__capacity">
-                {t('recentlyViewed.capacity', { count: room.capacity })}
-              </div>
+              <div className="rv-card__capacity">{t('recentlyViewed.capacity', { count: room.capacity })}</div>
               {room.features.length > 0 && (
                 <div className="rv-card__features">
                   {room.features.slice(0, 2).map((f) => (

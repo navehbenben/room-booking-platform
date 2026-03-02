@@ -61,9 +61,7 @@ describe('LoginForm', () => {
       target: { value: 'wrong' },
     });
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
-    await waitFor(() =>
-      expect(screen.getByText('Incorrect email or password. Please try again.')).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText('Incorrect email or password. Please try again.')).toBeInTheDocument());
   });
 
   it('pressing Enter submits when both fields filled', async () => {

@@ -130,7 +130,8 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
             <>
               {confirmDelete && (
                 <p className="gdpr-confirm-msg">
-                  {t('gdpr.erasure.confirmMsg')} <strong>{t('gdpr.erasure.confirmMsgStrong')}</strong> {t('gdpr.erasure.confirmMsgSuffix')}
+                  {t('gdpr.erasure.confirmMsg')} <strong>{t('gdpr.erasure.confirmMsgStrong')}</strong>{' '}
+                  {t('gdpr.erasure.confirmMsgSuffix')}
                 </p>
               )}
               <div className="gdpr-delete-row">
@@ -165,7 +166,8 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
       <section className="gdpr-section">
         <h3 className="gdpr-section__title">{t('gdpr.contact.title')}</h3>
         <p className="gdpr-section__desc">
-          {t('gdpr.contact.desc')} <a href={`mailto:${t('gdpr.contact.email')}`}>{t('gdpr.contact.email')}</a>{t('gdpr.contact.descSuffix')}
+          {t('gdpr.contact.desc')} <a href={`mailto:${t('gdpr.contact.email')}`}>{t('gdpr.contact.email')}</a>
+          {t('gdpr.contact.descSuffix')}
         </p>
       </section>
     </div>

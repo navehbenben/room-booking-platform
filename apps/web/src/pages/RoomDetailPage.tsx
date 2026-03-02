@@ -17,7 +17,7 @@ interface RoomDetailPageProps {
 
 function availabilityBadge(status: RoomDetail['availabilityStatus'], t: (key: string) => string) {
   if (status === 'AVAILABLE') return <Badge variant="success">{t('roomDetail.availabilityAvailable')}</Badge>;
-  if (status === 'HELD')      return <Badge variant="warning">{t('roomDetail.availabilityHeld')}</Badge>;
+  if (status === 'HELD') return <Badge variant="warning">{t('roomDetail.availabilityHeld')}</Badge>;
   return <Badge variant="cancelled">{t('roomDetail.availabilityBooked')}</Badge>;
 }
 
@@ -82,9 +82,7 @@ export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
           <div className="room-detail__header">
             <h1 className="room-detail__name">{room.name}</h1>
             <div className="room-detail__badges">
-              <Badge variant="neutral">
-                {t('roomDetail.capacity', { count: room.capacity })}
-              </Badge>
+              <Badge variant="neutral">{t('roomDetail.capacity', { count: room.capacity })}</Badge>
               {availabilityBadge(room.availabilityStatus, t)}
             </div>
           </div>
@@ -96,18 +94,16 @@ export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
               {t('roomDetail.timesInTz')} <strong>{tz}</strong> ({tzLabel}).
               {start && end && (
                 <>
-                  {' '}{t('roomDetail.yourBooking')}{' '}
-                  <strong>{formatInTimezone(start, tz, { hour: '2-digit', minute: '2-digit' })}</strong>
-                  {' '}→{' '}
+                  {' '}
+                  {t('roomDetail.yourBooking')}{' '}
+                  <strong>{formatInTimezone(start, tz, { hour: '2-digit', minute: '2-digit' })}</strong> →{' '}
                   <strong>{formatInTimezone(end, tz, { hour: '2-digit', minute: '2-digit' })}</strong>
                 </>
               )}
             </span>
           </div>
 
-          {room.description && (
-            <p className="room-detail__description">{room.description}</p>
-          )}
+          {room.description && <p className="room-detail__description">{room.description}</p>}
 
           {room.features.length > 0 && (
             <div className="room-detail__amenities">
@@ -131,14 +127,10 @@ export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
             {holdError && <div className="alert alert--error">{holdError}</div>}
 
             {!start || !end ? (
-              <p className="room-detail__no-dates">
-                {t('roomDetail.noDatesMsg')}
-              </p>
+              <p className="room-detail__no-dates">{t('roomDetail.noDatesMsg')}</p>
             ) : !isLoggedIn ? (
               <div className="room-detail__login-cta">
-                <p className="room-detail__login-cta-text">
-                  {t('roomDetail.loginCtaText')}
-                </p>
+                <p className="room-detail__login-cta-text">{t('roomDetail.loginCtaText')}</p>
                 <div className="room-detail__login-cta-btns">
                   <Button variant="primary" onClick={handleSignInToBook}>
                     {t('roomDetail.signInToBook')}
@@ -155,7 +147,9 @@ export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
                 loading={holdLoading}
                 disabled={!canReserve || holdLoading}
               >
-                {room.availabilityStatus !== 'AVAILABLE' ? t('roomDetail.roomNotAvailable') : t('roomDetail.reserveNow')}
+                {room.availabilityStatus !== 'AVAILABLE'
+                  ? t('roomDetail.roomNotAvailable')
+                  : t('roomDetail.reserveNow')}
               </Button>
             )}
           </div>

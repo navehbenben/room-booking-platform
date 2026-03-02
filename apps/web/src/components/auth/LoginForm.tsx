@@ -64,7 +64,10 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             label={t('auth.login.emailLabel')}
             type="email"
             value={email}
-            onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError('');
+            }}
             onKeyDown={handleKeyDown}
             placeholder={t('auth.login.emailPlaceholder')}
             autoComplete="email"
@@ -73,7 +76,9 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
           {emailError && !isGoogleOnly && (
             <p className="auth-form__field-hint">
               {t('auth.login.newHere')}{' '}
-              <Link to="/register" className="auth-form__inline-link">{t('auth.login.createAccount')}</Link>
+              <Link to="/register" className="auth-form__inline-link">
+                {t('auth.login.createAccount')}
+              </Link>
             </p>
           )}
         </div>
@@ -83,7 +88,10 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             label={t('auth.login.passwordLabel')}
             type="password"
             value={password}
-            onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordError('');
+            }}
             onKeyDown={handleKeyDown}
             placeholder={t('auth.login.passwordPlaceholder')}
             autoComplete="current-password"

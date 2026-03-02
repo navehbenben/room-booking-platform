@@ -1,11 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { ImageGallery } from '../ImageGallery';
 
-const images = [
-  'https://example.com/img1.jpg',
-  'https://example.com/img2.jpg',
-  'https://example.com/img3.jpg',
-];
+const images = ['https://example.com/img1.jpg', 'https://example.com/img2.jpg', 'https://example.com/img3.jpg'];
 
 describe('ImageGallery', () => {
   it('renders nothing when images is empty', () => {

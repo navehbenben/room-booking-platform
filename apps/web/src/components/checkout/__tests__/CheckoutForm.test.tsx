@@ -13,9 +13,7 @@ describe('CheckoutForm', () => {
   it('shows "Name is required" when submitted without name', async () => {
     render(<CheckoutForm onConfirm={vi.fn()} loading={false} />);
     fireEvent.click(screen.getByRole('button', { name: /confirm booking/i }));
-    await waitFor(() =>
-      expect(screen.getByText('Name is required')).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText('Name is required')).toBeInTheDocument());
   });
 
   it('shows "Email is required" when submitted without email', async () => {
@@ -24,9 +22,7 @@ describe('CheckoutForm', () => {
       target: { value: 'Alice' },
     });
     fireEvent.click(screen.getByRole('button', { name: /confirm booking/i }));
-    await waitFor(() =>
-      expect(screen.getByText('Email is required')).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText('Email is required')).toBeInTheDocument());
   });
 
   it('shows "Invalid email format" for bad email', async () => {
@@ -40,9 +36,7 @@ describe('CheckoutForm', () => {
     // Use fireEvent.submit to bypass jsdom's native type="email" validation
     // so our React validate() function runs and sets the error state.
     fireEvent.submit(container.querySelector('form')!);
-    await waitFor(() =>
-      expect(screen.getByText('Invalid email format')).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText('Invalid email format')).toBeInTheDocument());
   });
 
   it('calls onConfirm with notes when form is valid', async () => {
@@ -58,9 +52,7 @@ describe('CheckoutForm', () => {
       target: { value: 'Window seat please' },
     });
     fireEvent.click(screen.getByRole('button', { name: /confirm booking/i }));
-    await waitFor(() =>
-      expect(onConfirm).toHaveBeenCalledWith('Window seat please'),
-    );
+    await waitFor(() => expect(onConfirm).toHaveBeenCalledWith('Window seat please'));
   });
 
   it('calls onConfirm with undefined when notes is empty', async () => {
@@ -73,9 +65,7 @@ describe('CheckoutForm', () => {
       target: { value: 'alice@example.com' },
     });
     fireEvent.click(screen.getByRole('button', { name: /confirm booking/i }));
-    await waitFor(() =>
-      expect(onConfirm).toHaveBeenCalledWith(undefined),
-    );
+    await waitFor(() => expect(onConfirm).toHaveBeenCalledWith(undefined));
   });
 
   it('disables button and shows loading when loading=true', () => {

@@ -1,9 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/Button';
 import type { SearchParams } from '../../types';
 import { AMENITY_OPTIONS } from '../../constants/amenities';
-import { isStartInPast, isValidDateRange, dateToStartISO, dateToEndISO, localToday, isoToLocalDate } from '../../utils/date';
+import {
+  isStartInPast,
+  isValidDateRange,
+  dateToStartISO,
+  dateToEndISO,
+  localToday,
+  isoToLocalDate,
+} from '../../utils/date';
 
 interface SearchFiltersProps {
   params: SearchParams;
@@ -22,21 +29,26 @@ export const SearchFilters = React.memo(function SearchFilters({
 
   // params.start / params.end are ISO UTC strings — convert back to local date for display
   const startDate = isoToLocalDate(params.start);
-  const endDate   = isoToLocalDate(params.end);
+  const endDate = isoToLocalDate(params.end);
 
-  const isPastStart       = isStartInPast(startDate);
-  const isDateRangeValid  = isValidDateRange(startDate, endDate);
-  const isValid           = !isPastStart && isDateRangeValid;
+  const isPastStart = isStartInPast(startDate);
+  const isDateRangeValid = isValidDateRange(startDate, endDate);
+  const isValid = !isPastStart && isDateRangeValid;
 
-  const activeFeatures = params.featuresText
-    ? params.featuresText.split(',').map((s) => s.trim()).filter(Boolean)
-    : [];
+  const activeFeatures = useMemo(
+    () =>
+      params.featuresText
+        ? params.featuresText
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [],
+    [params.featuresText],
+  );
 
   const toggleFeature = useCallback(
     (key: string) => {
-      const next = activeFeatures.includes(key)
-        ? activeFeatures.filter((f) => f !== key)
-        : [...activeFeatures, key];
+      const next = activeFeatures.includes(key) ? activeFeatures.filter((f) => f !== key) : [...activeFeatures, key];
       onParamChange('featuresText', next.join(','));
     },
     [activeFeatures, onParamChange],
@@ -55,9 +67,7 @@ export const SearchFilters = React.memo(function SearchFilters({
             min={localToday()}
             onChange={(e) => onParamChange('start', dateToStartISO(e.target.value))}
           />
-          {isPastStart && (
-            <span className="input-error">{t('filters.checkInError')}</span>
-          )}
+          {isPastStart && <span className="input-error">{t('filters.checkInError')}</span>}
         </div>
         <div>
           <label className="search-filters__label">{t('filters.checkOut')}</label>
@@ -68,9 +78,7 @@ export const SearchFilters = React.memo(function SearchFilters({
             min={startDate || localToday()}
             onChange={(e) => onParamChange('end', dateToEndISO(e.target.value))}
           />
-          {!isDateRangeValid && (
-            <span className="input-error">{t('filters.checkOutError')}</span>
-          )}
+          {!isDateRangeValid && <span className="input-error">{t('filters.checkOutError')}</span>}
         </div>
         <div>
           <label className="search-filters__label">{t('filters.minCapacity')}</label>
@@ -100,11 +108,7 @@ export const SearchFilters = React.memo(function SearchFilters({
             ))}
           </div>
           {activeFeatures.length > 0 && (
-            <button
-              type="button"
-              className="amenity-pills__clear"
-              onClick={() => onParamChange('featuresText', '')}
-            >
+            <button type="button" className="amenity-pills__clear" onClick={() => onParamChange('featuresText', '')}>
               {t('filters.clearAmenities')}
             </button>
           )}

@@ -11,7 +11,8 @@ const makeRoom = (id: string) => ({
   roomId: id,
   name: `Room ${id}`,
   capacity: 2,
-  features: [],
+  features: [] as string[],
+  timezone: 'UTC',
   status: 'AVAILABLE',
 });
 
@@ -78,10 +79,16 @@ describe('useSearch', () => {
 
   it('loading is true during fetch, false after', async () => {
     let resolve!: (v: ReturnType<typeof makeResponse>) => void;
-    vi.mocked(api.search).mockReturnValue(new Promise((r) => { resolve = r; }));
+    vi.mocked(api.search).mockReturnValue(
+      new Promise((r) => {
+        resolve = r;
+      }),
+    );
     const { result } = renderHook(() => useSearch());
 
-    act(() => { result.current.search(1); });
+    act(() => {
+      result.current.search(1);
+    });
     expect(result.current.loading).toBe(true);
 
     act(() => resolve(makeResponse([], 0)));

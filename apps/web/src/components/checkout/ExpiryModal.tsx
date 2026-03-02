@@ -21,13 +21,13 @@ export const ExpiryModal = React.memo(function ExpiryModal({ roomId, start, end 
     // Overlay is intentionally non-dismissable — user must act on the CTA
     <div className="expiry-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="expiry-modal-title">
       <div className="expiry-modal">
-        <div className="expiry-modal__icon" aria-hidden="true">⏰</div>
+        <div className="expiry-modal__icon" aria-hidden="true">
+          ⏰
+        </div>
         <h2 className="expiry-modal__title" id="expiry-modal-title">
           {t('expiryModal.title')}
         </h2>
-        <p className="expiry-modal__message">
-          {t('expiryModal.message')}
-        </p>
+        <p className="expiry-modal__message">{t('expiryModal.message')}</p>
         <Button variant="primary" onClick={handleRecheck}>
           {t('expiryModal.recheckBtn')}
         </Button>

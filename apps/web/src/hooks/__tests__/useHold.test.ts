@@ -24,9 +24,7 @@ describe('useHold', () => {
   it('calls api.createHold with the provided params', async () => {
     vi.mocked(api.createHold).mockResolvedValue(HOLD);
     const { result } = renderHook(() => useHold());
-    await act(() =>
-      result.current.createHold('room-1', '2024-01-01T10:00:00Z', '2024-01-01T11:00:00Z'),
-    );
+    await act(() => result.current.createHold('room-1', '2024-01-01T10:00:00Z', '2024-01-01T11:00:00Z'));
     expect(api.createHold).toHaveBeenCalledWith({
       roomId: 'room-1',
       start: '2024-01-01T10:00:00Z',
@@ -37,9 +35,7 @@ describe('useHold', () => {
   it('navigates to /checkout/:holdId on success', async () => {
     vi.mocked(api.createHold).mockResolvedValue(HOLD);
     const { result } = renderHook(() => useHold());
-    await act(() =>
-      result.current.createHold('room-1', '2024-01-01T10:00:00Z', '2024-01-01T11:00:00Z'),
-    );
+    await act(() => result.current.createHold('room-1', '2024-01-01T10:00:00Z', '2024-01-01T11:00:00Z'));
     expect(mockNavigate).toHaveBeenCalledWith('/checkout/hold-xyz');
   });
 
@@ -48,18 +44,22 @@ describe('useHold', () => {
       error: { message: 'Room already held' },
     });
     const { result } = renderHook(() => useHold());
-    await act(() =>
-      result.current.createHold('room-1', '2024-01-01T10:00:00Z', '2024-01-01T11:00:00Z'),
-    );
+    await act(() => result.current.createHold('room-1', '2024-01-01T10:00:00Z', '2024-01-01T11:00:00Z'));
     expect(result.current.error).toBe('Room already held');
   });
 
   it('loading is true during createHold, false after', async () => {
     let resolve!: (v: typeof HOLD) => void;
-    vi.mocked(api.createHold).mockReturnValue(new Promise((r) => { resolve = r; }));
+    vi.mocked(api.createHold).mockReturnValue(
+      new Promise((r) => {
+        resolve = r;
+      }),
+    );
     const { result } = renderHook(() => useHold());
 
-    act(() => { result.current.createHold('r1', 'start', 'end'); });
+    act(() => {
+      result.current.createHold('r1', 'start', 'end');
+    });
     expect(result.current.loading).toBe(true);
 
     await act(async () => resolve(HOLD));

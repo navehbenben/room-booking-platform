@@ -157,7 +157,7 @@ export class HoldsService {
     try {
       await this.cache.del(`hold:${holdId}`);
       await this.cache.del(`hold:slot:${roomId}:${startISO}:${endISO}`);
-    } catch (err: any) {
+    } catch {
       // Redis unavailable: hold will expire naturally after TTL — log as warning, not error
       this.logger.warn({
         event: 'hold.consume_failed',

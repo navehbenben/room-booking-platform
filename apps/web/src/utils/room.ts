@@ -11,7 +11,7 @@ export function roomImageUrl(name: string): string {
 export function sortRooms(rooms: Room[], sort: SortOption): Room[] {
   if (sort === 'recommended') return rooms;
   return [...rooms].sort((a, b) => {
-    if (sort === 'capacity_asc')  return a.capacity - b.capacity;
+    if (sort === 'capacity_asc') return a.capacity - b.capacity;
     if (sort === 'capacity_desc') return b.capacity - a.capacity;
     return 0;
   });

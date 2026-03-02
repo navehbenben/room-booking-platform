@@ -10,11 +10,7 @@ interface BookingSummaryProps {
   end: string;
 }
 
-export const BookingSummary = React.memo(function BookingSummary({
-  room,
-  start,
-  end,
-}: BookingSummaryProps) {
+export const BookingSummary = React.memo(function BookingSummary({ room, start, end }: BookingSummaryProps) {
   const { t } = useTranslation();
   const tz = room.timezone ?? 'UTC';
   const tzLabel = timezoneOffsetLabel(tz);
@@ -25,9 +21,7 @@ export const BookingSummary = React.memo(function BookingSummary({
     <div className="booking-summary">
       <h3 className="booking-summary__name">{room.name}</h3>
       <div className="booking-summary__capacity">
-        <Badge variant="neutral">
-          {t('bookingSummary.capacity', { count: room.capacity })}
-        </Badge>
+        <Badge variant="neutral">{t('bookingSummary.capacity', { count: room.capacity })}</Badge>
       </div>
       <div className="booking-summary__tz-note" role="note">
         🌍 {t('bookingSummary.timesIn')} <strong>{tz}</strong> ({tzLabel})

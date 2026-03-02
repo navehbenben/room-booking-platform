@@ -17,9 +17,7 @@ function avatarColor(email: string): string {
 function avatarInitials(name: string | null, email: string): string {
   if (name && name.trim()) {
     const parts = name.trim().split(/\s+/);
-    return parts.length >= 2
-      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-      : parts[0][0].toUpperCase();
+    return parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0][0].toUpperCase();
   }
   return email[0].toUpperCase();
 }
@@ -159,23 +157,39 @@ export function UserProfilePage() {
                   onChange={(e) => setNameInput(e.target.value)}
                   autoFocus
                   disabled={nameSaving}
-                  onKeyDown={(e) => { if (e.key === 'Enter') handleSaveName(); if (e.key === 'Escape') handleCancelName(); }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleSaveName();
+                    if (e.key === 'Escape') handleCancelName();
+                  }}
                 />
                 <div className="profile-edit-inline__actions">
-                  <button className="btn btn--primary" onClick={handleSaveName} disabled={nameSaving || !nameInput.trim()}>
+                  <button
+                    className="btn btn--primary"
+                    onClick={handleSaveName}
+                    disabled={nameSaving || !nameInput.trim()}
+                  >
                     {nameSaving ? t('common.saving') : t('common.save')}
                   </button>
                   <button className="btn btn--ghost" onClick={handleCancelName} disabled={nameSaving}>
                     {t('common.cancel')}
                   </button>
                 </div>
-                {nameError && <p className="gdpr-error" style={{ marginTop: 6 }}>{nameError}</p>}
+                {nameError && (
+                  <p className="gdpr-error" style={{ marginTop: 6 }}>
+                    {nameError}
+                  </p>
+                )}
               </div>
             ) : (
               <div className="profile-field__value">
                 <span>{profile.name ?? <em style={{ color: 'var(--c-muted)' }}>{t('profile.noNameSet')}</em>}</span>
                 {nameSuccess && <span className="profile-success-badge">{t('profile.savedBadge')}</span>}
-                <button className="profile-edit-btn" onClick={handleEditName} title={t('profile.editNameAriaLabel')} aria-label={t('profile.editNameAriaLabel')}>
+                <button
+                  className="profile-edit-btn"
+                  onClick={handleEditName}
+                  title={t('profile.editNameAriaLabel')}
+                  aria-label={t('profile.editNameAriaLabel')}
+                >
                   ✎
                 </button>
               </div>
@@ -187,7 +201,9 @@ export function UserProfilePage() {
             <span className="profile-field__label">{t('profile.email')}</span>
             <div className="profile-field__value profile-field__locked">
               <span>{profile.email}</span>
-              <span className="profile-field__lock-icon" title={t('profile.emailLocked')}>🔒</span>
+              <span className="profile-field__lock-icon" title={t('profile.emailLocked')}>
+                🔒
+              </span>
             </div>
           </div>
 
@@ -205,7 +221,9 @@ export function UserProfilePage() {
           {profile.hasPassword ? (
             <form onSubmit={handleChangePassword}>
               <div className="profile-field" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
-                <label className="profile-field__label" htmlFor="current-pwd">{t('profile.currentPassword')}</label>
+                <label className="profile-field__label" htmlFor="current-pwd">
+                  {t('profile.currentPassword')}
+                </label>
                 <input
                   id="current-pwd"
                   type="password"
@@ -216,8 +234,13 @@ export function UserProfilePage() {
                   autoComplete="current-password"
                 />
               </div>
-              <div className="profile-field" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 8, marginTop: 12 }}>
-                <label className="profile-field__label" htmlFor="new-pwd">{t('profile.newPassword')}</label>
+              <div
+                className="profile-field"
+                style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 8, marginTop: 12 }}
+              >
+                <label className="profile-field__label" htmlFor="new-pwd">
+                  {t('profile.newPassword')}
+                </label>
                 <input
                   id="new-pwd"
                   type="password"
@@ -229,8 +252,16 @@ export function UserProfilePage() {
                   minLength={8}
                 />
               </div>
-              {pwdError && <p className="gdpr-error" style={{ marginTop: 8 }}>{pwdError}</p>}
-              {pwdSuccess && <p style={{ color: 'var(--c-success)', marginTop: 8, fontSize: 14 }}>{t('profile.passwordChangedSuccess')}</p>}
+              {pwdError && (
+                <p className="gdpr-error" style={{ marginTop: 8 }}>
+                  {pwdError}
+                </p>
+              )}
+              {pwdSuccess && (
+                <p style={{ color: 'var(--c-success)', marginTop: 8, fontSize: 14 }}>
+                  {t('profile.passwordChangedSuccess')}
+                </p>
+              )}
               <button
                 type="submit"
                 className="btn btn--primary"
@@ -241,21 +272,25 @@ export function UserProfilePage() {
               </button>
             </form>
           ) : (
-            <p style={{ color: 'var(--c-muted)', fontSize: 14, marginBottom: 16 }}>
-              {t('profile.googleOnly')}
-            </p>
+            <p style={{ color: 'var(--c-muted)', fontSize: 14, marginBottom: 16 }}>{t('profile.googleOnly')}</p>
           )}
 
           {/* Connected accounts */}
           <div style={{ marginTop: 20, borderTop: '1px solid var(--c-border)', paddingTop: 16 }}>
-            <p className="profile-field__label" style={{ marginBottom: 8 }}>{t('profile.connectedAccounts')}</p>
+            <p className="profile-field__label" style={{ marginBottom: 8 }}>
+              {t('profile.connectedAccounts')}
+            </p>
             <div className="connected-account">
               <span className="connected-account__icon">G</span>
               <span>Google</span>
               {profile.hasGoogleAccount ? (
-                <span className="connected-account__status connected-account__status--on">{t('profile.googleConnected')}</span>
+                <span className="connected-account__status connected-account__status--on">
+                  {t('profile.googleConnected')}
+                </span>
               ) : (
-                <span className="connected-account__status connected-account__status--off">{t('profile.googleNotConnected')}</span>
+                <span className="connected-account__status connected-account__status--off">
+                  {t('profile.googleNotConnected')}
+                </span>
               )}
             </div>
           </div>

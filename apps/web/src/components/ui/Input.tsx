@@ -8,9 +8,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, hint, className = '', ...props }, ref) => {
-    const groupClasses = ['input-group', error && 'input-group--error', className]
-      .filter(Boolean)
-      .join(' ');
+    const groupClasses = ['input-group', error && 'input-group--error', className].filter(Boolean).join(' ');
     return (
       <div className={groupClasses}>
         <label className="input-label">

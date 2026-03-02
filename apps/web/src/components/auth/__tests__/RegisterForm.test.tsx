@@ -53,9 +53,7 @@ describe('RegisterForm', () => {
       target: { value: 'password1' },
     });
     fireEvent.click(screen.getByRole('button', { name: /create account/i }));
-    await waitFor(() =>
-      expect(onSuccess).toHaveBeenCalledWith('Alice', 'alice@example.com', 'password1'),
-    );
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledWith('Alice', 'alice@example.com', 'password1'));
   });
 
   it('shows error message when onSuccess rejects', async () => {
@@ -70,8 +68,6 @@ describe('RegisterForm', () => {
       target: { value: 'password1' },
     });
     fireEvent.click(screen.getByRole('button', { name: /create account/i }));
-    await waitFor(() =>
-      expect(screen.getByText('Email already in use')).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText('Email already in use')).toBeInTheDocument());
   });
 });

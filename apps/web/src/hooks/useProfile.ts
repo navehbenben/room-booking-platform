@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { api } from '../api/client';
 import { UserProfile } from '../types';
-import { friendlyError } from '../utils/errorMessages';
 
 export function useProfile() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -25,13 +24,15 @@ export function useProfile() {
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Stable: no dependency on profile state — uses ref for rollback
   const saveName = useCallback(async (name: string) => {
     const previous = profileRef.current;
-    setProfile((p) => p ? { ...p, name } : p);
+    setProfile((p) => (p ? { ...p, name } : p));
     try {
       const updated = await api.updateProfile({ name });
       setProfile(updated as UserProfile);

@@ -5,8 +5,8 @@ import { UserEntity } from '../../users/entities/user.entity';
 export type BookingStatus = 'CONFIRMED' | 'CANCELLED';
 
 @Entity('bookings')
-@Index(['roomId', 'startTime', 'endTime'])  // fast overlap candidate queries
-@Index(['userId', 'createdAt'])              // fast "my bookings" queries
+@Index(['roomId', 'startTime', 'endTime']) // fast overlap candidate queries
+@Index(['userId', 'createdAt']) // fast "my bookings" queries
 export class BookingEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;

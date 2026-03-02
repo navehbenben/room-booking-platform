@@ -13,8 +13,7 @@ export const CountdownTimer = React.memo(function CountdownTimer({ expiresAt }: 
 
   useEffect(() => {
     if (remaining === 0) return;
-    let id: ReturnType<typeof setInterval>;
-    id = setInterval(() => {
+    const id = setInterval(() => {
       const next = Math.max(0, Math.floor((Date.parse(expiresAt) - Date.now()) / 1000));
       setRemaining(next);
       if (next === 0) clearInterval(id);

@@ -26,11 +26,7 @@ interface BookingCardProps {
   onCancel: (id: string) => void;
 }
 
-export const BookingCard = React.memo(function BookingCard({
-  booking,
-  cancellingId,
-  onCancel,
-}: BookingCardProps) {
+export const BookingCard = React.memo(function BookingCard({ booking, cancellingId, onCancel }: BookingCardProps) {
   const { t } = useTranslation();
   const isCancelling = cancellingId === booking.bookingId;
 

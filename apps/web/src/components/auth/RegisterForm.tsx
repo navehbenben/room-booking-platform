@@ -93,7 +93,10 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
             label={t('auth.register.emailLabel')}
             type="email"
             value={email}
-            onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError('');
+            }}
             onKeyDown={handleKeyDown}
             placeholder={t('auth.register.emailPlaceholder')}
             autoComplete="email"
@@ -102,7 +105,9 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           {emailError && (
             <p className="auth-form__field-hint">
               {t('auth.register.alreadyHaveAccount')}{' '}
-              <Link to="/login" className="auth-form__inline-link">{t('auth.register.signIn')}</Link>
+              <Link to="/login" className="auth-form__inline-link">
+                {t('auth.register.signIn')}
+              </Link>
             </p>
           )}
         </div>
@@ -112,7 +117,10 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
             label={t('auth.register.passwordLabel')}
             type="password"
             value={password}
-            onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordError('');
+            }}
             onKeyDown={handleKeyDown}
             placeholder={t('auth.register.passwordPlaceholder')}
             hint={t('auth.register.passwordHint')}

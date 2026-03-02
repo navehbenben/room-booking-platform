@@ -7,6 +7,7 @@ const makeRoom = (overrides: Partial<Room> = {}): Room => ({
   name: 'Conference Room A',
   capacity: 4,
   features: ['projector', 'whiteboard'],
+  timezone: 'UTC',
   status: 'AVAILABLE',
   ...overrides,
 });
@@ -28,17 +29,13 @@ describe('RoomCard', () => {
   });
 
   it('renders feature labels (human-readable)', () => {
-    render(
-      <RoomCard room={makeRoom({ features: ['projector', 'whiteboard'] })} onView={vi.fn()} disabled={false} />,
-    );
+    render(<RoomCard room={makeRoom({ features: ['projector', 'whiteboard'] })} onView={vi.fn()} disabled={false} />);
     expect(screen.getByText('Projector')).toBeInTheDocument();
     expect(screen.getByText('Whiteboard')).toBeInTheDocument();
   });
 
   it('renders no features section when features is empty', () => {
-    const { container } = render(
-      <RoomCard room={makeRoom({ features: [] })} onView={vi.fn()} disabled={false} />,
-    );
+    const { container } = render(<RoomCard room={makeRoom({ features: [] })} onView={vi.fn()} disabled={false} />);
     expect(container.querySelector('.room-card__features')).not.toBeInTheDocument();
   });
 

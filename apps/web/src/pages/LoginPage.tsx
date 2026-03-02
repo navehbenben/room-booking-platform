@@ -20,15 +20,16 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   return (
     <div className="auth-page">
       <div className="auth-form">
-        <div className="auth-form__logo">Room<span>Book</span></div>
+        <div className="auth-form__logo">
+          Room<span>Book</span>
+        </div>
         <GoogleAuthButton />
         <div className="auth-divider">
           <span>or sign in with email</span>
         </div>
         <LoginForm onSuccess={handleSuccess} />
         <p className="auth-form__footer">
-          Don't have an account?{' '}
-          <Link to="/register">Create one</Link>
+          Don't have an account? <Link to="/register">Create one</Link>
         </p>
       </div>
     </div>

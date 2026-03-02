@@ -9,15 +9,23 @@ export function Footer() {
     <footer className="footer">
       <div className="footer__inner">
         <div>
-          <div className="footer__brand-name">Room<span>Book</span></div>
+          <div className="footer__brand-name">
+            Room<span>Book</span>
+          </div>
           <p className="footer__brand-desc">{t('footer.brandDesc')}</p>
         </div>
         <div>
           <div className="footer__col-title">{t('footer.platform')}</div>
           <div className="footer__links">
-            <Link to="/search" className="footer__link">{t('footer.searchRooms')}</Link>
-            <Link to="/bookings" className="footer__link">{t('footer.myBookings')}</Link>
-            <Link to="/privacy" className="footer__link">{t('footer.privacyGdpr')}</Link>
+            <Link to="/search" className="footer__link">
+              {t('footer.searchRooms')}
+            </Link>
+            <Link to="/bookings" className="footer__link">
+              {t('footer.myBookings')}
+            </Link>
+            <Link to="/privacy" className="footer__link">
+              {t('footer.privacyGdpr')}
+            </Link>
           </div>
         </div>
         <div>

@@ -52,13 +52,7 @@ describe('BookingCard', () => {
   });
 
   it('Cancel button is in loading state when cancellingId matches bookingId', () => {
-    render(
-      <BookingCard
-        booking={makeBooking('CONFIRMED')}
-        cancellingId="booking-1"
-        onCancel={vi.fn()}
-      />,
-    );
+    render(<BookingCard booking={makeBooking('CONFIRMED')} cancellingId="booking-1" onCancel={vi.fn()} />);
     expect(screen.getByRole('button')).toBeDisabled();
   });
 

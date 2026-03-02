@@ -15,10 +15,18 @@ const makeRoom = (id: string): RecentlyViewedRoom => ({
 let _store: Record<string, string> = {};
 const localStorageMock = {
   getItem: (key: string) => _store[key] ?? null,
-  setItem: (key: string, value: string) => { _store[key] = value; },
-  removeItem: (key: string) => { delete _store[key]; },
-  clear: () => { _store = {}; },
-  get length() { return Object.keys(_store).length; },
+  setItem: (key: string, value: string) => {
+    _store[key] = value;
+  },
+  removeItem: (key: string) => {
+    delete _store[key];
+  },
+  clear: () => {
+    _store = {};
+  },
+  get length() {
+    return Object.keys(_store).length;
+  },
   key: (i: number) => Object.keys(_store)[i] ?? null,
 };
 

@@ -30,9 +30,7 @@ export function useBookings() {
     setCancellingId(bookingId);
     try {
       await api.cancelBooking(bookingId);
-      setBookings((prev) =>
-        prev.map((b) => (b.bookingId === bookingId ? { ...b, status: 'CANCELLED' } : b)),
-      );
+      setBookings((prev) => prev.map((b) => (b.bookingId === bookingId ? { ...b, status: 'CANCELLED' } : b)));
     } catch (e) {
       setError(friendlyError(e));
     } finally {

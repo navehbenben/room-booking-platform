@@ -51,9 +51,7 @@ import { MetricsModule } from './common/metrics/metrics.module';
           );
           return { store };
         } catch (err: any) {
-          logger.warn(
-            `Redis unavailable at startup — falling back to in-memory cache: ${err?.message}`,
-          );
+          logger.warn(`Redis unavailable at startup — falling back to in-memory cache: ${err?.message}`);
           return {}; // cache-manager default: in-memory store
         }
       },

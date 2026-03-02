@@ -24,12 +24,15 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Read initial params from URL — stable on mount only
-  const initialOverrides = useMemo(() => ({
-    ...(searchParams.get('start')    ? { start:        searchParams.get('start')!    } : {}),
-    ...(searchParams.get('end')      ? { end:          searchParams.get('end')!      } : {}),
-    ...(searchParams.get('capacity') ? { capacity:     Number(searchParams.get('capacity')) } : {}),
-    ...(searchParams.get('amenity')  ? { featuresText: searchParams.get('amenity')!  } : {}),
-  }), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const initialOverrides = useMemo(
+    () => ({
+      ...(searchParams.get('start') ? { start: searchParams.get('start')! } : {}),
+      ...(searchParams.get('end') ? { end: searchParams.get('end')! } : {}),
+      ...(searchParams.get('capacity') ? { capacity: Number(searchParams.get('capacity')) } : {}),
+      ...(searchParams.get('amenity') ? { featuresText: searchParams.get('amenity')! } : {}),
+    }),
+    [], // eslint-disable-line react-hooks/exhaustive-deps
+  );
 
   const { params, setParam, results, total, hasMore, loading, error, search, loadMore } = useSearch(initialOverrides);
 
@@ -48,18 +51,23 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
     const observer = new IntersectionObserver(
-      (entries) => { if (entries[0].isIntersecting) loadMore(); },
+      (entries) => {
+        if (entries[0].isIntersecting) loadMore();
+      },
       { threshold: 0.1 },
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, [loadMore]);
 
-  const handleView = useCallback((roomId: string) => {
-    const startISO = new Date(params.start).toISOString();
-    const endISO   = new Date(params.end).toISOString();
-    navigate(`/rooms/${roomId}?start=${encodeURIComponent(startISO)}&end=${encodeURIComponent(endISO)}`);
-  }, [navigate, params.start, params.end]);
+  const handleView = useCallback(
+    (roomId: string) => {
+      const startISO = new Date(params.start).toISOString();
+      const endISO = new Date(params.end).toISOString();
+      navigate(`/rooms/${roomId}?start=${encodeURIComponent(startISO)}&end=${encodeURIComponent(endISO)}`);
+    },
+    [navigate, params.start, params.end],
+  );
 
   const handleSearch = useCallback(() => {
     search(1);
@@ -69,11 +77,12 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
   const sortedResults = useMemo(() => sortRooms(results, sort), [results, sort]);
   const dateRange = params.start && params.end ? { start: params.start, end: params.end } : undefined;
 
-  const pageTitle = loading && results.length === 0
-    ? t('search.title_loading')
-    : results.length > 0
-      ? t('search.title_results', { count: total })
-      : t('search.title_empty');
+  const pageTitle =
+    loading && results.length === 0
+      ? t('search.title_loading')
+      : results.length > 0
+        ? t('search.title_results', { count: total })
+        : t('search.title_empty');
 
   return (
     <div className="main">
@@ -89,12 +98,7 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
       <div className="search-page">
         {/* Sidebar */}
         <aside className={`search-page__sidebar${filtersOpen ? ' search-page__sidebar--open' : ''}`}>
-          <SearchFilters
-            params={params}
-            loading={loading}
-            onParamChange={setParam}
-            onSearch={handleSearch}
-          />
+          <SearchFilters params={params} loading={loading} onParamChange={setParam} onSearch={handleSearch} />
         </aside>
 
         {/* Results */}
@@ -113,7 +117,9 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
                   aria-label={t('search.sortAriaLabel')}
                 >
                   {SORT_OPTIONS.map((o) => (
-                    <option key={o.value} value={o.value}>{t(o.labelKey)}</option>
+                    <option key={o.value} value={o.value}>
+                      {t(o.labelKey)}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -132,7 +138,9 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
           {error && (
             <div className="alert alert--error" role="alert">
               {error}
-              <button className="alert__retry" onClick={() => search(1)}>{t('common.retry')}</button>
+              <button className="alert__retry" onClick={() => search(1)}>
+                {t('common.retry')}
+              </button>
             </div>
           )}
 
@@ -141,20 +149,11 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
               Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
             ) : results.length === 0 && !loading ? (
               <div className="room-grid__empty">
-                <EmptyState
-                  title={t('search.noRoomsTitle')}
-                  subtitle={t('search.noRoomsSubtitle')}
-                />
+                <EmptyState title={t('search.noRoomsTitle')} subtitle={t('search.noRoomsSubtitle')} />
               </div>
             ) : (
               sortedResults.map((room) => (
-                <RoomCard
-                  key={room.roomId}
-                  room={room}
-                  onView={handleView}
-                  disabled={loading}
-                  dateRange={dateRange}
-                />
+                <RoomCard key={room.roomId} room={room} onView={handleView} disabled={loading} dateRange={dateRange} />
               ))
             )}
           </div>
@@ -168,9 +167,7 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
           )}
 
           {!hasMore && results.length > 0 && !loading && (
-            <p className="search-page__end-message">
-              {t('search.allShown', { count: total })}
-            </p>
+            <p className="search-page__end-message">{t('search.allShown', { count: total })}</p>
           )}
 
           <RecentlyViewedSection onView={handleView} />

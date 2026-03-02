@@ -18,15 +18,16 @@ export function RegisterPage({ onRegister }: RegisterPageProps) {
   return (
     <div className="auth-page">
       <div className="auth-form">
-        <div className="auth-form__logo">Room<span>Book</span></div>
+        <div className="auth-form__logo">
+          Room<span>Book</span>
+        </div>
         <GoogleAuthButton />
         <div className="auth-divider">
           <span>or register with email</span>
         </div>
         <RegisterForm onSuccess={handleSuccess} />
         <p className="auth-form__footer">
-          Already have an account?{' '}
-          <Link to="/login">Sign in</Link>
+          Already have an account? <Link to="/login">Sign in</Link>
         </p>
       </div>
     </div>

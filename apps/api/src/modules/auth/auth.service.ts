@@ -58,14 +58,22 @@ export class AuthService {
     // Google-only users have no password hash — guide them to the correct flow
     if (!user.passwordHash) {
       this.metrics.recordAuth('login', 'failure');
-      this.logger.warn({ event: 'auth.login.google_only', userId: user.id, message: 'Password login on Google-only account' });
+      this.logger.warn({
+        event: 'auth.login.google_only',
+        userId: user.id,
+        message: 'Password login on Google-only account',
+      });
       throw new UnauthorizedException({ code: 'GOOGLE_ACCOUNT_ONLY', message: 'This account uses Google Sign-In' });
     }
 
     const ok = await bcrypt.compare(params.password, user.passwordHash);
     if (!ok) {
       this.metrics.recordAuth('login', 'failure');
-      this.logger.warn({ event: 'auth.login.wrong_password', userId: user.id, message: 'Login attempt with wrong password' });
+      this.logger.warn({
+        event: 'auth.login.wrong_password',
+        userId: user.id,
+        message: 'Login attempt with wrong password',
+      });
       throw new UnauthorizedException({ code: 'WRONG_PASSWORD', message: 'Incorrect password' });
     }
 

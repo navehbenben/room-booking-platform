@@ -56,7 +56,9 @@ export class AuthController {
   // Initiates the redirect to Google's consent screen — no body/response here.
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  googleAuth() { /* guard handles the redirect */ }
+  googleAuth() {
+    /* guard handles the redirect */
+  }
 
   // Google redirects back here after consent.
   // The GoogleStrategy.validate() resolves to { userId, accessToken, refreshToken }.

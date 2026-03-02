@@ -24,16 +24,17 @@ describe('Button', () => {
 
   it('does not call onClick when disabled', () => {
     const handleClick = vi.fn();
-    render(<Button disabled onClick={handleClick}>Click me</Button>);
+    render(
+      <Button disabled onClick={handleClick}>
+        Click me
+      </Button>,
+    );
     fireEvent.click(screen.getByRole('button'));
     expect(handleClick).not.toHaveBeenCalled();
   });
 
-  it.each(['primary', 'secondary', 'ghost', 'danger'] as const)(
-    'applies %s variant class',
-    (variant) => {
-      render(<Button variant={variant}>Click</Button>);
-      expect(screen.getByRole('button')).toHaveClass(`btn--${variant}`);
-    },
-  );
+  it.each(['primary', 'secondary', 'ghost', 'danger'] as const)('applies %s variant class', (variant) => {
+    render(<Button variant={variant}>Click</Button>);
+    expect(screen.getByRole('button')).toHaveClass(`btn--${variant}`);
+  });
 });

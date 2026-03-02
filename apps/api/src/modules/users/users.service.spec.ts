@@ -87,11 +87,18 @@ describe('UsersService', () => {
 
     it('returns structured export with profile and bookings', async () => {
       const user = { id: 'u1', email: 'a@b.com', name: 'Alice', createdAt: new Date() };
-      const booking = { id: 'b1', roomId: 'r1', startTime: new Date(), endTime: new Date(), status: 'CONFIRMED', createdAt: new Date() };
+      const booking = {
+        id: 'b1',
+        roomId: 'r1',
+        startTime: new Date(),
+        endTime: new Date(),
+        status: 'CONFIRMED',
+        createdAt: new Date(),
+      };
       mockRepo.findOne.mockResolvedValue(user);
       mockBookingsRepo.find.mockResolvedValue([booking]);
 
-      const result = await service.exportMyData('u1') as any;
+      const result = (await service.exportMyData('u1')) as any;
 
       expect(result.profile.id).toBe('u1');
       expect(result.profile.email).toBe('a@b.com');

@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
   ForbiddenException,
   NotFoundException,
   ServiceUnavailableException,
@@ -12,13 +11,13 @@ import { BookingsService } from './bookings.service';
 // ---------------------------------------------------------------------------
 
 const FUTURE_START = new Date('2099-06-01T10:00:00Z');
-const FUTURE_END   = new Date('2099-06-01T11:00:00Z');
+const FUTURE_END = new Date('2099-06-01T11:00:00Z');
 
 const BASE_PARAMS = {
   userId: 'user-1',
   roomId: 'room-1',
-  start:  FUTURE_START,
-  end:    FUTURE_END,
+  start: FUTURE_START,
+  end: FUTURE_END,
 };
 
 // ---------------------------------------------------------------------------
@@ -49,12 +48,12 @@ beforeEach(() => {
 
   mockTxBookingsRepo = {
     create: jest.fn(),
-    save:   jest.fn(),
+    save: jest.fn(),
   };
 
   mockTxIdempRepo = {
     findOne: jest.fn().mockResolvedValue(null),
-    update:  jest.fn().mockResolvedValue({}),
+    update: jest.fn().mockResolvedValue({}),
   };
 
   // Manager returned inside transactions — routes getRepository() to the
@@ -62,7 +61,7 @@ beforeEach(() => {
   const txManager = {
     getRepository: jest.fn((entity) => {
       const name = entity?.name ?? '';
-      if (name === 'BookingEntity')        return mockTxBookingsRepo;
+      if (name === 'BookingEntity') return mockTxBookingsRepo;
       if (name === 'IdempotencyKeyEntity') return mockTxIdempRepo;
       return {};
     }),
@@ -71,29 +70,27 @@ beforeEach(() => {
 
   mockDataSource = {
     query: jest.fn().mockResolvedValue(undefined),
-    transaction: jest
-      .fn()
-      .mockImplementation(async (cb: (manager: any) => any) => cb(txManager)),
+    transaction: jest.fn().mockImplementation(async (cb: (manager: any) => any) => cb(txManager)),
   };
 
   const mockIdempQb = {
-    insert:  jest.fn().mockReturnThis(),
-    into:    jest.fn().mockReturnThis(),
-    values:  jest.fn().mockReturnThis(),
+    insert: jest.fn().mockReturnThis(),
+    into: jest.fn().mockReturnThis(),
+    values: jest.fn().mockReturnThis(),
     orIgnore: jest.fn().mockReturnThis(),
     execute: jest.fn().mockResolvedValue({}),
   };
 
   mockBookingsRepo = {
-    find:    jest.fn(),
+    find: jest.fn(),
     findOne: jest.fn(),
-    save:    jest.fn(),
+    save: jest.fn(),
   };
-  mockRoomsRepo    = { findOne: jest.fn() };
+  mockRoomsRepo = { findOne: jest.fn() };
   mockIdempotencyRepo = {
-    findOne:          jest.fn().mockResolvedValue(null),
+    findOne: jest.fn().mockResolvedValue(null),
     createQueryBuilder: jest.fn().mockReturnValue(mockIdempQb),
-    update:           jest.fn().mockResolvedValue({}),
+    update: jest.fn().mockResolvedValue({}),
   };
   mockCache = {
     get: jest.fn().mockResolvedValue(null),
@@ -101,7 +98,7 @@ beforeEach(() => {
     del: jest.fn().mockResolvedValue(undefined),
   };
   mockHoldsService = {
-    getHold:     jest.fn(),
+    getHold: jest.fn(),
     consumeHold: jest.fn().mockResolvedValue(undefined),
   };
   mockMetrics = { recordBooking: jest.fn() };
@@ -122,7 +119,6 @@ beforeEach(() => {
 // ---------------------------------------------------------------------------
 
 describe('createBooking', () => {
-
   // ── Validation ────────────────────────────────────────────────────────────
 
   it('throws BadRequestException when roomId/start/end are missing', async () => {
@@ -131,9 +127,9 @@ describe('createBooking', () => {
 
   it('throws BadRequestException when end <= start', async () => {
     mockRoomsRepo.findOne.mockResolvedValue({ id: 'room-1' });
-    await expect(
-      service.createBooking({ ...BASE_PARAMS, end: FUTURE_START }),
-    ).rejects.toBeInstanceOf(BadRequestException);
+    await expect(service.createBooking({ ...BASE_PARAMS, end: FUTURE_START })).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
   });
 
   it('throws NotFoundException when room does not exist', async () => {
@@ -196,10 +192,10 @@ describe('createBooking', () => {
     const storedBody = { bookingId: 'booking-cached', status: 'CONFIRMED' };
     mockIdempotencyRepo.findOne.mockResolvedValue({
       idempotencyKey: 'key-1',
-      userId:         'user-1',
-      responseCode:   201,
-      responseBody:   storedBody,
-      createdAt:      new Date(),
+      userId: 'user-1',
+      responseCode: 201,
+      responseBody: storedBody,
+      createdAt: new Date(),
     });
 
     const result = await service.createBooking({ ...BASE_PARAMS, idempotencyKey: 'key-1' });
@@ -215,15 +211,15 @@ describe('createBooking', () => {
     const conflictBody = { code: 'BOOKING_CONFLICT', message: 'Room already booked for this time range' };
     mockIdempotencyRepo.findOne.mockResolvedValue({
       idempotencyKey: 'key-conflict',
-      userId:         'user-1',
-      responseCode:   409,
-      responseBody:   conflictBody,
-      createdAt:      new Date(),
+      userId: 'user-1',
+      responseCode: 409,
+      responseBody: conflictBody,
+      createdAt: new Date(),
     });
 
-    await expect(
-      service.createBooking({ ...BASE_PARAMS, idempotencyKey: 'key-conflict' }),
-    ).rejects.toMatchObject({ response: { code: 'BOOKING_CONFLICT' } });
+    await expect(service.createBooking({ ...BASE_PARAMS, idempotencyKey: 'key-conflict' })).rejects.toMatchObject({
+      response: { code: 'BOOKING_CONFLICT' },
+    });
 
     // Must not re-execute the booking path
     expect(mockDataSource.transaction).not.toHaveBeenCalled();
@@ -236,9 +232,9 @@ describe('createBooking', () => {
     mockTxBookingsRepo.create.mockReturnValue({});
     mockTxBookingsRepo.save.mockRejectedValue(dbErr);
 
-    await expect(
-      service.createBooking({ ...BASE_PARAMS, idempotencyKey: 'key-new' }),
-    ).rejects.toMatchObject({ response: { code: 'BOOKING_CONFLICT' } });
+    await expect(service.createBooking({ ...BASE_PARAMS, idempotencyKey: 'key-new' })).rejects.toMatchObject({
+      response: { code: 'BOOKING_CONFLICT' },
+    });
 
     // persistIdempotencyFailure must have been called
     const qb = mockIdempotencyRepo.createQueryBuilder();
@@ -250,15 +246,15 @@ describe('createBooking', () => {
   it('returns 503 when the same key is already in-flight (responseCode = null)', async () => {
     mockIdempotencyRepo.findOne.mockResolvedValue({
       idempotencyKey: 'key-inflight',
-      userId:         'user-1',
-      responseCode:   null,
-      responseBody:   null,
-      createdAt:      new Date(),
+      userId: 'user-1',
+      responseCode: null,
+      responseBody: null,
+      createdAt: new Date(),
     });
 
-    await expect(
-      service.createBooking({ ...BASE_PARAMS, idempotencyKey: 'key-inflight' }),
-    ).rejects.toBeInstanceOf(ServiceUnavailableException);
+    await expect(service.createBooking({ ...BASE_PARAMS, idempotencyKey: 'key-inflight' })).rejects.toBeInstanceOf(
+      ServiceUnavailableException,
+    );
 
     expect(mockDataSource.transaction).not.toHaveBeenCalled();
   });
@@ -333,15 +329,15 @@ describe('createBooking', () => {
 describe('getMyBookings', () => {
   it('returns formatted bookings for the given user', async () => {
     const b = {
-      id:        'booking-1',
-      roomId:    'room-1',
-      userId:    'user-1',
+      id: 'booking-1',
+      roomId: 'room-1',
+      userId: 'user-1',
       startTime: new Date(),
-      endTime:   new Date(),
-      status:    'CONFIRMED',
-      notes:     null,
+      endTime: new Date(),
+      status: 'CONFIRMED',
+      notes: null,
       createdAt: new Date(),
-      room:      { name: 'Boardroom A' },
+      room: { name: 'Boardroom A' },
     };
     mockBookingsRepo.find.mockResolvedValue([b]);
 
@@ -351,9 +347,9 @@ describe('getMyBookings', () => {
     expect(result[0].roomName).toBe('Boardroom A');
     expect(result[0].status).toBe('CONFIRMED');
     expect(mockBookingsRepo.find).toHaveBeenCalledWith({
-      where:     { userId: 'user-1' },
+      where: { userId: 'user-1' },
       relations: ['room'],
-      order:     { createdAt: 'DESC' },
+      order: { createdAt: 'DESC' },
     });
   });
 
@@ -404,13 +400,13 @@ describe('cancelBooking', () => {
 
   it('sets status to CANCELLED and returns the formatted booking', async () => {
     const b = {
-      id:        'booking-1',
-      userId:    'user-1',
-      status:    'CONFIRMED',
-      roomId:    'room-1',
+      id: 'booking-1',
+      userId: 'user-1',
+      status: 'CONFIRMED',
+      roomId: 'room-1',
       startTime: new Date(),
-      endTime:   new Date(),
-      notes:     null,
+      endTime: new Date(),
+      notes: null,
       createdAt: new Date(),
     };
     mockBookingsRepo.findOne.mockResolvedValue(b);
@@ -418,16 +414,21 @@ describe('cancelBooking', () => {
 
     const result = await service.cancelBooking('booking-1', 'user-1');
 
-    expect(b.status).toBe('CANCELLED');           // mutated in-place before save
+    expect(b.status).toBe('CANCELLED'); // mutated in-place before save
     expect(result.status).toBe('CANCELLED');
     expect(result.bookingId).toBe('booking-1');
   });
 
   it('records a cancelled metric', async () => {
     const b = {
-      id: 'booking-1', userId: 'user-1', status: 'CONFIRMED',
-      roomId: 'room-1', startTime: new Date(), endTime: new Date(),
-      notes: null, createdAt: new Date(),
+      id: 'booking-1',
+      userId: 'user-1',
+      status: 'CONFIRMED',
+      roomId: 'room-1',
+      startTime: new Date(),
+      endTime: new Date(),
+      notes: null,
+      createdAt: new Date(),
     };
     mockBookingsRepo.findOne.mockResolvedValue(b);
     mockBookingsRepo.save.mockResolvedValue({ ...b, status: 'CANCELLED' });
@@ -439,9 +440,14 @@ describe('cancelBooking', () => {
 
   it('does NOT fail when cache invalidation throws on cancellation', async () => {
     const b = {
-      id: 'booking-1', userId: 'user-1', status: 'CONFIRMED',
-      roomId: 'room-1', startTime: new Date(), endTime: new Date(),
-      notes: null, createdAt: new Date(),
+      id: 'booking-1',
+      userId: 'user-1',
+      status: 'CONFIRMED',
+      roomId: 'room-1',
+      startTime: new Date(),
+      endTime: new Date(),
+      notes: null,
+      createdAt: new Date(),
     };
     mockBookingsRepo.findOne.mockResolvedValue(b);
     mockBookingsRepo.save.mockResolvedValue({ ...b, status: 'CANCELLED' });

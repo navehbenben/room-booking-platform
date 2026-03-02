@@ -9,8 +9,7 @@ import { ExpiryModal } from '../components/checkout/ExpiryModal';
 
 export function CheckoutPage() {
   const { t } = useTranslation();
-  const { hold, room, remainingSeconds, loading, error, confirm, expired, confirmLoading, bookingId } =
-    useCheckout();
+  const { hold, room, remainingSeconds, loading, error, confirm, expired, confirmLoading, bookingId } = useCheckout();
 
   const isWarning = remainingSeconds > 0 && remainingSeconds < 60;
 
@@ -28,7 +27,9 @@ export function CheckoutPage() {
         <div className="checkout-page checkout-page--success">
           <div className="checkout-success__icon">✓</div>
           <h2 className="checkout-success__title">{t('checkout.success.title')}</h2>
-          <p className="checkout-success__id">{t('checkout.success.bookingId')} <code>{bookingId}</code></p>
+          <p className="checkout-success__id">
+            {t('checkout.success.bookingId')} <code>{bookingId}</code>
+          </p>
           <div className="checkout-success__actions">
             <Link to="/bookings" className="btn btn--primary btn--md">
               {t('checkout.success.viewBookings')}
@@ -88,8 +89,12 @@ export function CheckoutPage() {
                 <BookingSummary room={room} start={hold.start} end={hold.end} />
               ) : (
                 <div className="checkout-layout__no-room">
-                  <p>{t('checkout.noRoom.start')} {new Date(hold.start).toLocaleString()}</p>
-                  <p>{t('checkout.noRoom.end')} {new Date(hold.end).toLocaleString()}</p>
+                  <p>
+                    {t('checkout.noRoom.start')} {new Date(hold.start).toLocaleString()}
+                  </p>
+                  <p>
+                    {t('checkout.noRoom.end')} {new Date(hold.end).toLocaleString()}
+                  </p>
                 </div>
               )}
             </div>

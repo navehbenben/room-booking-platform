@@ -30,7 +30,10 @@ export function App() {
     return (
       <div className="app">
         <Header isLoggedIn={false} onLogout={logout} />
-        <main className="main" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <main
+          className="main"
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}
+        >
           <span style={{ color: 'var(--c-muted)', fontSize: 15 }}>{t('app.loading')}</span>
         </main>
         <Footer />
@@ -46,10 +49,7 @@ export function App() {
         <Route path="/" element={<LandingPage />} />
 
         {/* Auth pages — redirect to /search if already logged in */}
-        <Route
-          path="/login"
-          element={isLoggedIn ? <Navigate to="/search" replace /> : <LoginPage onLogin={login} />}
-        />
+        <Route path="/login" element={isLoggedIn ? <Navigate to="/search" replace /> : <LoginPage onLogin={login} />} />
         <Route
           path="/register"
           element={isLoggedIn ? <Navigate to="/search" replace /> : <RegisterPage onRegister={register} />}

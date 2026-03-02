@@ -36,7 +36,11 @@ describe('useAuth', () => {
 
   it('rehydrating is true during rehydration, false after', async () => {
     let resolve!: (v: { accessToken: string }) => void;
-    vi.mocked(api.rehydrate).mockReturnValue(new Promise((r) => { resolve = r; }));
+    vi.mocked(api.rehydrate).mockReturnValue(
+      new Promise((r) => {
+        resolve = r;
+      }),
+    );
     const { result } = renderHook(() => useAuth());
     expect(result.current.rehydrating).toBe(true);
     act(() => resolve({ accessToken: 'tok' }));

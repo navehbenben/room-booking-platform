@@ -1,13 +1,13 @@
 export const ROUTES = {
-  HOME:        '/',
-  SEARCH:      '/search',
-  ROOM:        '/rooms/:id',
-  CHECKOUT:    '/checkout/:holdId',
-  BOOKINGS:    '/bookings',
-  PROFILE:     '/userprofile',
-  LOGIN:       '/login',
-  REGISTER:    '/register',
-  GDPR:        '/privacy',
+  HOME: '/',
+  SEARCH: '/search',
+  ROOM: '/rooms/:id',
+  CHECKOUT: '/checkout/:holdId',
+  BOOKINGS: '/bookings',
+  PROFILE: '/userprofile',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  GDPR: '/privacy',
 } as const;
 
 export function roomPath(id: string) {

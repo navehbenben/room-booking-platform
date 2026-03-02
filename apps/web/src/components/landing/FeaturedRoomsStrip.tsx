@@ -17,18 +17,25 @@ export function FeaturedRoomsStrip() {
 
   useEffect(() => {
     let cancelled = false;
-    api.search({
-      start:    dateToStartISO(defaultStart()),
-      end:      dateToEndISO(defaultEnd()),
-      capacity: 2,
-      page:     1,
-    })
+    api
+      .search({
+        start: dateToStartISO(defaultStart()),
+        end: dateToEndISO(defaultEnd()),
+        capacity: 2,
+        page: 1,
+      })
       .then((res) => {
         if (!cancelled) setRooms(res.results.slice(0, 10));
       })
-      .catch(() => { /* silently hide section on error */ })
-      .finally(() => { if (!cancelled) setLoading(false); });
-    return () => { cancelled = true; };
+      .catch(() => {
+        /* silently hide section on error */
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const scroll = (dir: 'left' | 'right') => {
@@ -39,7 +46,7 @@ export function FeaturedRoomsStrip() {
   const handleView = (roomId: string) => {
     const p = new URLSearchParams({
       start: dateToStartISO(defaultStart()),
-      end:   dateToEndISO(defaultEnd()),
+      end: dateToEndISO(defaultEnd()),
     });
     navigate(`/rooms/${roomId}?${p.toString()}`);
   };
@@ -51,8 +58,20 @@ export function FeaturedRoomsStrip() {
       <div className="featured-strip__header">
         <h2 className="featured-strip__title">{t('landing.featuredStrip.title')}</h2>
         <div className="featured-strip__nav">
-          <button className="featured-strip__arrow" onClick={() => scroll('left')} aria-label={t('landing.featuredStrip.scrollLeft')}>‹</button>
-          <button className="featured-strip__arrow" onClick={() => scroll('right')} aria-label={t('landing.featuredStrip.scrollRight')}>›</button>
+          <button
+            className="featured-strip__arrow"
+            onClick={() => scroll('left')}
+            aria-label={t('landing.featuredStrip.scrollLeft')}
+          >
+            ‹
+          </button>
+          <button
+            className="featured-strip__arrow"
+            onClick={() => scroll('right')}
+            aria-label={t('landing.featuredStrip.scrollRight')}
+          >
+            ›
+          </button>
         </div>
       </div>
 
@@ -84,14 +103,14 @@ export function FeaturedRoomsStrip() {
                       onError={() => setImgErrors((prev) => ({ ...prev, [room.roomId]: true }))}
                     />
                   ) : (
-                    <div className="featured-room-card__img-fallback" aria-hidden="true">🏢</div>
+                    <div className="featured-room-card__img-fallback" aria-hidden="true">
+                      🏢
+                    </div>
                   )}
                 </div>
                 <div className="featured-room-card__body">
                   <div className="featured-room-card__name">{room.name}</div>
-                  <div className="featured-room-card__capacity">
-                    {t('roomCard.capacity', { count: room.capacity })}
-                  </div>
+                  <div className="featured-room-card__capacity">{t('roomCard.capacity', { count: room.capacity })}</div>
                   {room.features.length > 0 && (
                     <div className="featured-room-card__features">
                       {room.features.slice(0, 2).map((f) => (
@@ -103,8 +122,7 @@ export function FeaturedRoomsStrip() {
                   )}
                 </div>
               </button>
-            ))
-        }
+            ))}
       </div>
     </section>
   );
