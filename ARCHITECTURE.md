@@ -169,7 +169,7 @@ Two-token model chosen to balance security with UX:
 
 | Token | Storage | TTL | Rotation |
 |---|---|---|---|
-| Access token (JWT) | In-memory only (React state) | 15 min | Issued fresh on every refresh |
+| Access token (JWT) | In-memory only (JS module variable) | 15 min | Issued fresh on every refresh |
 | Refresh token (opaque 256-bit random) | HttpOnly cookie | 14 days | Rotated on every use |
 
 **Why not localStorage for tokens?**
@@ -186,12 +186,19 @@ Two-token model chosen to balance security with UX:
 ```
 App mount
   │
-  └─► POST /auth/refresh (browser sends cookie automatically)
-        ├─► success: new accessToken stored in memory, user authenticated
-        └─► 401: user is logged out, show login page
+  └─► sessionHint present? (localStorage 'rb_has_session' = '1')
+        │
+        ├─► No  → skip /auth/refresh entirely (first-time visitor)
+        │         rehydrating → false immediately
+        │
+        └─► Yes → POST /auth/refresh (browser sends cookie automatically)
+                    ├─► success: new accessToken stored in module variable
+                    │           isLoggedIn → true, rehydrating → false
+                    └─► 401:    sessionHint cleared
+                                isLoggedIn stays false, rehydrating → false
 ```
 
-The app shows a loading state during rehydration to prevent flash of unauthenticated content.
+`sessionHint` is set on login / register / Google OAuth redirect and cleared on logout or a failed refresh. First-time visitors never produce a 401. The app shows a loading spinner during rehydration to prevent flash of unauthenticated content.
 
 ### Google OAuth
 
@@ -520,18 +527,70 @@ A `datadog` profile adds a Datadog agent that collects container logs and proces
 
 **React 18 + Vite 5 (TypeScript)**. Single-page application served by Nginx.
 
-### Key architectural decisions
+### State management — Redux Toolkit
 
-**Infinite scroll (not pagination)**
-Search results use IntersectionObserver to load the next page as the user scrolls. `useSearch` hook manages page state: page 1 replaces results, pages 2+ accumulate. This avoids visible page breaks and is natural for browsing rooms.
+Global state is managed with Redux Toolkit (`createSlice` + `createAsyncThunk`). Only state that genuinely benefits from being global is in Redux. Page-scoped data stays in local React state inside custom hooks.
 
-**Auth state management**
-No Redux or Zustand — auth state is in a top-level React context (`AuthContext`). Access token is stored in a `useRef` (not state) to avoid re-renders on token refresh. The context exposes `user`, `login`, `logout`, `register`, `googleLogin`.
+#### What is in Redux and why
 
-**Token refresh without flicker**
-On app mount, `useAuth` calls `api.rehydrate()` which hits `POST /auth/refresh`. During this call, `App.tsx` renders a loading spinner. Once resolved (success or failure), the app renders normally. This prevents the flash of unauthenticated content.
+| Slice | State | Why global |
+|---|---|---|
+| `auth` | `isLoggedIn`, `rehydrating`, `userId` | Read by `Header`, `App`, `SearchPage`, `RoomDetailPage`, `GdprPage` — prop drilling was the only alternative |
+| `profile` | `UserProfile` data, loading flags | Session-scoped cache — `UserProfilePage` remounts without a repeat fetch |
+| `search` | Search params + results + pagination | Back-navigation must restore the previous search exactly |
+| `recentlyViewed` | Last 8 viewed rooms | Written by `RoomDetailPage`, read by `RecentlyViewedSection` — two separate component subtrees |
 
-**Checkout flow**
+#### What stays in local state
+
+`useBookings`, `useCheckout`, `useHold`, `useRoomDetail`, `useGdpr` — all page-scoped, single-consumer, no benefit from Redux.
+
+#### Hook pattern
+
+All custom hooks remain as the public API. The "Redux" hooks (`useAuth`, `useSearch`, `useProfile`, `useRecentlyViewed`) are thin wrappers that dispatch thunks/actions and select from the store. Consumers call `useAuth()` exactly as before — the Redux backing is an implementation detail.
+
+```typescript
+// Example: useAuth is still the same interface
+const { isLoggedIn, rehydrating, login, logout } = useAuth();
+// Internally: dispatches rehydrateSession on mount, dispatches loginUser thunk, etc.
+```
+
+### Auth rehydration without 401 noise
+
+A non-sensitive `localStorage` flag (`rb_has_session`) gates the rehydration call:
+
+- **Set** on login / register / Google OAuth redirect (`?oauth=1` param)
+- **Cleared** on logout or when a refresh call returns 401
+- **Checked** before `POST /auth/refresh` — first-time visitors skip the call entirely, no 401 logged
+
+A module-level `_rehydrateInitiated` boolean prevents React 18 Strict Mode from firing two concurrent refresh calls. Both runs of `useEffect` in development would otherwise send the same cookie; the first call rotates it, leaving the second to fail with 401.
+
+### Global unauthorized handler
+
+When a mid-session silent token refresh fails (expired cookie while the tab was open):
+
+```
+api/client.ts (401 interceptor)
+  └── calls registered handler
+        ├── tokenStore.clear()       — drop in-memory access token
+        ├── sessionHint.clear()      — clear localStorage flag
+        ├── dispatch(forceLogout())  — auth slice → isLoggedIn: false
+        └── dispatch(clearProfile()) — profile slice → data: null
+```
+
+The UI updates synchronously — no additional API call, no navigation logic.
+
+### Search back-navigation
+
+After every successful search, `searchSlice` persists params to `sessionStorage`. When the user presses Back from `RoomDetailPage`, `SearchPage` remounts and `useSearch` restores the stored params — filters, date range, and capacity are all preserved.
+
+URL-provided params (e.g. from the landing page hero form) are merged in via `applyUrlOverrides` only when present, so the back-navigation path is unaffected.
+
+### Infinite scroll (not pagination)
+
+Search results use `IntersectionObserver` on a sentinel `<div>` at the bottom of the list. `loadMore()` in `useSearch` holds a stable reference (via `useRef`) so the observer callback doesn't need to be recreated on every render.
+
+### Checkout flow
+
 ```
 SearchPage → RoomDetailPage (select times) → CheckoutPage
   │
@@ -543,10 +602,16 @@ SearchPage → RoomDetailPage (select times) → CheckoutPage
         └── HOLD_EXPIRED → ExpiryModal (prompts user to re-select)
 ```
 
-**Error handling**
-`errorMessages.ts` maps API error codes (`BOOKING_CONFLICT`, `INVALID_CREDENTIALS`, etc.) to user-friendly messages. Machine-readable codes are used throughout — no string matching on error messages.
+### Error handling
 
-**Timezone display**
+`errorMessages.ts` maps API error codes (`BOOKING_CONFLICT`, `INVALID_CREDENTIALS`, etc.) to user-friendly i18n messages. Machine-readable codes are used throughout — no string matching on error messages.
+
+### Styling — SCSS modules
+
+Every component and page has a co-located `.module.scss` file. Global design tokens live in `src/styles/_tokens.scss` (CSS custom properties + SCSS variables). A small set of global utility classes (`.btn`, `.alert`, etc.) is in `src/styles/global.scss`.
+
+### Timezone display
+
 Rooms have IANA timezone identifiers. `formatInTimezone` uses `Intl.DateTimeFormat` to display booking times in the room's local timezone, with a banner: "All times shown in Europe/Rome (CET)".
 
 ---
@@ -571,9 +636,15 @@ Located in `test/*.e2e-spec.ts`. Spin up a full NestJS application against a rea
 - `env-setup.ts` (first `setupFile`) sets all env vars before any module is imported — required because TypeORM reads `DATABASE_URL` at module evaluation time (before test file body runs)
 
 ### Web unit tests (Vitest + React Testing Library)
-Located in `src/**/__tests__/*.test.{ts,tsx}`. Test hooks (`useSearch`, `useAuth`) and components (`RoomCard`, `BookingSummary`, `LoginForm`) in isolation with mocked API calls.
+Located in `src/**/__tests__/*.test.{ts,tsx}`. Test hooks and components in isolation with mocked API calls.
 
-**Test count:** 179 tests across the web frontend.
+**Component tests** (`Header`, `LoginForm`, `RegisterForm`, `RoomCard`, etc.) wrap the component in a minimal `<Provider store={makeStore(...)}>` with `preloadedState` to control auth/profile state without full app setup.
+
+**Hook tests** (`useAuth`, `useSearch`, `useRecentlyViewed`) pass a `wrapper` option to `renderHook` that provides a fresh isolated store per test. Each test creates its own store instance so Redux state cannot bleed between tests. The `__resetRehydrateGuard()` utility resets the Strict Mode guard between `useAuth` test cases.
+
+**Local-state hooks** (`useBookings`, `useCheckout`, `useHold`, `useRoomDetail`) require no Redux wrapper and test as before.
+
+**Test count:** 179 tests across 28 test files.
 
 ### Testing the double-booking constraint
 The e2e suite tests concurrent booking attempts directly against the real database, verifying that PostgreSQL's exclusion constraint fires and one request wins while the other gets `409 BOOKING_CONFLICT`.
