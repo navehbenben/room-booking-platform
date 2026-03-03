@@ -84,7 +84,7 @@ function makeStore() {
 
 function createWrapper() {
   const store = makeStore();
-  const Wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(Provider, { store }, children);
+  const Wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(Provider, { store, children });
   return Wrapper;
 }
 

@@ -30,7 +30,7 @@ const makeResponse = (results: ReturnType<typeof makeRoom>[], total: number, pag
 // Each test gets a fresh store to prevent state bleeding between tests.
 function createWrapper() {
   const store = configureStore({ reducer: { search: searchReducer } });
-  const Wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(Provider, { store }, children);
+  const Wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(Provider, { store, children });
   return Wrapper;
 }
 
