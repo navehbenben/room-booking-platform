@@ -74,9 +74,16 @@
   border: 1px solid transparent;
   letter-spacing: 0.01em;
 
-  &:active:not(:disabled) { transform: scale(0.98); }
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
-  &:hover { text-decoration: none; }
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  &:hover {
+    text-decoration: none;
+  }
 
   &:focus-visible {
     outline: 2px solid p.$color-accent;
@@ -84,8 +91,13 @@
   }
 }
 
-.btn--sm  { padding: 6px p.$sp-3; font-size: 13px; }
-.btn--md  { padding: 10px p.$sp-5; }
+.btn--sm {
+  padding: 6px p.$sp-3;
+  font-size: 13px;
+}
+.btn--md {
+  padding: 10px p.$sp-5;
+}
 
 .btn--primary {
   background: p.$color-accent;
@@ -105,7 +117,9 @@
   color: p.$color-accent;
   border-color: p.$color-accent;
 
-  &:hover:not(:disabled) { background: #e8f0fb; }
+  &:hover:not(:disabled) {
+    background: #e8f0fb;
+  }
 }
 
 .btn--ghost {
@@ -125,7 +139,9 @@
   color: #ffffff;
   border-color: p.$color-error;
 
-  &:hover:not(:disabled) { background: #aa0000; }
+  &:hover:not(:disabled) {
+    background: #aa0000;
+  }
 }
 
 .btn--yellow {
@@ -134,7 +150,9 @@
   border-color: p.$color-yellow;
   font-weight: 700;
 
-  &:hover:not(:disabled) { background: p.$color-yellow-hover; }
+  &:hover:not(:disabled) {
+    background: p.$color-yellow-hover;
+  }
 }
 
 .btn--outline-white {
@@ -142,7 +160,9 @@
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.5);
 
-  &:hover:not(:disabled) { background: rgba(255, 255, 255, 0.15); }
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+  }
 }
 
 .btn--pulse {
@@ -150,8 +170,13 @@
 }
 
 @keyframes pulseDanger {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(204, 0, 0, 0); }
-  50%       { box-shadow: 0 0 0 6px rgba(204, 0, 0, 0.25); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(204, 0, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(204, 0, 0, 0.25);
+  }
 }
 
 // ============================================================
@@ -190,5 +215,91 @@
   a {
     color: p.$color-accent;
     font-weight: 600;
+  }
+}
+
+// ============================================================
+//   Input utilities — global so raw <input> elements rendered
+//   outside the <Input> component share the same design system.
+//   Used by SearchFilters (date / number inputs) and
+//   UserProfilePage (inline edit / password inputs).
+// ============================================================
+.input {
+  display: block;
+  width: 100%;
+  padding: 10px p.$sp-3;
+  border-radius: p.$r-sm;
+  border: 1.5px solid p.$color-border;
+  background: p.$color-input-bg;
+  color: p.$color-text;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition:
+    border-color p.$t-fast,
+    box-shadow p.$t-fast;
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+
+  &:focus {
+    border-color: p.$color-accent;
+    box-shadow: 0 0 0 3px rgba(0, 113, 194, 0.15);
+  }
+
+  &:disabled {
+    background: #f9fafb;
+    color: p.$color-muted;
+    cursor: not-allowed;
+  }
+}
+
+// Applied as a second class alongside .input when the field is invalid
+.input--error {
+  border-color: p.$color-error !important;
+
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.15) !important;
+  }
+}
+
+// Inline error message shown beneath a raw input
+.input-error {
+  display: block;
+  font-size: 12px;
+  color: p.$color-error;
+  margin-top: p.$sp-1;
+}
+
+// Alias used in UserProfilePage for inline-edit and password fields
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 9px p.$sp-3;
+  border-radius: p.$r-sm;
+  border: 1.5px solid p.$color-border;
+  background: p.$color-input-bg;
+  color: p.$color-text;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition:
+    border-color p.$t-fast,
+    box-shadow p.$t-fast;
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+
+  &:focus {
+    border-color: p.$color-accent;
+    box-shadow: 0 0 0 3px rgba(0, 113, 194, 0.15);
+  }
+
+  &:disabled {
+    background: #f9fafb;
+    color: p.$color-muted;
+    cursor: not-allowed;
   }
 }

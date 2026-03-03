@@ -8,13 +8,61 @@
   background: p.$color-white;
   border: 1px solid p.$color-border;
   border-radius: p.$r-lg;
-  padding: p.$sp-5;
-  box-shadow: p.$shadow-xs;
+  padding: p.$sp-6;
+  box-shadow: p.$shadow-sm;
 }
 
 .title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: p.$color-text;
-  margin-bottom: p.$sp-2;
+  padding-bottom: p.$sp-4;
+  margin-bottom: p.$sp-1;
+  border-bottom: 1px solid p.$color-border;
+}
+
+// Notes textarea field — label + textarea stacked
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-1;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: p.$color-text-2;
+}
+
+.textarea {
+  width: 100%;
+  padding: 10px p.$sp-3;
+  border-radius: p.$r-sm;
+  border: 1.5px solid p.$color-border;
+  background: p.$color-input-bg;
+  color: p.$color-text;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  transition:
+    border-color p.$t-fast,
+    box-shadow p.$t-fast;
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+
+  &:focus {
+    border-color: p.$color-accent;
+    box-shadow: 0 0 0 3px rgba(0, 113, 194, 0.15);
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 13px;
+  font-size: 15px;
+  margin-top: p.$sp-2;
 }

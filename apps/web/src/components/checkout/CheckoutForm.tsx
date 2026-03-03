@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import styles from './CheckoutForm.module.scss';
 
@@ -46,45 +47,54 @@ export const CheckoutForm = React.memo(function CheckoutForm({
   return (
     <form className={styles.wrap} onSubmit={handleSubmit}>
       <h3 className={styles.title}>{t('checkoutForm.title')}</h3>
-      <div className={`input-group${errors.name ? ' input-group--error' : ''}`}>
-        <label className="input-label">
-          <span className="input-label__text">{t('checkoutForm.name')}</span>
-          <input
-            className="input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={t('checkoutForm.namePlaceholder')}
-          />
+
+      <Input
+        label={t('checkoutForm.name')}
+        value={name}
+        onChange={(e) => {
+          setName(e.target.value);
+          if (errors.name) setErrors((p) => ({ ...p, name: undefined }));
+        }}
+        placeholder={t('checkoutForm.namePlaceholder')}
+        autoComplete="name"
+        error={errors.name}
+      />
+
+      <Input
+        label={t('checkoutForm.email')}
+        type="email"
+        value={email}
+        onChange={(e) => {
+          setEmail(e.target.value);
+          if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
+        }}
+        placeholder={t('checkoutForm.emailPlaceholder')}
+        autoComplete="email"
+        error={errors.email}
+      />
+
+      <div className={styles.field}>
+        <label className={styles.fieldLabel} htmlFor="checkout-notes">
+          {t('checkoutForm.notes')}
         </label>
-        {errors.name && <span className="input-error">{errors.name}</span>}
+        <textarea
+          id="checkout-notes"
+          className={styles.textarea}
+          rows={3}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder={t('checkoutForm.notesPlaceholder')}
+          maxLength={500}
+        />
       </div>
-      <div className={`input-group${errors.email ? ' input-group--error' : ''}`}>
-        <label className="input-label">
-          <span className="input-label__text">{t('checkoutForm.email')}</span>
-          <input
-            className="input"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t('checkoutForm.emailPlaceholder')}
-          />
-        </label>
-        {errors.email && <span className="input-error">{errors.email}</span>}
-      </div>
-      <div className="input-group">
-        <label className="input-label">
-          <span className="input-label__text">{t('checkoutForm.notes')}</span>
-          <textarea
-            className="input"
-            rows={3}
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder={t('checkoutForm.notesPlaceholder')}
-            maxLength={500}
-          />
-        </label>
-      </div>
-      <Button type="submit" variant="primary" loading={loading} disabled={loading || disabled}>
+
+      <Button
+        type="submit"
+        variant="primary"
+        loading={loading}
+        disabled={loading || disabled}
+        className={styles.submitBtn}
+      >
         {t('checkoutForm.confirmBtn')}
       </Button>
     </form>
