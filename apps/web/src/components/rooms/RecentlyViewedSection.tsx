@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useRecentlyViewed } from '../../hooks/useRecentlyViewed';
 import { roomImageUrl } from '../../utils/room';
 import { FEATURE_LABEL_KEYS } from '../../constants/amenities';
+import styles from './RecentlyViewedSection.module.scss';
 
 interface RecentlyViewedSectionProps {
   onView: (roomId: string) => void;
@@ -15,24 +16,24 @@ export const RecentlyViewedSection = React.memo(function RecentlyViewedSection({
   if (rooms.length === 0) return null;
 
   return (
-    <section className="recently-viewed">
-      <div className="recently-viewed__header">
-        <h3 className="recently-viewed__title">{t('recentlyViewed.title')}</h3>
-        <button className="recently-viewed__clear" onClick={clearAll} aria-label={t('recentlyViewed.clearAriaLabel')}>
+    <section className={styles.wrap}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>{t('recentlyViewed.title')}</h3>
+        <button className={styles.clear} onClick={clearAll} aria-label={t('recentlyViewed.clearAriaLabel')}>
           {t('recentlyViewed.clearAll')}
         </button>
       </div>
-      <div className="recently-viewed__track">
+      <div className={styles.track}>
         {rooms.map((room) => (
           <button
             key={room.roomId}
-            className="rv-card"
+            className={styles.card}
             onClick={() => onView(room.roomId)}
             aria-label={t('recentlyViewed.viewAriaLabel', { name: room.name })}
           >
-            <div className="rv-card__img-wrap">
+            <div className={styles.imgWrap}>
               <img
-                className="rv-card__img"
+                className={styles.img}
                 src={roomImageUrl(room.name)}
                 alt={room.name}
                 loading="lazy"
@@ -41,18 +42,18 @@ export const RecentlyViewedSection = React.memo(function RecentlyViewedSection({
                 }}
               />
             </div>
-            <div className="rv-card__body">
-              <div className="rv-card__name">{room.name}</div>
-              <div className="rv-card__capacity">{t('recentlyViewed.capacity', { count: room.capacity })}</div>
+            <div className={styles.body}>
+              <div className={styles.name}>{room.name}</div>
+              <div className={styles.capacity}>{t('recentlyViewed.capacity', { count: room.capacity })}</div>
               {room.features.length > 0 && (
-                <div className="rv-card__features">
+                <div className={styles.features}>
                   {room.features.slice(0, 2).map((f) => (
-                    <span key={f} className="rv-card__tag">
+                    <span key={f} className={styles.tag}>
                       {FEATURE_LABEL_KEYS[f] ? t(FEATURE_LABEL_KEYS[f]) : f}
                     </span>
                   ))}
                   {room.features.length > 2 && (
-                    <span className="rv-card__tag rv-card__tag--more">+{room.features.length - 2}</span>
+                    <span className={styles.tag}>+{room.features.length - 2}</span>
                   )}
                 </div>
               )}

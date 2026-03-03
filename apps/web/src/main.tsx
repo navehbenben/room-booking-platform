@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { datadogLogs } from '@datadog/browser-logs';
 import { App } from './ui/App';
-import './ui/styles.css';
+import './styles/global.scss';
 
 // ---------------------------------------------------------------------------
 // Datadog Browser Logs

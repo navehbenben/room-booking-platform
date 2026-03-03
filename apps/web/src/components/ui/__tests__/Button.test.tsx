@@ -11,7 +11,7 @@ describe('Button', () => {
     render(<Button loading>Click me</Button>);
     const btn = screen.getByRole('button');
     expect(btn).toBeDisabled();
-    expect(document.querySelector('.spinner')).toBeInTheDocument();
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
     expect(screen.queryByText('Click me')).not.toBeInTheDocument();
   });
 
@@ -33,8 +33,8 @@ describe('Button', () => {
     expect(handleClick).not.toHaveBeenCalled();
   });
 
-  it.each(['primary', 'secondary', 'ghost', 'danger'] as const)('applies %s variant class', (variant) => {
+  it.each(['primary', 'secondary', 'ghost', 'danger'] as const)('applies %s variant', (variant) => {
     render(<Button variant={variant}>Click</Button>);
-    expect(screen.getByRole('button')).toHaveClass(`btn--${variant}`);
+    expect(screen.getByRole('button')).toHaveAttribute('data-variant', variant);
   });
 });

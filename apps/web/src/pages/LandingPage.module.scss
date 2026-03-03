@@ -1,0 +1,260 @@
+// LandingPage.module.scss
+@use '../styles/palette' as p;
+
+.landing {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  background: p.$color-primary;
+  background-image: linear-gradient(135deg, #003580 0%, #0050aa 100%);
+  padding: p.$sp-10 p.$sp-6 calc(p.$sp-10 + 40px);
+  text-align: center;
+  position: relative;
+
+  @media (max-width: 560px) {
+    padding: p.$sp-8 p.$sp-4 calc(p.$sp-8 + 32px);
+  }
+}
+
+.heroContent {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: p.$sp-2;
+  letter-spacing: -0.5px;
+
+  @media (max-width: 560px) { font-size: 26px; }
+}
+
+.heroSubtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 17px;
+  margin-bottom: p.$sp-6;
+}
+
+.heroSearch {
+  display: flex;
+  align-items: stretch;
+  background: p.$color-white;
+  border-radius: p.$r-md;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+  max-width: 900px;
+  margin: p.$sp-6 auto 0;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    border-radius: p.$r-md;
+  }
+}
+
+.heroSearchField {
+  display: flex;
+  flex-direction: column;
+  padding: p.$sp-3 p.$sp-5;
+  flex: 1;
+  min-width: 0;
+  border-right: 1px solid p.$color-border;
+  cursor: pointer;
+
+  @media (max-width: 700px) {
+    border-right: none;
+    border-bottom: 1px solid p.$color-border;
+  }
+
+  &.heroSearchFieldCapacity {
+    flex: 0 0 130px;
+
+    @media (max-width: 700px) { flex: 1; }
+  }
+}
+
+.heroSearchLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: p.$color-text;
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+.heroSearchInput {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  color: p.$color-text;
+  background: transparent;
+  width: 100%;
+  padding: 2px 0;
+
+  &::placeholder { color: #9ca3af; }
+  &.heroSearchInputError { color: p.$color-error; }
+}
+
+.heroSearchBtn {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-2;
+  background: p.$color-accent;
+  color: #ffffff;
+  border: none;
+  padding: p.$sp-4 p.$sp-6;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background p.$t-fast;
+  flex-shrink: 0;
+
+  &:hover { background: p.$color-accent-hover; }
+
+  @media (max-width: 700px) {
+    justify-content: center;
+    padding: p.$sp-4;
+    border-radius: 0;
+  }
+}
+
+.heroSearchError {
+  color: #ffcdd2;
+  font-size: 13px;
+  margin-top: p.$sp-2;
+  text-align: center;
+}
+
+.heroTrust {
+  display: flex;
+  gap: p.$sp-3;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: p.$sp-5;
+}
+
+.heroTrustPill {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: p.$r-full;
+  padding: p.$sp-1 p.$sp-4;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: p.$sp-8 p.$sp-6 p.$sp-10;
+}
+
+.section {
+  margin-bottom: p.$sp-10;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: p.$color-text;
+  margin-bottom: p.$sp-6;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: p.$sp-6;
+  margin-bottom: p.$sp-10;
+
+  @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 560px) { grid-template-columns: 1fr; }
+}
+
+.featureCard {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  padding: p.$sp-6;
+  text-align: center;
+  box-shadow: p.$shadow-xs;
+}
+
+.featureCardIcon {
+  font-size: 36px;
+  margin-bottom: p.$sp-3;
+}
+
+.featureCardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: p.$color-text;
+  margin-bottom: p.$sp-2;
+}
+
+.featureCardDesc {
+  font-size: 14px;
+  color: p.$color-muted;
+  line-height: 1.6;
+}
+
+.amenityPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: p.$sp-3;
+}
+
+.amenityPill {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-full;
+  padding: p.$sp-2 p.$sp-5;
+  font-size: 14px;
+  font-weight: 500;
+  color: p.$color-text;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all p.$t-fast;
+
+  &:hover {
+    background: p.$color-accent;
+    color: #fff;
+    border-color: p.$color-accent;
+  }
+}
+
+.cta {
+  background: p.$color-primary;
+  border-radius: p.$r-lg;
+  padding: p.$sp-8;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: p.$sp-4;
+}
+
+.ctaTitle {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.ctaSub {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 15px;
+}
+
+.ctaBtns {
+  display: flex;
+  gap: p.$sp-3;
+  flex-wrap: wrap;
+  justify-content: center;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './GoogleAuthButton.module.scss';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
@@ -11,7 +12,7 @@ export function GoogleAuthButton() {
   };
 
   return (
-    <button className="btn-google" onClick={handleClick} type="button">
+    <button className={styles.btn} onClick={handleClick} type="button">
       <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
         <path
           fill="#EA4335"

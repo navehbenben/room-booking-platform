@@ -1,0 +1,53 @@
+// BookingSummary.module.scss
+@use '../../styles/palette' as p;
+
+.wrap {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  padding: p.$sp-5;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+  box-shadow: p.$shadow-xs;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  color: p.$color-text;
+}
+
+.dates {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-2;
+}
+
+.dateRow {
+  display: flex;
+  gap: p.$sp-2;
+  font-size: 14px;
+}
+
+.label {
+  font-weight: 600;
+  color: p.$color-muted;
+  min-width: 60px;
+}
+
+.tzNote {
+  font-size: 12px;
+  color: #0a4d77;
+  background: #e8f4fd;
+  border: 1px solid #b3d9f5;
+  border-radius: p.$r-sm;
+  padding: p.$sp-2 p.$sp-3;
+  margin-bottom: p.$sp-3;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: p.$sp-2;
+}

@@ -1,0 +1,83 @@
+// LoginForm.module.scss
+@use '../../styles/palette' as p;
+
+.title {
+  font-size: 22px;
+  font-weight: 800;
+  color: p.$color-text;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: p.$color-muted;
+  margin-top: calc(-1 * p.$sp-3);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldHint {
+  font-size: 12px;
+  color: p.$color-muted;
+  margin: 0;
+}
+
+.submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.footer {
+  text-align: center;
+  font-size: 13px;
+  color: p.$color-muted;
+
+  a {
+    color: p.$color-accent;
+    font-weight: 600;
+  }
+}
+
+.inlineLink {
+  color: p.$color-accent;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-3;
+  color: p.$color-muted;
+  font-size: 13px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: p.$color-border;
+  }
+}
+
+.formError {
+  background: p.$color-error-bg;
+  border: 1px solid #fca5a5;
+  color: p.$color-error;
+  padding: p.$sp-3 p.$sp-4;
+  border-radius: p.$r-sm;
+  font-size: 13px;
+}

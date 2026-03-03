@@ -1,0 +1,91 @@
+// CheckoutPage.module.scss
+@use '../styles/palette' as p;
+
+@keyframes warningSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-6;
+  max-width: 860px;
+  margin: 0 auto;
+
+  @media (max-width: 560px) { padding: 0 p.$sp-2; }
+}
+
+.pageLoading,
+.pageExpired,
+.pageSuccess {
+  text-align: center;
+  padding: p.$sp-10 p.$sp-6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: p.$sp-4;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: p.$r-full;
+  background: p.$color-success-bg;
+  border: 2px solid p.$color-success;
+  color: p.$color-success;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.successTitle {
+  font-size: 24px;
+  font-weight: 800;
+  color: p.$color-success;
+}
+
+.successId {
+  font-size: 13px;
+  color: p.$color-muted;
+}
+
+.successActions {
+  display: flex;
+  gap: p.$sp-3;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: p.$sp-4;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: p.$sp-6;
+  align-items: start;
+
+  @media (max-width: 720px) { grid-template-columns: 1fr; }
+}
+
+.noRoom {
+  font-size: 14px;
+  color: p.$color-muted;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-2;
+}
+
+.warningBanner {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-2;
+  padding: p.$sp-3 p.$sp-4;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: p.$r-sm;
+  font-size: 14px;
+  font-weight: 500;
+  color: p.$color-warning;
+  animation: warningSlideIn 300ms ease;
+}

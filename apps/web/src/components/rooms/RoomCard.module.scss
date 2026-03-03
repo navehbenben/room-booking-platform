@@ -1,0 +1,248 @@
+// RoomCard.module.scss
+@use '../../styles/palette' as p;
+
+.card {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  overflow: hidden;
+  display: flex;
+  box-shadow: p.$shadow-xs;
+  transition: box-shadow p.$t-base, border-color p.$t-base, transform p.$t-base;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: p.$shadow-md;
+    border-color: #d1d5db;
+    transform: translateY(-2px);
+
+    .img { transform: scale(1.04); }
+  }
+
+  @media (max-width: 560px) { flex-direction: column; }
+}
+
+.cardDisabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.imageWrap {
+  width: 240px;
+  min-height: 170px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background: #e5e7eb;
+
+  @media (max-width: 560px) {
+    width: 100%;
+    height: 180px;
+    min-height: unset;
+  }
+  @media (max-width: 640px) {
+    width: 100%;
+    height: 180px;
+    min-height: unset;
+  }
+  @media (max-width: 720px) { width: 160px; }
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.imgFallback {
+  width: 100%;
+  height: 100%;
+  min-height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+}
+
+.badge {
+  position: absolute;
+  top: p.$sp-3;
+  left: p.$sp-3;
+  background: p.$color-success;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px p.$sp-2;
+  border-radius: p.$r-sm;
+  text-transform: uppercase;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.urgency {
+  position: absolute;
+  top: p.$sp-3;
+  right: p.$sp-3;
+  background: rgba(200, 50, 0, 0.88);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 3px p.$sp-2;
+  border-radius: p.$r-sm;
+  backdrop-filter: blur(2px);
+}
+
+.body {
+  flex: 1;
+  padding: p.$sp-4 p.$sp-5;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-2;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: p.$sp-3;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 700;
+  color: p.$color-accent;
+  line-height: 1.3;
+}
+
+.capacity {
+  font-size: 13px;
+  color: p.$color-muted;
+  display: flex;
+  align-items: center;
+  gap: p.$sp-1;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: p.$sp-1;
+  margin-top: p.$sp-1;
+}
+
+.featureTag {
+  background: #f0f4ff;
+  color: #3b5bdb;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px p.$sp-2;
+  border-radius: p.$r-xs;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-4;
+  font-size: 13px;
+  color: p.$color-muted;
+  margin-top: p.$sp-1;
+}
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: p.$color-accent;
+  color: #ffffff;
+  border-radius: p.$r-sm p.$r-sm p.$r-sm 0;
+  padding: p.$sp-1 p.$sp-2;
+  min-width: 42px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.ratingScore {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ratingLabel {
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+.reviews {
+  font-size: 12px;
+  color: p.$color-muted;
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.freeCancel {
+  font-size: 12px;
+  color: p.$color-success;
+  font-weight: 500;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.priceAmount {
+  font-size: 20px;
+  font-weight: 800;
+  color: p.$color-text;
+}
+
+.priceUnit {
+  font-size: 13px;
+  color: p.$color-muted;
+}
+
+.cta {
+  background: p.$color-accent;
+  color: #ffffff;
+  border: none;
+  border-radius: p.$r-sm;
+  padding: p.$sp-2 p.$sp-4;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background p.$t-fast;
+  align-self: flex-end;
+
+  &:hover:not(:disabled) { background: p.$color-accent-hover; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: p.$sp-3;
+  border-top: 1px solid p.$color-border;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dates {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: p.$color-muted;
+  margin-top: p.$sp-1;
+}

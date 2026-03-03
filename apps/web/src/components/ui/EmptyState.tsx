@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './EmptyState.module.scss';
 
 interface EmptyStateProps {
   title: string;
@@ -7,8 +8,8 @@ interface EmptyStateProps {
 
 export const EmptyState = React.memo(function EmptyState({ title, subtitle }: EmptyStateProps) {
   return (
-    <div className="empty-state">
-      <div className="empty-state__icon">
+    <div className={styles.wrap}>
+      <div className={styles.icon}>
         <svg
           width="28"
           height="28"
@@ -23,8 +24,8 @@ export const EmptyState = React.memo(function EmptyState({ title, subtitle }: Em
           <path d="m21 21-4.35-4.35" />
         </svg>
       </div>
-      <div className="empty-state__title">{title}</div>
-      {subtitle && <div className="empty-state__subtitle">{subtitle}</div>}
+      <div className={styles.title}>{title}</div>
+      {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
     </div>
   );
 });

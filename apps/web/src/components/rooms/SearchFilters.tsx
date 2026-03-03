@@ -11,6 +11,7 @@ import {
   localToday,
   isoToLocalDate,
 } from '../../utils/date';
+import styles from './SearchFilters.module.scss';
 
 interface SearchFiltersProps {
   params: SearchParams;
@@ -55,11 +56,11 @@ export const SearchFilters = React.memo(function SearchFilters({
   );
 
   return (
-    <div className="search-filters">
-      <div className="search-filters__heading">{t('filters.heading')}</div>
-      <div className="search-filters__body">
+    <div className={styles.wrap}>
+      <div className={styles.heading}>{t('filters.heading')}</div>
+      <div className={styles.body}>
         <div>
-          <label className="search-filters__label">{t('filters.checkIn')}</label>
+          <label className={styles.label}>{t('filters.checkIn')}</label>
           <input
             className={`input${isPastStart ? ' input--error' : ''}`}
             type="date"
@@ -70,7 +71,7 @@ export const SearchFilters = React.memo(function SearchFilters({
           {isPastStart && <span className="input-error">{t('filters.checkInError')}</span>}
         </div>
         <div>
-          <label className="search-filters__label">{t('filters.checkOut')}</label>
+          <label className={styles.label}>{t('filters.checkOut')}</label>
           <input
             className={`input${!isDateRangeValid ? ' input--error' : ''}`}
             type="date"
@@ -81,7 +82,7 @@ export const SearchFilters = React.memo(function SearchFilters({
           {!isDateRangeValid && <span className="input-error">{t('filters.checkOutError')}</span>}
         </div>
         <div>
-          <label className="search-filters__label">{t('filters.minCapacity')}</label>
+          <label className={styles.label}>{t('filters.minCapacity')}</label>
           <input
             className="input"
             type="number"
@@ -93,22 +94,22 @@ export const SearchFilters = React.memo(function SearchFilters({
           />
         </div>
         <div>
-          <label className="search-filters__label">{t('filters.amenities')}</label>
-          <div className="amenity-pills">
+          <label className={styles.label}>{t('filters.amenities')}</label>
+          <div className={styles.amenityPills}>
             {AMENITY_OPTIONS.map(({ key, labelKey, icon }) => (
               <button
                 key={key}
                 type="button"
-                className={`amenity-pill${activeFeatures.includes(key) ? ' amenity-pill--active' : ''}`}
+                className={[styles.amenityPill, activeFeatures.includes(key) && styles.amenityPillActive].filter(Boolean).join(' ')}
                 onClick={() => toggleFeature(key)}
               >
-                <span className="amenity-pill__icon">{icon}</span>
+                <span className={styles.amenityPillIcon}>{icon}</span>
                 {t(labelKey)}
               </button>
             ))}
           </div>
           {activeFeatures.length > 0 && (
-            <button type="button" className="amenity-pills__clear" onClick={() => onParamChange('featuresText', '')}>
+            <button type="button" className={styles.pillsClear} onClick={() => onParamChange('featuresText', '')}>
               {t('filters.clearAmenities')}
             </button>
           )}
@@ -119,7 +120,7 @@ export const SearchFilters = React.memo(function SearchFilters({
           loading={loading}
           disabled={loading || !isValid}
           aria-label="Search rooms"
-          className="search-filters__search-btn"
+          className={styles.searchBtn}
         >
           {t('filters.searchBtn')}
         </Button>

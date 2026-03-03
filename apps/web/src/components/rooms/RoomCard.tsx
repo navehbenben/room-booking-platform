@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Room } from '../../types';
 import { FEATURE_LABEL_KEYS } from '../../constants/amenities';
 import { roomImageUrl, urgencyLabel } from '../../utils/room';
+import styles from './RoomCard.module.scss';
 
 interface RoomCardProps {
   room: Room;
@@ -33,7 +34,7 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
 
   return (
     <div
-      className={`room-card${disabled ? ' room-card--disabled' : ''}`}
+      className={[styles.card, disabled && styles.cardDisabled].filter(Boolean).join(' ')}
       onClick={handleCardClick}
       role="button"
       tabIndex={disabled ? -1 : 0}
@@ -44,30 +45,30 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
       aria-disabled={disabled}
     >
       {/* Image */}
-      <div className="room-card__image-wrap">
+      <div className={styles.imageWrap}>
         {!imgError ? (
           <img
-            className="room-card__img"
+            className={styles.img}
             src={roomImageUrl(room.name)}
             alt={room.name}
             loading="lazy"
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="room-card__img-fallback" aria-hidden="true">
+          <div className={styles.imgFallback} aria-hidden="true">
             🏢
           </div>
         )}
-        <span className="room-card__badge">{t('roomCard.available')}</span>
-        {urgency && <span className="room-card__urgency">{urgency}</span>}
+        <span className={styles.badge}>{t('roomCard.available')}</span>
+        {urgency && <span className={styles.urgency}>{urgency}</span>}
       </div>
 
       {/* Card body */}
-      <div className="room-card__body">
-        <div className="room-card__name">{room.name}</div>
+      <div className={styles.body}>
+        <div className={styles.name}>{room.name}</div>
 
-        <div className="room-card__meta">
-          <span className="room-card__capacity">
+        <div className={styles.meta}>
+          <span className={styles.capacity}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
@@ -79,14 +80,14 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
         </div>
 
         {room.features.length > 0 && (
-          <div className="room-card__features">
+          <div className={styles.features} data-testid="features-list">
             {visibleFeatures.map((f) => (
-              <span key={f} className="room-card__feature-tag">
+              <span key={f} className={styles.featureTag}>
                 {FEATURE_LABEL_KEYS[f] ? t(FEATURE_LABEL_KEYS[f]) : f}
               </span>
             ))}
             {extraCount > 0 && (
-              <span className="room-card__feature-tag room-card__feature-tag--more">
+              <span className={styles.featureTag}>
                 {t('roomCard.moreFeatures', { count: extraCount })}
               </span>
             )}
@@ -94,7 +95,7 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
         )}
 
         {dateRange && (
-          <div className="room-card__dates">
+          <div className={styles.dates}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <rect x="3" y="4" width="18" height="18" rx="2" />
               <line x1="16" y1="2" x2="16" y2="6" />
@@ -107,8 +108,8 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
           </div>
         )}
 
-        <div className="room-card__footer">
-          <button className="room-card__cta" onClick={handleButtonClick} disabled={disabled}>
+        <div className={styles.footer}>
+          <button className={styles.cta} onClick={handleButtonClick} disabled={disabled}>
             {t('roomCard.seeAvailability')}
           </button>
         </div>

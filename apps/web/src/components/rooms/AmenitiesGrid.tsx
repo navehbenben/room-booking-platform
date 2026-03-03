@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './AmenitiesGrid.module.scss';
 
 const FEATURE_ICONS: Record<string, React.ReactNode> = {
   projector: (
@@ -179,15 +180,15 @@ export const AmenitiesGrid = React.memo(function AmenitiesGrid({ features }: Ame
   if (features.length === 0) return null;
 
   return (
-    <div className="amenities-grid">
+    <div className={styles.grid}>
       {features.map((f) => {
         const icon = FEATURE_ICONS[f] ?? null;
         const labelKey = GRID_LABEL_KEYS[f];
         const label = labelKey ? t(labelKey) : f;
         return (
-          <div key={f} className="amenity-tile">
-            {icon && <span className="amenity-tile__icon">{icon}</span>}
-            <span className="amenity-tile__label">{label}</span>
+          <div key={f} className={styles.tile}>
+            {icon && <span className={styles.tileIcon}>{icon}</span>}
+            <span className={styles.tileLabel}>{label}</span>
           </div>
         );
       })}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGdpr } from '../hooks/useGdpr';
+import styles from './GdprPage.module.scss';
 
 interface GdprPageProps {
   isLoggedIn: boolean;
@@ -17,16 +18,16 @@ interface ToggleSwitchProps {
 
 function ToggleSwitch({ checked, onChange, label, id }: ToggleSwitchProps) {
   return (
-    <label className="gdpr-toggle" htmlFor={id}>
-      <span className="gdpr-toggle__label">{label}</span>
+    <label className={styles.toggle} htmlFor={id}>
+      <span className={styles.toggleLabel}>{label}</span>
       <button
         id={id}
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`gdpr-toggle__btn${checked ? ' gdpr-toggle__btn--on' : ''}`}
+        className={checked ? `${styles.toggleBtn} ${styles.toggleBtnOn}` : styles.toggleBtn}
       >
-        <span className="gdpr-toggle__thumb" />
+        <span className={styles.toggleThumb} />
       </button>
     </label>
   );
@@ -48,25 +49,25 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
   };
 
   return (
-    <div className="gdpr-page">
+    <div className={styles.page}>
       {isLoggedIn ? (
-        <Link to="/userprofile" className="gdpr-page__back">
+        <Link to="/userprofile" className={styles.back}>
           {t('gdpr.backToProfile')}
         </Link>
       ) : (
-        <Link to="/" className="gdpr-page__back">
+        <Link to="/" className={styles.back}>
           {t('gdpr.back')}
         </Link>
       )}
 
-      <h2 className="gdpr-page__title">{t('gdpr.title')}</h2>
-      <p className="gdpr-page__intro">{t('gdpr.intro')}</p>
+      <h2 className={styles.title}>{t('gdpr.title')}</h2>
+      <p className={styles.intro}>{t('gdpr.intro')}</p>
 
       {/* ── Consent Preferences ─────────────────────────────────────── */}
-      <section className="gdpr-section">
-        <h3 className="gdpr-section__title">{t('gdpr.consent.title')}</h3>
-        <p className="gdpr-section__desc">{t('gdpr.consent.desc')}</p>
-        <div className="gdpr-section__body">
+      <section className={styles.section}>
+        <h3 className={styles.sectionTitle}>{t('gdpr.consent.title')}</h3>
+        <p className={styles.sectionDesc}>{t('gdpr.consent.desc')}</p>
+        <div className={styles.sectionBody}>
           <ToggleSwitch
             id="consent-analytics"
             label={t('gdpr.consent.analyticsLabel')}
@@ -79,17 +80,17 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
             checked={consent.marketing}
             onChange={(v) => updateConsent('marketing', v)}
           />
-          <p className="gdpr-section__updated">
+          <p className={styles.sectionUpdated}>
             {t('gdpr.consent.lastUpdated', { date: new Date(consent.updatedAt).toLocaleString() })}
           </p>
         </div>
       </section>
 
       {/* ── Right to Restriction ────────────────────────────────────── */}
-      <section className="gdpr-section">
-        <h3 className="gdpr-section__title">{t('gdpr.restriction.title')}</h3>
-        <p className="gdpr-section__desc">{t('gdpr.restriction.desc')}</p>
-        <div className="gdpr-section__body">
+      <section className={styles.section}>
+        <h3 className={styles.sectionTitle}>{t('gdpr.restriction.title')}</h3>
+        <p className={styles.sectionDesc}>{t('gdpr.restriction.desc')}</p>
+        <div className={styles.sectionBody}>
           <ToggleSwitch
             id="consent-restrict"
             label={t('gdpr.restriction.restrictLabel')}
@@ -100,19 +101,19 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
       </section>
 
       {/* ── Right to Access + Portability ───────────────────────────── */}
-      <section className="gdpr-section">
-        <h3 className="gdpr-section__title">{t('gdpr.access.title')}</h3>
-        <p className="gdpr-section__desc">{t('gdpr.access.desc')}</p>
-        <div className="gdpr-section__body">
+      <section className={styles.section}>
+        <h3 className={styles.sectionTitle}>{t('gdpr.access.title')}</h3>
+        <p className={styles.sectionDesc}>{t('gdpr.access.desc')}</p>
+        <div className={styles.sectionBody}>
           {isLoggedIn ? (
             <>
               <button className="btn btn--secondary" onClick={exportData} disabled={exporting}>
                 {exporting ? t('gdpr.access.exportingBtn') : t('gdpr.access.exportBtn')}
               </button>
-              {exportError && <p className="gdpr-error">{exportError}</p>}
+              {exportError && <p className={styles.error}>{exportError}</p>}
             </>
           ) : (
-            <p className="gdpr-section__login-hint">
+            <p className={styles.sectionLoginHint}>
               <Link to="/">{t('gdpr.access.loginLink')}</Link> {t('gdpr.access.loginHint')}
             </p>
           )}
@@ -120,21 +121,21 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
       </section>
 
       {/* ── Right to Erasure ────────────────────────────────────────── */}
-      <section className="gdpr-section gdpr-section--danger">
-        <h3 className="gdpr-section__title">{t('gdpr.erasure.title')}</h3>
-        <p className="gdpr-section__desc">
+      <section className={`${styles.section} ${styles.sectionDanger}`}>
+        <h3 className={styles.sectionTitle}>{t('gdpr.erasure.title')}</h3>
+        <p className={styles.sectionDesc}>
           {t('gdpr.erasure.desc')} <strong>{t('gdpr.erasure.descStrong')}</strong>
         </p>
-        <div className="gdpr-section__body">
+        <div className={styles.sectionBody}>
           {isLoggedIn ? (
             <>
               {confirmDelete && (
-                <p className="gdpr-confirm-msg">
+                <p className={styles.confirmMsg}>
                   {t('gdpr.erasure.confirmMsg')} <strong>{t('gdpr.erasure.confirmMsgStrong')}</strong>{' '}
                   {t('gdpr.erasure.confirmMsgSuffix')}
                 </p>
               )}
-              <div className="gdpr-delete-row">
+              <div className={styles.deleteRow}>
                 <button
                   className={`btn btn--danger${confirmDelete ? ' btn--pulse' : ''}`}
                   onClick={handleDeleteClick}
@@ -152,10 +153,10 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
                   </button>
                 )}
               </div>
-              {deleteError && <p className="gdpr-error">{deleteError}</p>}
+              {deleteError && <p className={styles.error}>{deleteError}</p>}
             </>
           ) : (
-            <p className="gdpr-section__login-hint">
+            <p className={styles.sectionLoginHint}>
               <Link to="/">{t('gdpr.erasure.loginLink')}</Link> {t('gdpr.erasure.loginHint')}
             </p>
           )}
@@ -163,9 +164,9 @@ export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
       </section>
 
       {/* ── Contact ─────────────────────────────────────────────────── */}
-      <section className="gdpr-section">
-        <h3 className="gdpr-section__title">{t('gdpr.contact.title')}</h3>
-        <p className="gdpr-section__desc">
+      <section className={styles.section}>
+        <h3 className={styles.sectionTitle}>{t('gdpr.contact.title')}</h3>
+        <p className={styles.sectionDesc}>
           {t('gdpr.contact.desc')} <a href={`mailto:${t('gdpr.contact.email')}`}>{t('gdpr.contact.email')}</a>
           {t('gdpr.contact.descSuffix')}
         </p>

@@ -1,0 +1,56 @@
+// LanguageSwitcher.module.scss
+@use '../../styles/palette' as p;
+
+.wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: p.$r-sm;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 6px;
+  line-height: 1;
+  color: #ffffff;
+  transition: background p.$t-fast;
+
+  &:hover { background: rgba(255, 255, 255, 0.25); }
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-md;
+  box-shadow: p.$shadow-md;
+  min-width: 130px;
+  z-index: 200;
+  overflow: hidden;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  padding: 9px 14px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 13px;
+  color: p.$color-text;
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:hover { background: #f3f4f6; }
+
+  &.optionActive {
+    font-weight: 600;
+    color: p.$color-primary;
+    background: #f0f4ff;
+  }
+}

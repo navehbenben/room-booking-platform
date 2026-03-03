@@ -17,16 +17,16 @@ describe('CountdownTimer', () => {
     expect(screen.getByText('00:00')).toBeInTheDocument();
   });
 
-  it('applies warning class when remaining < 60 seconds', () => {
+  it('applies warning state when remaining < 60 seconds', () => {
     const expiresAt = new Date(Date.now() + 59_000).toISOString();
     const { container } = render(<CountdownTimer expiresAt={expiresAt} />);
-    expect(container.querySelector('.countdown--warning')).toBeInTheDocument();
+    expect(container.firstChild).toHaveAttribute('data-warning', 'true');
   });
 
-  it('does not apply warning class when remaining >= 60 seconds', () => {
+  it('does not apply warning state when remaining >= 60 seconds', () => {
     const expiresAt = new Date(Date.now() + 120_000).toISOString();
     const { container } = render(<CountdownTimer expiresAt={expiresAt} />);
-    expect(container.querySelector('.countdown--warning')).not.toBeInTheDocument();
+    expect(container.firstChild).not.toHaveAttribute('data-warning');
   });
 
   it('counts down each second', () => {

@@ -10,6 +10,7 @@ import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { formatInTimezone, timezoneOffsetLabel } from '../utils/date';
 import type { RoomDetail } from '../types';
+import styles from './RoomDetailPage.module.scss';
 
 interface RoomDetailPageProps {
   isLoggedIn: boolean;
@@ -49,7 +50,7 @@ export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
   if (loading) {
     return (
       <div className="main">
-        <div className="room-detail--loading">{t('roomDetail.loadingText')}</div>
+        <div className={styles.loading}>{t('roomDetail.loadingText')}</div>
       </div>
     );
   }
@@ -71,25 +72,25 @@ export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
 
   return (
     <div className="main">
-      <div className="room-detail-page">
-        <div className="room-detail">
-          <button className="room-detail__back" onClick={handleBack}>
+      <div className={styles.page}>
+        <div className={styles.detail}>
+          <button className={styles.back} onClick={handleBack}>
             {t('roomDetail.backToResults')}
           </button>
 
           <ImageGallery images={room.images} />
 
-          <div className="room-detail__header">
-            <h1 className="room-detail__name">{room.name}</h1>
-            <div className="room-detail__badges">
+          <div className={styles.header}>
+            <h1 className={styles.name}>{room.name}</h1>
+            <div className={styles.badges}>
               <Badge variant="neutral">{t('roomDetail.capacity', { count: room.capacity })}</Badge>
               {availabilityBadge(room.availabilityStatus, t)}
             </div>
           </div>
 
           {/* Timezone notice — always visible so users know which local time applies */}
-          <div className="room-detail__tz-banner" role="note">
-            <span className="room-detail__tz-icon">🌍</span>
+          <div className={styles.tzBanner} role="note">
+            <span className={styles.tzIcon}>🌍</span>
             <span>
               {t('roomDetail.timesInTz')} <strong>{tz}</strong> ({tzLabel}).
               {start && end && (
@@ -103,35 +104,35 @@ export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
             </span>
           </div>
 
-          {room.description && <p className="room-detail__description">{room.description}</p>}
+          {room.description && <p className={styles.description}>{room.description}</p>}
 
           {room.features.length > 0 && (
-            <div className="room-detail__amenities">
-              <h2 className="room-detail__section-title">{t('roomDetail.amenitiesTitle')}</h2>
+            <div className={styles.amenities}>
+              <h2 className={styles.sectionTitle}>{t('roomDetail.amenitiesTitle')}</h2>
               <AmenitiesGrid features={room.features} />
             </div>
           )}
 
-          <div className="room-detail__policies">
-            <h2 className="room-detail__section-title">{t('roomDetail.policiesTitle')}</h2>
-            <ul className="room-detail__policy-list">
+          <div className={styles.policies}>
+            <h2 className={styles.sectionTitle}>{t('roomDetail.policiesTitle')}</h2>
+            <ul className={styles.policyList}>
               <li>{t('roomDetail.policy1')}</li>
               <li>{t('roomDetail.policy2')}</li>
               <li>{t('roomDetail.policy3')}</li>
             </ul>
           </div>
 
-          <div className="room-detail__cta">
-            <div className="room-detail__cta-title">{t('roomDetail.ctaTitle')}</div>
+          <div className={styles.cta}>
+            <div className={styles.ctaTitle}>{t('roomDetail.ctaTitle')}</div>
 
             {holdError && <div className="alert alert--error">{holdError}</div>}
 
             {!start || !end ? (
-              <p className="room-detail__no-dates">{t('roomDetail.noDatesMsg')}</p>
+              <p className={styles.noDates}>{t('roomDetail.noDatesMsg')}</p>
             ) : !isLoggedIn ? (
-              <div className="room-detail__login-cta">
-                <p className="room-detail__login-cta-text">{t('roomDetail.loginCtaText')}</p>
-                <div className="room-detail__login-cta-btns">
+              <div className={styles.loginCta}>
+                <p className={styles.loginCtaText}>{t('roomDetail.loginCtaText')}</p>
+                <div className={styles.loginCtaBtns}>
                   <Button variant="primary" onClick={handleSignInToBook}>
                     {t('roomDetail.signInToBook')}
                   </Button>

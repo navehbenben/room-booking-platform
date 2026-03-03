@@ -5,6 +5,7 @@ import { BookingCard } from '../components/bookings/BookingCard';
 import { SkeletonCard } from '../components/ui/SkeletonCard';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Button } from '../components/ui/Button';
+import styles from './MyBookingsPage.module.scss';
 
 export function MyBookingsPage() {
   const { t } = useTranslation();
@@ -12,9 +13,9 @@ export function MyBookingsPage() {
 
   return (
     <div className="main">
-      <div className="bookings-page">
-        <div className="bookings-page__header">
-          <h1 className="bookings-page__title">{t('bookings.title')}</h1>
+      <div className={styles.page}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>{t('bookings.title')}</h1>
           <Button variant="ghost" size="sm" onClick={load} loading={loading}>
             {t('bookings.refresh')}
           </Button>
@@ -23,7 +24,7 @@ export function MyBookingsPage() {
         {error && <div className="alert alert--error">{error}</div>}
 
         {loading ? (
-          <div className="booking-list">
+          <div className={styles.list}>
             {Array.from({ length: 3 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
@@ -31,7 +32,7 @@ export function MyBookingsPage() {
         ) : bookings.length === 0 ? (
           <EmptyState title={t('bookings.emptyTitle')} subtitle={t('bookings.emptySubtitle')} />
         ) : (
-          <div className="booking-list">
+          <div className={styles.list}>
             {bookings.map((booking) => (
               <BookingCard key={booking.bookingId} booking={booking} cancellingId={cancellingId} onCancel={cancel} />
             ))}

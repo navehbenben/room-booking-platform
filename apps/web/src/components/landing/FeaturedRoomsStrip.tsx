@@ -6,6 +6,7 @@ import { roomImageUrl } from '../../utils/room';
 import { dateToStartISO, dateToEndISO, defaultStart, defaultEnd } from '../../utils/date';
 import { FEATURE_LABEL_KEYS } from '../../constants/amenities';
 import type { Room } from '../../types';
+import styles from './FeaturedRoomsStrip.module.scss';
 
 export function FeaturedRoomsStrip() {
   const { t } = useTranslation();
@@ -54,19 +55,19 @@ export function FeaturedRoomsStrip() {
   if (!loading && rooms.length === 0) return null;
 
   return (
-    <section className="featured-strip">
-      <div className="featured-strip__header">
-        <h2 className="featured-strip__title">{t('landing.featuredStrip.title')}</h2>
-        <div className="featured-strip__nav">
+    <section className={styles.strip}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{t('landing.featuredStrip.title')}</h2>
+        <div className={styles.nav}>
           <button
-            className="featured-strip__arrow"
+            className={styles.arrow}
             onClick={() => scroll('left')}
             aria-label={t('landing.featuredStrip.scrollLeft')}
           >
             ‹
           </button>
           <button
-            className="featured-strip__arrow"
+            className={styles.arrow}
             onClick={() => scroll('right')}
             aria-label={t('landing.featuredStrip.scrollRight')}
           >
@@ -75,46 +76,46 @@ export function FeaturedRoomsStrip() {
         </div>
       </div>
 
-      <div className="featured-strip__track" ref={scrollRef}>
+      <div className={styles.track} ref={scrollRef}>
         {loading
           ? Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className="featured-room-card featured-room-card--skeleton" aria-hidden="true">
-                <div className="featured-room-card__img-wrap skeleton-shimmer" />
-                <div className="featured-room-card__body">
-                  <div className="skeleton-line skeleton-line--title" />
-                  <div className="skeleton-line skeleton-line--short" />
+              <div key={i} className={`${styles.roomCard} ${styles.roomCardSkeleton}`} aria-hidden="true">
+                <div className={`${styles.imgWrap} ${styles.skeletonShimmer}`} />
+                <div className={styles.body}>
+                  <div className={`${styles.skeletonLine} ${styles.skeletonLineTitle}`} />
+                  <div className={`${styles.skeletonLine} ${styles.skeletonLineShort}`} />
                 </div>
               </div>
             ))
           : rooms.map((room) => (
               <button
                 key={room.roomId}
-                className="featured-room-card"
+                className={styles.roomCard}
                 onClick={() => handleView(room.roomId)}
                 aria-label={t('roomCard.viewAriaLabel', { name: room.name })}
               >
-                <div className="featured-room-card__img-wrap">
+                <div className={styles.imgWrap}>
                   {!imgErrors[room.roomId] ? (
                     <img
-                      className="featured-room-card__img"
+                      className={styles.img}
                       src={roomImageUrl(room.name)}
                       alt={room.name}
                       loading="lazy"
                       onError={() => setImgErrors((prev) => ({ ...prev, [room.roomId]: true }))}
                     />
                   ) : (
-                    <div className="featured-room-card__img-fallback" aria-hidden="true">
+                    <div className={styles.imgFallback} aria-hidden="true">
                       🏢
                     </div>
                   )}
                 </div>
-                <div className="featured-room-card__body">
-                  <div className="featured-room-card__name">{room.name}</div>
-                  <div className="featured-room-card__capacity">{t('roomCard.capacity', { count: room.capacity })}</div>
+                <div className={styles.body}>
+                  <div className={styles.name}>{room.name}</div>
+                  <div className={styles.capacity}>{t('roomCard.capacity', { count: room.capacity })}</div>
                   {room.features.length > 0 && (
-                    <div className="featured-room-card__features">
+                    <div className={styles.features}>
                       {room.features.slice(0, 2).map((f) => (
-                        <span key={f} className="featured-room-card__tag">
+                        <span key={f} className={styles.tag}>
                           {FEATURE_LABEL_KEYS[f] ? t(FEATURE_LABEL_KEYS[f]) : f}
                         </span>
                       ))}

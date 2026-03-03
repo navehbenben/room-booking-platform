@@ -1,0 +1,53 @@
+// ExpiryModal.module.scss
+@use '../../styles/palette' as p;
+
+@keyframes modalIn {
+  from { transform: scale(0.92); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: p.$sp-6;
+}
+
+.modal {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-xl;
+  padding: p.$sp-8;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: p.$sp-5;
+  box-shadow: p.$shadow-lg;
+  animation: modalIn 200ms ease;
+}
+
+.icon {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: p.$color-error;
+}
+
+.message {
+  font-size: 14px;
+  color: p.$color-muted;
+  line-height: 1.6;
+}

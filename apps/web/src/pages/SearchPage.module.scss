@@ -1,0 +1,149 @@
+// SearchPage.module.scss
+@use '../styles/palette' as p;
+
+.page {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: p.$sp-6;
+  align-items: start;
+
+  @media (max-width: 900px) { grid-template-columns: 240px 1fr; }
+  @media (max-width: 720px) { grid-template-columns: 1fr; }
+}
+
+.sidebar {
+  position: sticky;
+  top: 80px;
+
+  @media (max-width: 720px) {
+    display: none;
+    position: static;
+
+    &.sidebarOpen { display: block; }
+  }
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: p.$sp-3;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 800;
+  color: p.$color-text;
+}
+
+.meta {
+  font-size: 14px;
+  color: p.$color-muted;
+}
+
+.filterToggle {
+  display: none;
+  align-items: center;
+  gap: p.$sp-2;
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-sm;
+  padding: 8px p.$sp-4;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: p.$color-accent;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  transition: background p.$t-fast;
+  margin-bottom: p.$sp-2;
+
+  &:hover { background: #e8f0fb; }
+
+  @media (max-width: 720px) { display: flex; }
+}
+
+.sortBar {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-2;
+  flex-shrink: 0;
+
+  @media (max-width: 700px) { display: none; }
+}
+
+.sortLabel {
+  font-size: 13px;
+  color: p.$color-muted;
+  white-space: nowrap;
+}
+
+.sortSelect {
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-sm;
+  padding: p.$sp-1 p.$sp-3;
+  font-size: 13px;
+  font-family: inherit;
+  color: p.$color-text;
+  background: p.$color-white;
+  cursor: pointer;
+  outline: none;
+
+  &:focus { border-color: p.$color-accent; }
+}
+
+.loginBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e8f4fd;
+  border: 1px solid #b3d7f5;
+  border-radius: p.$r-md;
+  padding: p.$sp-3 p.$sp-5;
+  font-size: 14px;
+  color: p.$color-primary;
+  margin-bottom: p.$sp-4;
+  gap: p.$sp-3;
+  flex-wrap: wrap;
+
+  @media (max-width: 700px) { font-size: 13px; }
+}
+
+.loginLink {
+  font-weight: 700;
+  color: p.$color-accent;
+  white-space: nowrap;
+}
+
+.roomList {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+}
+
+.roomEmpty {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+}
+
+.loadMoreSpinner {
+  display: flex;
+  justify-content: center;
+  padding: p.$sp-6 0;
+}
+
+.endMessage {
+  text-align: center;
+  font-size: 13px;
+  color: p.$color-muted;
+  padding: p.$sp-4 0 p.$sp-8;
+}

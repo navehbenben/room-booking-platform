@@ -1,0 +1,20 @@
+// CheckoutForm.module.scss
+@use '../../styles/palette' as p;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  padding: p.$sp-5;
+  box-shadow: p.$shadow-xs;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: p.$color-text;
+  margin-bottom: p.$sp-2;
+}

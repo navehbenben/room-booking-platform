@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner } from './Spinner';
+import styles from './Button.module.scss';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
@@ -16,9 +17,9 @@ export const Button = React.memo(function Button({
   className = '',
   ...props
 }: ButtonProps) {
-  const classes = ['btn', `btn--${variant}`, `btn--${size}`, className].filter(Boolean).join(' ');
+  const classes = [styles.btn, styles[variant], styles[size], className].filter(Boolean).join(' ');
   return (
-    <button className={classes} disabled={disabled || loading} {...props}>
+    <button className={classes} data-variant={variant} disabled={disabled || loading} {...props}>
       {loading ? <Spinner size={size === 'sm' ? 14 : 16} /> : children}
     </button>
   );

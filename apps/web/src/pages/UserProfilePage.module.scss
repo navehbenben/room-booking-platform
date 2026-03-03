@@ -1,0 +1,232 @@
+// UserProfilePage.module.scss
+@use '../styles/palette' as p;
+
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: p.$sp-6 p.$sp-4 p.$sp-10;
+}
+
+.skeleton {
+  background: p.$color-border;
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+  border-radius: p.$r-md;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-6;
+  background: linear-gradient(135deg, p.$color-primary 0%, p.$color-accent 100%);
+  border-radius: p.$r-xl;
+  padding: p.$sp-8;
+  color: p.$color-white;
+  margin-bottom: p.$sp-6;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    text-align: center;
+    padding: p.$sp-6;
+  }
+}
+
+.heroAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: p.$r-full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: p.$color-white;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  @media (max-width: 400px) { width: 60px; height: 60px; font-size: 22px; }
+}
+
+.heroInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.heroName {
+  font-size: 22px;
+  font-weight: 700;
+
+  @media (max-width: 400px) { font-size: 18px; }
+}
+
+.heroEmail {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.heroSince {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: p.$sp-6;
+  margin-bottom: p.$sp-6;
+
+  @media (max-width: 700px) { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  padding: p.$sp-6;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: p.$color-text;
+  margin: 0 0 p.$sp-5 0;
+  padding-bottom: p.$sp-3;
+  border-bottom: 1px solid p.$color-border;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: p.$sp-3;
+  padding: p.$sp-3 0;
+  border-bottom: 1px solid p.$color-border;
+
+  &:last-of-type { border-bottom: none; }
+
+  @media (max-width: 400px) { flex-direction: column; align-items: flex-start; }
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: p.$color-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.fieldValue {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-2;
+  font-size: 14px;
+  color: p.$color-text;
+}
+
+.fieldLocked { color: p.$color-text-2; }
+
+.fieldLockIcon {
+  font-size: 13px;
+  cursor: default;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: p.$color-accent;
+  font-size: 16px;
+  padding: 2px 4px;
+  border-radius: p.$r-sm;
+  line-height: 1;
+  transition: background 0.15s;
+
+  &:hover { background: p.$color-card-hover; }
+}
+
+.editInline {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-2;
+  width: 100%;
+
+  input { width: 100%; }
+}
+
+.editInlineActions {
+  display: flex;
+  gap: p.$sp-2;
+}
+
+.successBadge {
+  font-size: 12px;
+  color: p.$color-success;
+  font-weight: 600;
+  background: p.$color-success-bg;
+  padding: 2px 8px;
+  border-radius: p.$r-full;
+}
+
+.connectedAccount {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-3;
+  font-size: 14px;
+  color: p.$color-text;
+}
+
+.connectedAccountIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: p.$r-full;
+  background: p.$color-accent;
+  color: p.$color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.connectedAccountStatus {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: p.$r-full;
+
+  &.on {
+    color: p.$color-success;
+    background: p.$color-success-bg;
+  }
+
+  &.off {
+    color: p.$color-muted;
+    background: p.$color-page;
+  }
+}
+
+.privacyCard {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  padding: p.$sp-5 p.$sp-6;
+  text-align: center;
+}
+
+.privacyCardLink {
+  color: p.$color-accent;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}

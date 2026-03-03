@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../hooks/useProfile';
 import { friendlyError } from '../utils/errorMessages';
+import styles from './UserProfilePage.module.scss';
 
 /** Deterministic avatar background from email — seeded HSL */
 function avatarColor(email: string): string {
@@ -28,20 +29,20 @@ function formatMemberSince(iso: string, locale?: string): string {
 
 function ProfileSkeleton() {
   return (
-    <div className="profile-page">
-      <div className="profile-hero profile-skeleton" style={{ height: 160 }} />
-      <div className="profile-grid" style={{ marginTop: 24 }}>
-        <div className="profile-card">
-          <div className="profile-skeleton" style={{ height: 20, width: '60%', marginBottom: 16, borderRadius: 4 }} />
-          <div className="profile-skeleton" style={{ height: 40, marginBottom: 12, borderRadius: 4 }} />
-          <div className="profile-skeleton" style={{ height: 40, marginBottom: 20, borderRadius: 4 }} />
-          <div className="profile-skeleton" style={{ height: 36, width: 120, borderRadius: 4 }} />
+    <div className={styles.page}>
+      <div className={`${styles.hero} ${styles.skeleton}`} style={{ height: 160 }} />
+      <div className={styles.grid} style={{ marginTop: 24 }}>
+        <div className={styles.card}>
+          <div className={styles.skeleton} style={{ height: 20, width: '60%', marginBottom: 16, borderRadius: 4 }} />
+          <div className={styles.skeleton} style={{ height: 40, marginBottom: 12, borderRadius: 4 }} />
+          <div className={styles.skeleton} style={{ height: 40, marginBottom: 20, borderRadius: 4 }} />
+          <div className={styles.skeleton} style={{ height: 36, width: 120, borderRadius: 4 }} />
         </div>
-        <div className="profile-card">
-          <div className="profile-skeleton" style={{ height: 20, width: '50%', marginBottom: 16, borderRadius: 4 }} />
-          <div className="profile-skeleton" style={{ height: 40, marginBottom: 12, borderRadius: 4 }} />
-          <div className="profile-skeleton" style={{ height: 40, marginBottom: 12, borderRadius: 4 }} />
-          <div className="profile-skeleton" style={{ height: 36, width: 140, borderRadius: 4 }} />
+        <div className={styles.card}>
+          <div className={styles.skeleton} style={{ height: 20, width: '50%', marginBottom: 16, borderRadius: 4 }} />
+          <div className={styles.skeleton} style={{ height: 40, marginBottom: 12, borderRadius: 4 }} />
+          <div className={styles.skeleton} style={{ height: 40, marginBottom: 12, borderRadius: 4 }} />
+          <div className={styles.skeleton} style={{ height: 36, width: 140, borderRadius: 4 }} />
         </div>
       </div>
     </div>
@@ -69,8 +70,8 @@ export function UserProfilePage() {
   if (loading) return <ProfileSkeleton />;
   if (error || !profile) {
     return (
-      <div className="profile-page">
-        <p className="gdpr-error">{error ?? t('profile.failedToLoad')}</p>
+      <div className={styles.page}>
+        <p className={styles.error}>{error ?? t('profile.failedToLoad')}</p>
       </div>
     );
   }
@@ -125,32 +126,32 @@ export function UserProfilePage() {
   const initials = avatarInitials(profile.name, profile.email);
 
   return (
-    <div className="profile-page">
+    <div className={styles.page}>
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <div className="profile-hero">
-        <div className="profile-hero__avatar" style={{ backgroundColor: bg }}>
+      <div className={styles.hero}>
+        <div className={styles.heroAvatar} style={{ backgroundColor: bg }}>
           {initials}
         </div>
-        <div className="profile-hero__info">
-          <div className="profile-hero__name">{profile.name ?? profile.email}</div>
-          <div className="profile-hero__email">{profile.email}</div>
-          <div className="profile-hero__since">
+        <div className={styles.heroInfo}>
+          <div className={styles.heroName}>{profile.name ?? profile.email}</div>
+          <div className={styles.heroEmail}>{profile.email}</div>
+          <div className={styles.heroSince}>
             {t('profile.memberSince', { date: formatMemberSince(profile.createdAt, i18n.language) })}
           </div>
         </div>
       </div>
 
       {/* ── Two-column grid ──────────────────────────────────────── */}
-      <div className="profile-grid">
+      <div className={styles.grid}>
         {/* Profile Settings card */}
-        <div className="profile-card">
-          <h3 className="profile-card__title">{t('profile.profileSettings')}</h3>
+        <div className={styles.card}>
+          <h3 className={styles.cardTitle}>{t('profile.profileSettings')}</h3>
 
           {/* Full name field */}
-          <div className="profile-field">
-            <span className="profile-field__label">{t('profile.fullName')}</span>
+          <div className={styles.field}>
+            <span className={styles.fieldLabel}>{t('profile.fullName')}</span>
             {editingName ? (
-              <div className="profile-edit-inline">
+              <div className={styles.editInline}>
                 <input
                   className="form-input"
                   value={nameInput}
@@ -162,7 +163,7 @@ export function UserProfilePage() {
                     if (e.key === 'Escape') handleCancelName();
                   }}
                 />
-                <div className="profile-edit-inline__actions">
+                <div className={styles.editInlineActions}>
                   <button
                     className="btn btn--primary"
                     onClick={handleSaveName}
@@ -175,17 +176,17 @@ export function UserProfilePage() {
                   </button>
                 </div>
                 {nameError && (
-                  <p className="gdpr-error" style={{ marginTop: 6 }}>
+                  <p className={styles.error} style={{ marginTop: 6 }}>
                     {nameError}
                   </p>
                 )}
               </div>
             ) : (
-              <div className="profile-field__value">
+              <div className={styles.fieldValue}>
                 <span>{profile.name ?? <em style={{ color: 'var(--c-muted)' }}>{t('profile.noNameSet')}</em>}</span>
-                {nameSuccess && <span className="profile-success-badge">{t('profile.savedBadge')}</span>}
+                {nameSuccess && <span className={styles.successBadge}>{t('profile.savedBadge')}</span>}
                 <button
-                  className="profile-edit-btn"
+                  className={styles.editBtn}
                   onClick={handleEditName}
                   title={t('profile.editNameAriaLabel')}
                   aria-label={t('profile.editNameAriaLabel')}
@@ -197,11 +198,11 @@ export function UserProfilePage() {
           </div>
 
           {/* Email field — read-only */}
-          <div className="profile-field">
-            <span className="profile-field__label">{t('profile.email')}</span>
-            <div className="profile-field__value profile-field__locked">
+          <div className={styles.field}>
+            <span className={styles.fieldLabel}>{t('profile.email')}</span>
+            <div className={`${styles.fieldValue} ${styles.fieldLocked}`}>
               <span>{profile.email}</span>
-              <span className="profile-field__lock-icon" title={t('profile.emailLocked')}>
+              <span className={styles.fieldLockIcon} title={t('profile.emailLocked')}>
                 🔒
               </span>
             </div>
@@ -215,13 +216,13 @@ export function UserProfilePage() {
         </div>
 
         {/* Security card */}
-        <div className="profile-card">
-          <h3 className="profile-card__title">{t('profile.security')}</h3>
+        <div className={styles.card}>
+          <h3 className={styles.cardTitle}>{t('profile.security')}</h3>
 
           {profile.hasPassword ? (
             <form onSubmit={handleChangePassword}>
-              <div className="profile-field" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
-                <label className="profile-field__label" htmlFor="current-pwd">
+              <div className={styles.field} style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
+                <label className={styles.fieldLabel} htmlFor="current-pwd">
                   {t('profile.currentPassword')}
                 </label>
                 <input
@@ -235,10 +236,10 @@ export function UserProfilePage() {
                 />
               </div>
               <div
-                className="profile-field"
+                className={styles.field}
                 style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 8, marginTop: 12 }}
               >
-                <label className="profile-field__label" htmlFor="new-pwd">
+                <label className={styles.fieldLabel} htmlFor="new-pwd">
                   {t('profile.newPassword')}
                 </label>
                 <input
@@ -253,7 +254,7 @@ export function UserProfilePage() {
                 />
               </div>
               {pwdError && (
-                <p className="gdpr-error" style={{ marginTop: 8 }}>
+                <p className={styles.error} style={{ marginTop: 8 }}>
                   {pwdError}
                 </p>
               )}
@@ -277,18 +278,18 @@ export function UserProfilePage() {
 
           {/* Connected accounts */}
           <div style={{ marginTop: 20, borderTop: '1px solid var(--c-border)', paddingTop: 16 }}>
-            <p className="profile-field__label" style={{ marginBottom: 8 }}>
+            <p className={styles.fieldLabel} style={{ marginBottom: 8 }}>
               {t('profile.connectedAccounts')}
             </p>
-            <div className="connected-account">
-              <span className="connected-account__icon">G</span>
+            <div className={styles.connectedAccount}>
+              <span className={styles.connectedAccountIcon}>G</span>
               <span>Google</span>
               {profile.hasGoogleAccount ? (
-                <span className="connected-account__status connected-account__status--on">
+                <span className={[styles.connectedAccountStatus, styles.on].join(' ')}>
                   {t('profile.googleConnected')}
                 </span>
               ) : (
-                <span className="connected-account__status connected-account__status--off">
+                <span className={[styles.connectedAccountStatus, styles.off].join(' ')}>
                   {t('profile.googleNotConnected')}
                 </span>
               )}
@@ -298,8 +299,8 @@ export function UserProfilePage() {
       </div>
 
       {/* ── Privacy link card ────────────────────────────────────── */}
-      <div className="profile-privacy-card">
-        <Link to="/privacy" className="profile-privacy-card__link">
+      <div className={styles.privacyCard}>
+        <Link to="/privacy" className={styles.privacyCardLink}>
           {t('profile.privacyLink')}
         </Link>
       </div>

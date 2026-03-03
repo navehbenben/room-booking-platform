@@ -13,6 +13,7 @@ import {
   localToday,
 } from '../utils/date';
 import { LANDING_AMENITY_PILLS } from '../constants/amenities';
+import styles from './LandingPage.module.scss';
 
 export function LandingPage() {
   const { t } = useTranslation();
@@ -50,19 +51,19 @@ export function LandingPage() {
   };
 
   return (
-    <div className="landing">
+    <div className={styles.landing}>
       {/* ── Hero ──────────────────────────────────────────── */}
-      <div className="hero">
-        <div className="hero__content">
-          <h1 className="hero__title">{t('landing.hero.title')}</h1>
-          <p className="hero__subtitle">{t('landing.hero.subtitle')}</p>
+      <div className={styles.hero}>
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>{t('landing.hero.title')}</h1>
+          <p className={styles.heroSubtitle}>{t('landing.hero.subtitle')}</p>
 
           {/* Booking.com-style horizontal search bar */}
-          <div className="hero-search">
-            <div className="hero-search__field hero-search__field--date">
-              <label className="hero-search__label">{t('landing.hero.checkIn')}</label>
+          <div className={styles.heroSearch}>
+            <div className={styles.heroSearchField}>
+              <label className={styles.heroSearchLabel}>{t('landing.hero.checkIn')}</label>
               <input
-                className="hero-search__input"
+                className={styles.heroSearchInput}
                 type="date"
                 value={start}
                 min={localToday()}
@@ -74,10 +75,10 @@ export function LandingPage() {
               />
             </div>
             <div className="hero-search__divider" />
-            <div className="hero-search__field hero-search__field--date">
-              <label className="hero-search__label">{t('landing.hero.checkOut')}</label>
+            <div className={styles.heroSearchField}>
+              <label className={styles.heroSearchLabel}>{t('landing.hero.checkOut')}</label>
               <input
-                className={`hero-search__input${dateError ? ' hero-search__input--error' : ''}`}
+                className={`${styles.heroSearchInput}${dateError ? ` ${styles.heroSearchInputError}` : ''}`}
                 type="date"
                 value={end}
                 min={start || localToday()}
@@ -89,10 +90,10 @@ export function LandingPage() {
               />
             </div>
             <div className="hero-search__divider" />
-            <div className="hero-search__field hero-search__field--capacity">
-              <label className="hero-search__label">{t('landing.hero.guests')}</label>
+            <div className={`${styles.heroSearchField} ${styles.heroSearchFieldCapacity}`}>
+              <label className={styles.heroSearchLabel}>{t('landing.hero.guests')}</label>
               <input
-                className="hero-search__input"
+                className={styles.heroSearchInput}
                 type="number"
                 min={1}
                 max={500}
@@ -101,7 +102,7 @@ export function LandingPage() {
                 onKeyDown={handleKeyDown}
               />
             </div>
-            <button className="hero-search__btn" onClick={handleSearch}>
+            <button className={styles.heroSearchBtn} onClick={handleSearch}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.35-4.35" />
@@ -111,22 +112,22 @@ export function LandingPage() {
           </div>
 
           {dateError && (
-            <p className="hero-search__error" role="alert">
+            <p className={styles.heroSearchError} role="alert">
               {dateError}
             </p>
           )}
 
           {/* Trust pills */}
-          <div className="hero__trust">
-            <span className="hero__trust-pill">{t('landing.hero.trustInstant')}</span>
-            <span className="hero__trust-pill">{t('landing.hero.trustFree')}</span>
-            <span className="hero__trust-pill">{t('landing.hero.trust500')}</span>
-            <span className="hero__trust-pill">{t('landing.hero.trustNoCard')}</span>
+          <div className={styles.heroTrust}>
+            <span className={styles.heroTrustPill}>{t('landing.hero.trustInstant')}</span>
+            <span className={styles.heroTrustPill}>{t('landing.hero.trustFree')}</span>
+            <span className={styles.heroTrustPill}>{t('landing.hero.trust500')}</span>
+            <span className={styles.heroTrustPill}>{t('landing.hero.trustNoCard')}</span>
           </div>
         </div>
       </div>
 
-      <div className="landing__content">
+      <div className={styles.content}>
         {/* ── Deals / Promos (horizontal scroll) ────────── */}
         <PromoBanner />
 
@@ -134,40 +135,40 @@ export function LandingPage() {
         <FeaturedRoomsStrip />
 
         {/* ── Why choose us ────────────────────────────── */}
-        <section className="landing__section">
-          <h2 className="landing__section-title">{t('landing.whyUs.sectionTitle')}</h2>
-          <div className="landing__features">
-            <div className="feature-card">
-              <div className="feature-card__icon">🏢</div>
-              <div className="feature-card__title">{t('landing.whyUs.rooms500Title')}</div>
-              <p className="feature-card__desc">{t('landing.whyUs.rooms500Desc')}</p>
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>{t('landing.whyUs.sectionTitle')}</h2>
+          <div className={styles.features}>
+            <div className={styles.featureCard}>
+              <div className={styles.featureCardIcon}>🏢</div>
+              <div className={styles.featureCardTitle}>{t('landing.whyUs.rooms500Title')}</div>
+              <p className={styles.featureCardDesc}>{t('landing.whyUs.rooms500Desc')}</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-card__icon">⚡</div>
-              <div className="feature-card__title">{t('landing.whyUs.instantTitle')}</div>
-              <p className="feature-card__desc">{t('landing.whyUs.instantDesc')}</p>
+            <div className={styles.featureCard}>
+              <div className={styles.featureCardIcon}>⚡</div>
+              <div className={styles.featureCardTitle}>{t('landing.whyUs.instantTitle')}</div>
+              <p className={styles.featureCardDesc}>{t('landing.whyUs.instantDesc')}</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-card__icon">🔒</div>
-              <div className="feature-card__title">{t('landing.whyUs.secureTitle')}</div>
-              <p className="feature-card__desc">{t('landing.whyUs.secureDesc')}</p>
+            <div className={styles.featureCard}>
+              <div className={styles.featureCardIcon}>🔒</div>
+              <div className={styles.featureCardTitle}>{t('landing.whyUs.secureTitle')}</div>
+              <p className={styles.featureCardDesc}>{t('landing.whyUs.secureDesc')}</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-card__icon">📊</div>
-              <div className="feature-card__title">{t('landing.whyUs.smartTitle')}</div>
-              <p className="feature-card__desc">{t('landing.whyUs.smartDesc')}</p>
+            <div className={styles.featureCard}>
+              <div className={styles.featureCardIcon}>📊</div>
+              <div className={styles.featureCardTitle}>{t('landing.whyUs.smartTitle')}</div>
+              <p className={styles.featureCardDesc}>{t('landing.whyUs.smartDesc')}</p>
             </div>
           </div>
         </section>
 
         {/* ── Popular amenities ─────────────────────────── */}
-        <section className="landing__section landing__amenities-section">
-          <h2 className="landing__section-title">{t('landing.amenities.sectionTitle')}</h2>
-          <div className="landing__amenity-pills">
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>{t('landing.amenities.sectionTitle')}</h2>
+          <div className={styles.amenityPills}>
             {LANDING_AMENITY_PILLS.map(({ key, labelKey }) => (
               <button
                 key={key}
-                className="landing__amenity-pill"
+                className={styles.amenityPill}
                 onClick={() => navigate(`/search?amenity=${encodeURIComponent(key)}`)}
               >
                 {t(labelKey)}
@@ -177,10 +178,10 @@ export function LandingPage() {
         </section>
 
         {/* ── CTA ───────────────────────────────────────── */}
-        <div className="landing__cta">
-          <h2 className="landing__cta-title">{t('landing.cta.title')}</h2>
-          <p className="landing__cta-sub">{t('landing.cta.subtitle')}</p>
-          <div className="landing__cta-btns">
+        <div className={styles.cta}>
+          <h2 className={styles.ctaTitle}>{t('landing.cta.title')}</h2>
+          <p className={styles.ctaSub}>{t('landing.cta.subtitle')}</p>
+          <div className={styles.ctaBtns}>
             <button className="btn btn--yellow btn--md" onClick={handleSearch}>
               {t('landing.cta.searchBtn')}
             </button>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { LoginForm } from '../components/auth/LoginForm';
 import { GoogleAuthButton } from '../components/auth/GoogleAuthButton';
+import styles from './LoginPage.module.scss';
 
 interface LoginPageProps {
   onLogin: (email: string, password: string) => Promise<void>;
@@ -18,9 +19,9 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-form">
-        <div className="auth-form__logo">
+    <div className={styles.authPage}>
+      <div className={styles.form}>
+        <div className={styles.logo}>
           Room<span>Book</span>
         </div>
         <GoogleAuthButton />

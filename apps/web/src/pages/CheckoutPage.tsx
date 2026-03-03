@@ -6,6 +6,7 @@ import { CountdownTimer } from '../components/checkout/CountdownTimer';
 import { BookingSummary } from '../components/checkout/BookingSummary';
 import { CheckoutForm } from '../components/checkout/CheckoutForm';
 import { ExpiryModal } from '../components/checkout/ExpiryModal';
+import styles from './CheckoutPage.module.scss';
 
 export function CheckoutPage() {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ export function CheckoutPage() {
   if (loading) {
     return (
       <div className="main">
-        <div className="checkout-page checkout-page--loading">{t('checkout.loading')}</div>
+        <div className={styles.pageLoading}>{t('checkout.loading')}</div>
       </div>
     );
   }
@@ -24,13 +25,13 @@ export function CheckoutPage() {
   if (bookingId) {
     return (
       <div className="main">
-        <div className="checkout-page checkout-page--success">
-          <div className="checkout-success__icon">✓</div>
-          <h2 className="checkout-success__title">{t('checkout.success.title')}</h2>
-          <p className="checkout-success__id">
+        <div className={styles.pageSuccess}>
+          <div className={styles.successIcon}>✓</div>
+          <h2 className={styles.successTitle}>{t('checkout.success.title')}</h2>
+          <p className={styles.successId}>
             {t('checkout.success.bookingId')} <code>{bookingId}</code>
           </p>
-          <div className="checkout-success__actions">
+          <div className={styles.successActions}>
             <Link to="/bookings" className="btn btn--primary btn--md">
               {t('checkout.success.viewBookings')}
             </Link>
@@ -46,7 +47,7 @@ export function CheckoutPage() {
   if (!hold && expired) {
     return (
       <div className="main">
-        <div className="checkout-page checkout-page--expired">
+        <div className={styles.pageExpired}>
           <h2>{t('checkout.expired.title')}</h2>
           <p>{t('checkout.expired.message')}</p>
           <Link to="/search" className="btn btn--primary btn--md">
@@ -72,23 +73,23 @@ export function CheckoutPage() {
     <>
       {expired && <ExpiryModal roomId={hold.roomId} start={hold.start} end={hold.end} />}
       <div className="main">
-        <div className="checkout-page">
+        <div className={styles.page}>
           <CountdownTimer expiresAt={hold.expiresAt} />
 
           {isWarning && (
-            <div className="checkout-warning-banner" role="alert">
+            <div className={styles.warningBanner} role="alert">
               {t('checkout.warningBanner')}
             </div>
           )}
 
           {error && <div className="alert alert--error">{error}</div>}
 
-          <div className="checkout-layout">
-            <div className="checkout-layout__summary">
+          <div className={styles.layout}>
+            <div>
               {room ? (
                 <BookingSummary room={room} start={hold.start} end={hold.end} />
               ) : (
-                <div className="checkout-layout__no-room">
+                <div className={styles.noRoom}>
                   <p>
                     {t('checkout.noRoom.start')} {new Date(hold.start).toLocaleString()}
                   </p>
@@ -98,7 +99,7 @@ export function CheckoutPage() {
                 </div>
               )}
             </div>
-            <div className="checkout-layout__form">
+            <div>
               <CheckoutForm onConfirm={confirm} loading={confirmLoading} disabled={expired} />
             </div>
           </div>

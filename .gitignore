@@ -4,6 +4,7 @@
 # IDEs
 .idea/
 .claude/
+docs/
 
 # Dependencies
 node_modules/

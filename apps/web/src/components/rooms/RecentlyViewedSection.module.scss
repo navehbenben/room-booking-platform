@@ -1,0 +1,125 @@
+// RecentlyViewedSection.module.scss
+@use '../../styles/palette' as p;
+
+.wrap {
+  margin-top: p.$sp-8;
+  padding-top: p.$sp-6;
+  border-top: 1px solid p.$color-border;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: p.$color-text;
+}
+
+.clear {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: p.$color-muted;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+  transition: color p.$t-fast;
+
+  &:hover { color: p.$color-error; }
+}
+
+.track {
+  display: flex;
+  gap: p.$sp-3;
+  overflow-x: auto;
+  padding-bottom: p.$sp-2;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.card {
+  flex: 0 0 180px;
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  transition: transform p.$t-base, box-shadow p.$t-base, border-color p.$t-base;
+  box-shadow: p.$shadow-xs;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: p.$shadow-sm;
+    border-color: p.$color-accent;
+  }
+
+  &:active { transform: scale(0.98); }
+}
+
+.imgWrap {
+  width: 100%;
+  height: 90px;
+  overflow: hidden;
+  background: #e5e7eb;
+  flex-shrink: 0;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+
+  .card:hover & { transform: scale(1.05); }
+}
+
+.body {
+  padding: p.$sp-2 p.$sp-3;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 700;
+  color: p.$color-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.capacity {
+  font-size: 11px;
+  color: p.$color-muted;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.tag {
+  font-size: 10px;
+  background: #f3f4f6;
+  color: p.$color-text-2;
+  padding: 2px 6px;
+  border-radius: p.$r-full;
+  white-space: nowrap;
+}

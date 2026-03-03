@@ -1,12 +1,13 @@
 import React from 'react';
+import styles from './SkeletonCard.module.scss';
 
 export const SkeletonCard = React.memo(function SkeletonCard() {
   return (
-    <div className="skeleton-card">
-      <div className="skeleton skeleton--title" />
-      <div className="skeleton skeleton--text" />
-      <div className="skeleton skeleton--text skeleton--short" />
-      <div className="skeleton skeleton--button" />
+    <div className={styles.card}>
+      <div className={`${styles.skeleton} ${styles.title}`} />
+      <div className={`${styles.skeleton} ${styles.text}`} />
+      <div className={`${styles.skeleton} ${styles.text} ${styles.short}`} />
+      <div className={`${styles.skeleton} ${styles.button}`} />
     </div>
   );
 });

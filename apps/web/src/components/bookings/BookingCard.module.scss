@@ -1,0 +1,60 @@
+// BookingCard.module.scss
+@use '../../styles/palette' as p;
+
+.card {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-lg;
+  padding: p.$sp-5;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+  box-shadow: p.$shadow-xs;
+  transition: box-shadow p.$t-base;
+
+  &:hover { box-shadow: p.$shadow-sm; }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: p.$sp-3;
+
+  @media (max-width: 560px) { flex-wrap: wrap; gap: p.$sp-2; }
+}
+
+.roomId {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: p.$color-accent;
+  font-weight: 700;
+  margin-bottom: p.$sp-1;
+}
+
+.time {
+  font-size: 16px;
+  font-weight: 700;
+  color: p.$color-text;
+
+  @media (max-width: 560px) { font-size: 14px; word-break: break-word; }
+}
+
+.meta {
+  font-size: 13px;
+  color: p.$color-muted;
+  margin-top: p.$sp-1;
+}
+
+.sep { margin: 0 p.$sp-2; }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-3;
+  padding-top: p.$sp-2;
+  border-top: 1px solid p.$color-border;
+
+  @media (max-width: 560px) { flex-wrap: wrap; }
+}

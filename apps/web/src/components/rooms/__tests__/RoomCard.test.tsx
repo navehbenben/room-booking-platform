@@ -35,8 +35,8 @@ describe('RoomCard', () => {
   });
 
   it('renders no features section when features is empty', () => {
-    const { container } = render(<RoomCard room={makeRoom({ features: [] })} onView={vi.fn()} disabled={false} />);
-    expect(container.querySelector('.room-card__features')).not.toBeInTheDocument();
+    render(<RoomCard room={makeRoom({ features: [] })} onView={vi.fn()} disabled={false} />);
+    expect(screen.queryByTestId('features-list')).not.toBeInTheDocument();
   });
 
   it('calls onView with roomId when See availability is clicked', () => {

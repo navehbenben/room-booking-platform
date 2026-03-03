@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { friendlyError, errorCode } from '../../utils/errorMessages';
+import styles from './LoginForm.module.scss';
 
 type LoginFormProps = {
   onSuccess: (email: string, password: string) => Promise<void>;
@@ -53,11 +54,11 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
 
   return (
     <>
-      <h2 className="auth-form__title">{t('auth.login.title')}</h2>
-      <p className="auth-form__subtitle">{t('auth.login.subtitle')}</p>
+      <h2 className={styles.title}>{t('auth.login.title')}</h2>
+      <p className={styles.subtitle}>{t('auth.login.subtitle')}</p>
 
-      <div className="auth-form__fields">
-        <div className="auth-form__field-group">
+      <div className={styles.fields}>
+        <div className={styles.fieldGroup}>
           <Input
             label={t('auth.login.emailLabel')}
             type="email"
@@ -72,16 +73,16 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             error={emailError}
           />
           {emailError && !isGoogleOnly && (
-            <p className="auth-form__field-hint">
+            <p className={styles.fieldHint}>
               {t('auth.login.newHere')}{' '}
-              <Link to="/register" className="auth-form__inline-link">
+              <Link to="/register" className={styles.inlineLink}>
                 {t('auth.login.createAccount')}
               </Link>
             </p>
           )}
         </div>
 
-        <div className="auth-form__field-group">
+        <div className={styles.fieldGroup}>
           <Input
             label={t('auth.login.passwordLabel')}
             type="password"
@@ -98,14 +99,14 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
         </div>
       </div>
 
-      {formError && <div className="form-error">{formError}</div>}
+      {formError && <div className={styles.formError}>{formError}</div>}
 
       <Button
         variant="primary"
         onClick={submit}
         disabled={!email || !password}
         loading={loading}
-        className="auth-form__submit"
+        className={styles.submit}
       >
         {t('auth.login.submitBtn')}
       </Button>

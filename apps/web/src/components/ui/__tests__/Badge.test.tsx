@@ -7,8 +7,8 @@ describe('Badge', () => {
     expect(screen.getByText('Confirmed')).toBeInTheDocument();
   });
 
-  it.each(['success', 'warning', 'cancelled', 'neutral'] as const)('applies %s variant class', (variant) => {
+  it.each(['success', 'warning', 'cancelled', 'neutral'] as const)('applies %s variant', (variant) => {
     render(<Badge variant={variant}>label</Badge>);
-    expect(screen.getByText('label')).toHaveClass(`badge--${variant}`);
+    expect(screen.getByText('label')).toHaveAttribute('data-variant', variant);
   });
 });

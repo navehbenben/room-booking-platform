@@ -1,0 +1,42 @@
+// CountdownTimer.module.scss
+@use '../../styles/palette' as p;
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-3;
+  padding: p.$sp-3 p.$sp-4;
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-sm;
+
+  @media (max-width: 560px) { flex-wrap: wrap; }
+
+  &.warning {
+    border-color: #fcd34d;
+    background: #fffbeb;
+
+    .time {
+      color: p.$color-warning;
+      animation: pulse 1s ease-in-out infinite;
+    }
+  }
+}
+
+.label {
+  font-size: 14px;
+  color: p.$color-muted;
+}
+
+.time {
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  color: p.$color-text;
+}

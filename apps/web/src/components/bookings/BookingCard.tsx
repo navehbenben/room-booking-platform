@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import type { Booking } from '../../types';
+import styles from './BookingCard.module.scss';
 
 type BadgeVariant = 'success' | 'warning' | 'cancelled' | 'neutral';
 
@@ -31,25 +32,25 @@ export const BookingCard = React.memo(function BookingCard({ booking, cancelling
   const isCancelling = cancellingId === booking.bookingId;
 
   return (
-    <div className="booking-card">
-      <div className="booking-card__header">
+    <div className={styles.card}>
+      <div className={styles.header}>
         <div>
-          <div className="booking-card__room-id">
+          <div className={styles.roomId}>
             {booking.roomName ?? t('bookingCard.roomFallback', { id: booking.roomId.slice(0, 8) })}
           </div>
-          <div className="booking-card__time">
+          <div className={styles.time}>
             {fmtDate(booking.start)} — {fmtTime(booking.end)}
           </div>
-          <div className="booking-card__meta">
+          <div className={styles.meta}>
             {t('bookingCard.booked')} {fmtDate(booking.createdAt)}
-            <span className="booking-card__sep">·</span>
+            <span className={styles.sep}>·</span>
             {t('bookingCard.id')} <code>{booking.bookingId.slice(0, 8)}…</code>
           </div>
         </div>
         <Badge variant={statusVariant(booking.status)}>{booking.status}</Badge>
       </div>
       {booking.status === 'CONFIRMED' && (
-        <div className="booking-card__actions">
+        <div className={styles.actions}>
           <Button
             variant="danger"
             size="sm"

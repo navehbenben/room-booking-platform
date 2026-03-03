@@ -11,6 +11,7 @@ import { RecentlyViewedSection } from '../components/rooms/RecentlyViewedSection
 import { SORT_OPTIONS } from '../constants/search';
 import { sortRooms } from '../utils/room';
 import type { SortOption } from '../types';
+import styles from './SearchPage.module.scss';
 
 interface SearchPageProps {
   isLoggedIn: boolean;
@@ -88,30 +89,30 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
     <div className="main">
       {/* Mobile filter toggle */}
       <button
-        className="search-page__filter-toggle"
+        className={styles.filterToggle}
         onClick={() => setFiltersOpen((v) => !v)}
         aria-expanded={filtersOpen}
       >
         {filtersOpen ? t('search.filterToggleClose') : t('search.filterToggleOpen')}
       </button>
 
-      <div className="search-page">
+      <div className={styles.page}>
         {/* Sidebar */}
-        <aside className={`search-page__sidebar${filtersOpen ? ' search-page__sidebar--open' : ''}`}>
+        <aside className={`${styles.sidebar}${filtersOpen ? ` ${styles.sidebarOpen}` : ''}`}>
           <SearchFilters params={params} loading={loading} onParamChange={setParam} onSearch={handleSearch} />
         </aside>
 
         {/* Results */}
-        <div className="search-page__results">
+        <div className={styles.results}>
           {/* Header row: count + sort */}
-          <div className="search-page__header">
-            <h1 className="search-page__title">{pageTitle}</h1>
+          <div className={styles.header}>
+            <h1 className={styles.title}>{pageTitle}</h1>
 
             {results.length > 0 && (
-              <div className="sort-bar">
-                <span className="sort-bar__label">{t('search.sortBy')}</span>
+              <div className={styles.sortBar}>
+                <span className={styles.sortLabel}>{t('search.sortBy')}</span>
                 <select
-                  className="sort-bar__select"
+                  className={styles.sortSelect}
                   value={sort}
                   onChange={(e) => setSort(e.target.value as SortOption)}
                   aria-label={t('search.sortAriaLabel')}
@@ -127,9 +128,9 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
           </div>
 
           {!isLoggedIn && results.length > 0 && (
-            <div className="search-page__login-banner">
+            <div className={styles.loginBanner}>
               <span>{t('search.loginBanner')}</span>
-              <a href={`/login?redirect=${encodeURIComponent('/search')}`} className="search-page__login-link">
+              <a href={`/login?redirect=${encodeURIComponent('/search')}`} className={styles.loginLink}>
                 {t('search.loginBannerLink')}
               </a>
             </div>
@@ -144,11 +145,11 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
             </div>
           )}
 
-          <div className="room-list">
+          <div className={styles.roomList}>
             {loading && results.length === 0 ? (
               Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
             ) : results.length === 0 && !loading ? (
-              <div className="room-grid__empty">
+              <div className={styles.roomEmpty}>
                 <EmptyState title={t('search.noRoomsTitle')} subtitle={t('search.noRoomsSubtitle')} />
               </div>
             ) : (
@@ -161,13 +162,13 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
           <div ref={sentinelRef} style={{ height: 1 }} />
 
           {loading && results.length > 0 && (
-            <div className="search-page__load-more-spinner">
+            <div className={styles.loadMoreSpinner}>
               <Spinner />
             </div>
           )}
 
           {!hasMore && results.length > 0 && !loading && (
-            <p className="search-page__end-message">{t('search.allShown', { count: total })}</p>
+            <p className={styles.endMessage}>{t('search.allShown', { count: total })}</p>
           )}
 
           <RecentlyViewedSection onView={handleView} />

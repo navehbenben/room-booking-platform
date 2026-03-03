@@ -26,19 +26,17 @@ describe('BookingCard', () => {
 
   it('shows a success badge for CONFIRMED status', () => {
     render(<BookingCard booking={makeBooking('CONFIRMED')} cancellingId={null} onCancel={vi.fn()} />);
-    const badge = screen.getByText('CONFIRMED');
-    expect(badge).toHaveClass('badge--success');
+    expect(screen.getByText('CONFIRMED')).toHaveAttribute('data-variant', 'success');
   });
 
   it('shows a cancelled badge for CANCELLED status', () => {
     render(<BookingCard booking={makeBooking('CANCELLED')} cancellingId={null} onCancel={vi.fn()} />);
-    const badge = screen.getByText('CANCELLED');
-    expect(badge).toHaveClass('badge--cancelled');
+    expect(screen.getByText('CANCELLED')).toHaveAttribute('data-variant', 'cancelled');
   });
 
   it('shows a neutral badge for unknown status', () => {
     render(<BookingCard booking={makeBooking('PENDING')} cancellingId={null} onCancel={vi.fn()} />);
-    expect(screen.getByText('PENDING')).toHaveClass('badge--neutral');
+    expect(screen.getByText('PENDING')).toHaveAttribute('data-variant', 'neutral');
   });
 
   it('shows Cancel button only for CONFIRMED bookings', () => {

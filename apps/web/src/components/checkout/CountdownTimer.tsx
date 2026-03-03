@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './CountdownTimer.module.scss';
 
 interface CountdownTimerProps {
   expiresAt: string;
@@ -25,9 +26,12 @@ export const CountdownTimer = React.memo(function CountdownTimer({ expiresAt }: 
   const ss = String(remaining % 60).padStart(2, '0');
 
   return (
-    <div className={`countdown${remaining < 60 ? ' countdown--warning' : ''}`}>
-      <span className="countdown__label">{t('countdown.expiresIn')}</span>
-      <span className="countdown__time">
+    <div
+      className={[styles.countdown, remaining < 60 && styles.warning].filter(Boolean).join(' ')}
+      data-warning={remaining < 60 ? 'true' : undefined}
+    >
+      <span className={styles.label}>{t('countdown.expiresIn')}</span>
+      <span className={styles.time}>
         {mm}:{ss}
       </span>
     </div>

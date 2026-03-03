@@ -1,0 +1,27 @@
+// GoogleAuthButton.module.scss
+@use '../../styles/palette' as p;
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: p.$sp-3;
+  width: 100%;
+  padding: 10px p.$sp-4;
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-sm;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: p.$color-text;
+  cursor: pointer;
+  transition: background p.$t-fast, border-color p.$t-fast, box-shadow p.$t-fast;
+  box-shadow: p.$shadow-xs;
+
+  &:hover {
+    background: #f8f9fa;
+    border-color: #9ca3af;
+    box-shadow: p.$shadow-sm;
+  }
+}

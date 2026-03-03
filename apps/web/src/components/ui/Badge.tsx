@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Badge.module.scss';
 
 type BadgeVariant = 'success' | 'warning' | 'cancelled' | 'neutral';
 
@@ -9,6 +10,6 @@ interface BadgeProps {
 }
 
 export const Badge = React.memo(function Badge({ variant = 'neutral', children, className = '' }: BadgeProps) {
-  const classes = ['badge', `badge--${variant}`, className].filter(Boolean).join(' ');
-  return <span className={classes}>{children}</span>;
+  const classes = [styles.badge, styles[variant], className].filter(Boolean).join(' ');
+  return <span className={classes} data-variant={variant}>{children}</span>;
 });

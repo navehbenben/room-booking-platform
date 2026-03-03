@@ -1,0 +1,202 @@
+// Header.module.scss
+@use '../../styles/palette' as p;
+@use '../../styles/mixins' as mx;
+
+.header {
+  background: p.$color-primary;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: p.$shadow-sm;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 p.$sp-6;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: p.$sp-6;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  text-decoration: none;
+
+  span { color: p.$color-yellow; }
+  &:hover { text-decoration: none; }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-1;
+  flex: 1;
+}
+
+.navLink {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 500;
+  padding: p.$sp-2 p.$sp-3;
+  border-radius: p.$r-sm;
+  transition: background p.$t-fast, color p.$t-fast;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover,
+  &.navLinkActive {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  &.navLinkActive {
+    border-bottom: 2px solid p.$color-yellow;
+  }
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-2;
+  margin-left: auto;
+}
+
+.authDesktop {
+  @include mx.bp(600px) { display: none; }
+}
+
+.authLink {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 500;
+  padding: p.$sp-2 p.$sp-3;
+  border-radius: p.$r-sm;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: all p.$t-fast;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover { background: rgba(255, 255, 255, 0.15); text-decoration: none; }
+}
+
+.authBtn {
+  background: p.$color-yellow;
+  color: p.$color-primary;
+  font-size: 14px;
+  font-weight: 700;
+  padding: p.$sp-2 p.$sp-4;
+  border-radius: p.$r-sm;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background p.$t-fast;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-block;
+
+  &:hover { background: #e5a800; }
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: p.$r-sm;
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
+
+  @include mx.bp(600px) { display: flex; }
+
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+    transition: transform p.$t-base, opacity p.$t-base;
+  }
+
+  &.hamburgerOpen {
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+}
+
+@keyframes mobileMenuIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobileMenu {
+  background: p.$color-primary-dark;
+  display: flex;
+  flex-direction: column;
+  padding: p.$sp-3 p.$sp-4 p.$sp-4;
+  gap: p.$sp-1;
+  animation: mobileMenuIn 150ms ease;
+}
+
+.mobileLink {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px p.$sp-3;
+  border-radius: p.$r-sm;
+  text-decoration: none;
+  transition: background p.$t-fast;
+
+  &:hover,
+  &.mobileLinkActive {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  &.mobileLinkCta {
+    background: p.$color-yellow;
+    color: p.$color-primary;
+    font-weight: 700;
+    text-align: center;
+    margin-top: p.$sp-2;
+
+    &:hover { background: #e5a800; color: p.$color-primary; }
+  }
+}
+
+.mobileDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: p.$sp-2 0;
+}
+
+.mobileSignout {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 10px p.$sp-3;
+  border-radius: p.$r-sm;
+  cursor: pointer;
+  text-align: left;
+  transition: background p.$t-fast;
+
+  &:hover { background: rgba(255, 255, 255, 0.1); }
+}

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { friendlyError, errorCode } from '../../utils/errorMessages';
+import styles from './RegisterForm.module.scss';
 
 type RegisterFormProps = {
   onSuccess: (name: string, email: string, password: string) => Promise<void>;
@@ -22,7 +23,6 @@ function passwordStrength(pw: string): { level: 0 | 1 | 2 | 3; labelKey: string 
 }
 
 const STRENGTH_COLORS = ['', '#e53e3e', '#d69e2e', '#38a169'] as const;
-const STRENGTH_CLASS = ['', 'weak', 'fair', 'strong'] as const;
 
 export function RegisterForm({ onSuccess }: RegisterFormProps) {
   const { t } = useTranslation();
@@ -75,10 +75,10 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
 
   return (
     <>
-      <h2 className="auth-form__title">{t('auth.register.title')}</h2>
-      <p className="auth-form__subtitle">{t('auth.register.subtitle')}</p>
+      <h2 className={styles.title}>{t('auth.register.title')}</h2>
+      <p className={styles.subtitle}>{t('auth.register.subtitle')}</p>
 
-      <div className="auth-form__fields">
+      <div className={styles.fields}>
         <Input
           label={t('auth.register.nameLabel')}
           value={name}
@@ -88,7 +88,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           autoComplete="name"
         />
 
-        <div className="auth-form__field-group">
+        <div className={styles.fieldGroup}>
           <Input
             label={t('auth.register.emailLabel')}
             type="email"
@@ -103,16 +103,16 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
             error={emailError}
           />
           {emailError && (
-            <p className="auth-form__field-hint">
+            <p className={styles.fieldHint}>
               {t('auth.register.alreadyHaveAccount')}{' '}
-              <Link to="/login" className="auth-form__inline-link">
+              <Link to="/login" className={styles.inlineLink}>
                 {t('auth.register.signIn')}
               </Link>
             </p>
           )}
         </div>
 
-        <div className="auth-form__field-group">
+        <div className={styles.fieldGroup}>
           <Input
             label={t('auth.register.passwordLabel')}
             type="password"
@@ -128,17 +128,17 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
             error={passwordError}
           />
           {password.length > 0 && (
-            <div className="password-strength">
-              <div className="password-strength__bars">
+            <div className={styles.strengthMeter}>
+              <div className={styles.strengthBars}>
                 {[1, 2, 3].map((level) => (
                   <div
                     key={level}
-                    className={`password-strength__bar${strength.level >= level ? ` password-strength__bar--${STRENGTH_CLASS[strength.level]}` : ''}`}
+                    className={styles.strengthBar}
                     style={{ backgroundColor: strength.level >= level ? STRENGTH_COLORS[strength.level] : undefined }}
                   />
                 ))}
               </div>
-              <span className="password-strength__label" style={{ color: STRENGTH_COLORS[strength.level] }}>
+              <span className={styles.strengthLabel} style={{ color: STRENGTH_COLORS[strength.level] }}>
                 {strength.labelKey ? t(strength.labelKey) : ''}
               </span>
             </div>
@@ -146,14 +146,14 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
         </div>
       </div>
 
-      {formError && <div className="form-error">{formError}</div>}
+      {formError && <div className={styles.formError}>{formError}</div>}
 
       <Button
         variant="primary"
         onClick={submit}
         disabled={!email || password.length < 8}
         loading={loading}
-        className="auth-form__submit"
+        className={styles.submit}
       >
         {t('auth.register.submitBtn')}
       </Button>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './ImageGallery.module.scss';
 
 interface ImageGalleryProps {
   images: string[];
@@ -24,17 +25,19 @@ export const ImageGallery = React.memo(function ImageGallery({ images }: ImageGa
   if (images.length === 0) return null;
 
   return (
-    <div className="image-gallery">
-      <div className="image-gallery__hero" onClick={() => setLightboxOpen(true)}>
+    <div className={styles.gallery}>
+      <div data-testid="gallery-hero" className={styles.hero} onClick={() => setLightboxOpen(true)}>
         <img src={images[validIdx]} alt={t('imageGallery.altRoom')} />
-        <span className="image-gallery__hint">{t('imageGallery.clickToEnlarge')}</span>
+        <span className={styles.hint}>{t('imageGallery.clickToEnlarge')}</span>
       </div>
       {images.length > 1 && (
-        <div className="image-gallery__thumbs">
+        <div data-testid="gallery-thumbs" className={styles.thumbs}>
           {images.slice(0, 4).map((src, i) => (
             <button
               key={i}
-              className={`image-gallery__thumb${i === validIdx ? ' image-gallery__thumb--active' : ''}`}
+              data-testid="gallery-thumb"
+              data-active={i === validIdx ? 'true' : undefined}
+              className={[styles.thumb, i === validIdx && styles.thumbActive].filter(Boolean).join(' ')}
               onClick={() => setActiveIdx(i)}
             >
               <img src={src} alt={t('imageGallery.altView', { number: i + 1 })} />
@@ -43,7 +46,7 @@ export const ImageGallery = React.memo(function ImageGallery({ images }: ImageGa
         </div>
       )}
       {lightboxOpen && (
-        <div className="lightbox" onClick={() => setLightboxOpen(false)}>
+        <div data-testid="gallery-lightbox" className={styles.lightbox} onClick={() => setLightboxOpen(false)}>
           <img src={images[validIdx]} alt={t('imageGallery.altFullscreen')} onClick={(e) => e.stopPropagation()} />
         </div>
       )}

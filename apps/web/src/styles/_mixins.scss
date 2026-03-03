@@ -1,0 +1,77 @@
+@use 'palette' as p;
+
+// ============================================================
+//   Responsive breakpoint helper
+// ============================================================
+@mixin bp($max) {
+  @media (max-width: $max) {
+    @content;
+  }
+}
+
+// ============================================================
+//   Card — shared white card surface
+// ============================================================
+@mixin card($radius: p.$r-lg) {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: $radius;
+  box-shadow: p.$shadow-xs;
+}
+
+// ============================================================
+//   Horizontal scroll strip
+// ============================================================
+@mixin scroll-track {
+  display: flex;
+  gap: p.$sp-4;
+  overflow-x: auto;
+  padding-bottom: p.$sp-3;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ============================================================
+//   Scroll arrow button (horizontal strips)
+// ============================================================
+@mixin scroll-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid p.$color-border;
+  background: p.$color-white;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: p.$color-text;
+  transition: background p.$t-fast, border-color p.$t-fast;
+  flex-shrink: 0;
+
+  &:hover {
+    background: p.$color-primary;
+    border-color: p.$color-primary;
+    color: #fff;
+  }
+}
+
+// ============================================================
+//   Shimmer skeleton animation
+// ============================================================
+@mixin shimmer-bg {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

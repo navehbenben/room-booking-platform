@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './LanguageSwitcher.module.scss';
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -30,9 +31,9 @@ export function LanguageSwitcher() {
   }, [open]);
 
   return (
-    <div className="lang-switcher" ref={ref}>
+    <div className={styles.wrap} ref={ref}>
       <button
-        className="lang-switcher__btn"
+        className={styles.btn}
         onClick={() => setOpen((v) => !v)}
         aria-label={t('languageSwitcher.ariaLabel')}
         aria-expanded={open}
@@ -41,13 +42,13 @@ export function LanguageSwitcher() {
         🌐
       </button>
       {open && (
-        <div className="lang-switcher__dropdown" role="listbox">
+        <div className={styles.dropdown} role="listbox">
           {LANGUAGES.map(({ code, label }) => (
             <button
               key={code}
               role="option"
               aria-selected={code === currentCode}
-              className={`lang-switcher__option${code === currentCode ? ' lang-switcher__option--active' : ''}`}
+              className={[styles.option, code === currentCode && styles.optionActive].filter(Boolean).join(' ')}
               onClick={() => {
                 i18n.changeLanguage(code);
                 setOpen(false);

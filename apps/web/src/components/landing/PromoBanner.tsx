@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import styles from './PromoBanner.module.scss';
 
 interface Deal {
   id: string;
@@ -42,6 +43,13 @@ const DEALS: Deal[] = [
   },
 ];
 
+const BADGE_VARIANT_CLASS: Record<Deal['badgeVariant'], string> = {
+  sale: styles.dealBadgeSale,
+  popular: styles.dealBadgePopular,
+  new: styles.dealBadgeNew,
+  limited: styles.dealBadgeLimited,
+};
+
 export function PromoBanner() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -60,19 +68,19 @@ export function PromoBanner() {
   };
 
   return (
-    <section className="promo-banner">
-      <div className="promo-banner__header">
-        <h2 className="promo-banner__title">{t('landing.promo.sectionTitle')}</h2>
-        <div className="promo-banner__nav">
+    <section className={styles.wrap}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{t('landing.promo.sectionTitle')}</h2>
+        <div className={styles.nav}>
           <button
-            className="promo-banner__arrow"
+            className={styles.arrow}
             onClick={() => scroll('left')}
             aria-label={t('landing.promo.scrollLeft')}
           >
             ‹
           </button>
           <button
-            className="promo-banner__arrow"
+            className={styles.arrow}
             onClick={() => scroll('right')}
             aria-label={t('landing.promo.scrollRight')}
           >
@@ -81,21 +89,21 @@ export function PromoBanner() {
         </div>
       </div>
 
-      <div className="promo-banner__track" ref={scrollRef}>
+      <div className={styles.track} ref={scrollRef}>
         {DEALS.map((deal) => (
           <button
             key={deal.id}
-            className="deal-card"
+            className={styles.dealCard}
             style={{ background: deal.gradient }}
             onClick={() => handleDealClick(deal)}
             aria-label={t(`landing.promo.${deal.id}.title`)}
           >
-            <span className={`deal-card__badge deal-card__badge--${deal.badgeVariant}`}>
+            <span className={`${styles.dealBadge} ${BADGE_VARIANT_CLASS[deal.badgeVariant]}`}>
               {t(`landing.promo.${deal.id}.badge`)}
             </span>
-            <div className="deal-card__title">{t(`landing.promo.${deal.id}.title`)}</div>
-            <div className="deal-card__subtitle">{t(`landing.promo.${deal.id}.subtitle`)}</div>
-            <span className="deal-card__cta">{t(`landing.promo.${deal.id}.cta`)} →</span>
+            <div className={styles.dealTitle}>{t(`landing.promo.${deal.id}.title`)}</div>
+            <div className={styles.dealSubtitle}>{t(`landing.promo.${deal.id}.subtitle`)}</div>
+            <span className={styles.dealCta}>{t(`landing.promo.${deal.id}.cta`)} →</span>
           </button>
         ))}
       </div>

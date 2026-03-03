@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
+import styles from './Header.module.scss';
 
 type HeaderProps = {
   isLoggedIn: boolean;
@@ -28,27 +29,27 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
   };
 
   return (
-    <header className="header">
-      <div className="header__inner">
-        <Link to="/" className="header__logo">
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        <Link to="/" className={styles.logo}>
           Room<span>Book</span>
         </Link>
 
-        <nav className="header__nav">
-          <Link to="/search" className={`header__nav-link${isActive('/search') ? ' header__nav-link--active' : ''}`}>
+        <nav className={styles.nav}>
+          <Link to="/search" className={[styles.navLink, isActive('/search') && styles.navLinkActive].filter(Boolean).join(' ')}>
             {t('header.searchRooms')}
           </Link>
           {isLoggedIn && (
             <>
               <Link
                 to="/bookings"
-                className={`header__nav-link${isActive('/bookings') ? ' header__nav-link--active' : ''}`}
+                className={[styles.navLink, isActive('/bookings') && styles.navLinkActive].filter(Boolean).join(' ')}
               >
                 {t('header.myBookings')}
               </Link>
               <Link
                 to="/userprofile"
-                className={`header__nav-link${isActive('/userprofile') ? ' header__nav-link--active' : ''}`}
+                className={[styles.navLink, isActive('/userprofile') && styles.navLinkActive].filter(Boolean).join(' ')}
               >
                 {t('header.myProfile')}
               </Link>
@@ -57,21 +58,20 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
         </nav>
 
         {/* Desktop auth — hidden on mobile */}
-        <div className="header__auth header__auth--desktop">
+        <div className={`${styles.auth} ${styles.authDesktop}`}>
           <LanguageSwitcher />
           {isLoggedIn ? (
-            <button className="header__auth-btn" onClick={handleLogout}>
+            <button className={styles.authBtn} onClick={handleLogout}>
               {t('header.signOut')}
             </button>
           ) : (
             <>
-              <Link to="/login" className="header__auth-link">
+              <Link to="/login" className={styles.authLink}>
                 {t('header.signIn')}
               </Link>
               <Link
                 to="/register"
-                className="header__auth-btn"
-                style={{ textDecoration: 'none', display: 'inline-block' }}
+                className={styles.authBtn}
               >
                 {t('header.register')}
               </Link>
@@ -81,7 +81,7 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
 
         {/* Hamburger button — visible on mobile only */}
         <button
-          className={`header__hamburger${menuOpen ? ' header__hamburger--open' : ''}`}
+          className={[styles.hamburger, menuOpen && styles.hamburgerOpen].filter(Boolean).join(' ')}
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? t('header.closeMenu') : t('header.openMenu')}
           aria-expanded={menuOpen}
@@ -94,10 +94,10 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <div className="header__mobile-menu">
+        <div className={styles.mobileMenu}>
           <Link
             to="/search"
-            className={`header__mobile-link${isActive('/search') ? ' header__mobile-link--active' : ''}`}
+            className={[styles.mobileLink, isActive('/search') && styles.mobileLinkActive].filter(Boolean).join(' ')}
           >
             {t('header.searchRooms')}
           </Link>
@@ -105,30 +105,30 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
             <>
               <Link
                 to="/bookings"
-                className={`header__mobile-link${isActive('/bookings') ? ' header__mobile-link--active' : ''}`}
+                className={[styles.mobileLink, isActive('/bookings') && styles.mobileLinkActive].filter(Boolean).join(' ')}
               >
                 {t('header.myBookings')}
               </Link>
               <Link
                 to="/userprofile"
-                className={`header__mobile-link${isActive('/userprofile') ? ' header__mobile-link--active' : ''}`}
+                className={[styles.mobileLink, isActive('/userprofile') && styles.mobileLinkActive].filter(Boolean).join(' ')}
               >
                 {t('header.myProfile')}
               </Link>
-              <div className="header__mobile-divider" />
+              <div className={styles.mobileDivider} />
               <LanguageSwitcher />
-              <button className="header__mobile-signout" onClick={handleLogout}>
+              <button className={styles.mobileSignout} onClick={handleLogout}>
                 {t('header.signOut')}
               </button>
             </>
           ) : (
             <>
-              <div className="header__mobile-divider" />
+              <div className={styles.mobileDivider} />
               <LanguageSwitcher />
-              <Link to="/login" className="header__mobile-link">
+              <Link to="/login" className={styles.mobileLink}>
                 {t('header.signIn')}
               </Link>
-              <Link to="/register" className="header__mobile-link header__mobile-link--cta">
+              <Link to="/register" className={`${styles.mobileLink} ${styles.mobileLinkCta}`}>
                 {t('header.register')}
               </Link>
             </>

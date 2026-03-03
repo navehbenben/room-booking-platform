@@ -1,0 +1,164 @@
+// GdprPage.module.scss
+@use '../styles/palette' as p;
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-8;
+
+  @media (max-width: 560px) { gap: p.$sp-5; }
+}
+
+.back {
+  color: p.$color-accent;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  align-self: flex-start;
+  transition: color p.$t-fast;
+
+  &:hover { color: p.$color-accent-hover; text-decoration: none; }
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 800;
+  color: p.$color-text;
+  margin-bottom: p.$sp-2;
+}
+
+.intro {
+  color: p.$color-muted;
+  line-height: 1.7;
+  margin-top: calc(p.$sp-8 * -1 + p.$sp-2);
+}
+
+.section {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-md;
+  padding: p.$sp-6;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+  box-shadow: p.$shadow-xs;
+
+  &.sectionDanger { border-color: #fca5a5; }
+
+  @media (max-width: 560px) { padding: p.$sp-4; }
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: p.$color-text;
+}
+
+.sectionDesc {
+  color: p.$color-muted;
+  font-size: 14px;
+  line-height: 1.6;
+
+  a {
+    color: p.$color-accent;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+}
+
+.sectionUpdated {
+  font-size: 12px;
+  color: p.$color-muted;
+}
+
+.sectionLoginHint {
+  font-size: 14px;
+  color: p.$color-muted;
+
+  a {
+    color: p.$color-accent;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: p.$sp-4;
+  padding: p.$sp-3 p.$sp-4;
+  background: #f9fafb;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-sm;
+  cursor: pointer;
+
+  @media (max-width: 560px) { flex-wrap: wrap; gap: p.$sp-2; }
+}
+
+.toggleLabel {
+  font-size: 14px;
+  color: p.$color-text;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.toggleBtn {
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+  border-radius: p.$r-full;
+  border: none;
+  background: #d1d5db;
+  position: relative;
+  cursor: pointer;
+  transition: background p.$t-base;
+  outline: none;
+
+  &:focus-visible { box-shadow: 0 0 0 2px p.$color-accent; }
+
+  &.toggleBtnOn { background: p.$color-accent; }
+}
+
+.toggleThumb {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform p.$t-base;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+  .toggleBtnOn & { transform: translateX(20px); }
+}
+
+.confirmMsg {
+  font-size: 14px;
+  color: p.$color-error;
+  background: p.$color-error-bg;
+  border: 1px solid #fca5a5;
+  border-radius: p.$r-sm;
+  padding: p.$sp-3 p.$sp-4;
+}
+
+.deleteRow {
+  display: flex;
+  gap: p.$sp-3;
+  flex-wrap: wrap;
+}
+
+.error {
+  font-size: 13px;
+  color: p.$color-error;
+}

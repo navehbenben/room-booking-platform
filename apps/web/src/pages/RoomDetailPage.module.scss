@@ -1,0 +1,257 @@
+// RoomDetailPage.module.scss
+@use '../styles/palette' as p;
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-6;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: p.$sp-1;
+  background: none;
+  border: none;
+  color: p.$color-accent;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 0;
+  align-self: flex-start;
+  transition: color p.$t-fast;
+
+  &:hover { color: p.$color-accent-hover; }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: p.$sp-4;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: 800;
+  color: p.$color-text;
+  letter-spacing: -0.5px;
+
+  @media (max-width: 720px) { font-size: 22px; }
+}
+
+.badges {
+  display: flex;
+  gap: p.$sp-2;
+  flex-wrap: wrap;
+}
+
+.ratingBlock {
+  display: flex;
+  align-items: center;
+  gap: p.$sp-3;
+  flex-shrink: 0;
+
+  @media (max-width: 700px) { display: none; }
+}
+
+.ratingScore {
+  background: p.$color-accent;
+  color: #ffffff;
+  border-radius: p.$r-sm;
+  padding: p.$sp-2 p.$sp-3;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ratingInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.ratingLabel {
+  font-size: 15px;
+  font-weight: 700;
+  color: p.$color-text;
+}
+
+.ratingReviews {
+  font-size: 13px;
+  color: p.$color-muted;
+}
+
+.description {
+  font-size: 15px;
+  color: p.$color-text-2;
+  line-height: 1.7;
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-md;
+  padding: p.$sp-5;
+}
+
+.sectionTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: p.$color-text;
+  margin-bottom: p.$sp-4;
+  padding-bottom: p.$sp-2;
+  border-bottom: 2px solid p.$color-primary;
+  display: inline-block;
+}
+
+.tzBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: p.$sp-2;
+  background: #e8f4fd;
+  border: 1px solid #b3d9f5;
+  border-radius: p.$r-md;
+  padding: p.$sp-3 p.$sp-4;
+  font-size: 13px;
+  color: #0a4d77;
+  line-height: 1.5;
+}
+
+.tzIcon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.amenities,
+.policies {
+  display: flex;
+  flex-direction: column;
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-md;
+  padding: p.$sp-5;
+}
+
+.policyList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-3;
+
+  li {
+    font-size: 14px;
+    color: p.$color-text-2;
+    padding-left: p.$sp-5;
+    position: relative;
+    line-height: 1.5;
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: p.$color-success;
+      font-weight: 700;
+    }
+  }
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: p.$sp-4;
+  flex-wrap: wrap;
+  margin-bottom: p.$sp-4;
+  padding-bottom: p.$sp-4;
+  border-bottom: 1px solid p.$color-border;
+
+  @media (max-width: 700px) { gap: p.$sp-2; }
+}
+
+.price {
+  font-size: 28px;
+  font-weight: 800;
+  color: p.$color-text;
+}
+
+.priceUnit {
+  font-size: 15px;
+  font-weight: 400;
+  color: p.$color-muted;
+}
+
+.priceTotal {
+  font-size: 14px;
+  color: p.$color-muted;
+  background: #f3f4f6;
+  padding: p.$sp-1 p.$sp-3;
+  border-radius: p.$r-sm;
+}
+
+.freeCancel {
+  font-size: 13px;
+  color: p.$color-success;
+  font-weight: 600;
+  margin-left: auto;
+
+  @media (max-width: 700px) { margin-left: 0; }
+}
+
+.cta {
+  background: p.$color-white;
+  border: 1px solid p.$color-border;
+  border-radius: p.$r-md;
+  padding: p.$sp-5;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-3;
+  box-shadow: p.$shadow-sm;
+}
+
+.ctaTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: p.$color-text;
+}
+
+.noDates {
+  font-size: 14px;
+  color: p.$color-muted;
+}
+
+.loginCta {
+  background: #f0f7ff;
+  border: 1px solid #c8e0f9;
+  border-radius: p.$r-md;
+  padding: p.$sp-5;
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+}
+
+.loginCtaText {
+  font-size: 15px;
+  color: p.$color-text-2;
+  line-height: 1.5;
+}
+
+.loginCtaBtns {
+  display: flex;
+  gap: p.$sp-3;
+  flex-wrap: wrap;
+}
+
+.loading {
+  text-align: center;
+  color: p.$color-muted;
+  padding: p.$sp-10 p.$sp-6;
+}

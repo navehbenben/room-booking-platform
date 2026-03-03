@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/Button';
+import styles from './CheckoutForm.module.scss';
 
 interface FormErrors {
   name?: string;
@@ -43,8 +44,8 @@ export const CheckoutForm = React.memo(function CheckoutForm({
   };
 
   return (
-    <form className="checkout-form" onSubmit={handleSubmit}>
-      <h3 className="checkout-form__title">{t('checkoutForm.title')}</h3>
+    <form className={styles.wrap} onSubmit={handleSubmit}>
+      <h3 className={styles.title}>{t('checkoutForm.title')}</h3>
       <div className={`input-group${errors.name ? ' input-group--error' : ''}`}>
         <label className="input-label">
           <span className="input-label__text">{t('checkoutForm.name')}</span>

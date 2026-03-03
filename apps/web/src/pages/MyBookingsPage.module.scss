@@ -1,0 +1,31 @@
+// MyBookingsPage.module.scss
+@use '../styles/palette' as p;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-6;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: p.$sp-4;
+  padding-bottom: p.$sp-4;
+  border-bottom: 1px solid p.$color-border;
+
+  @media (max-width: 720px) { flex-wrap: wrap; }
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  color: p.$color-text;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: p.$sp-4;
+}
