@@ -2,6 +2,25 @@ import { useState, useEffect } from 'react';
 import { api, tokenStore, setUnauthorizedHandler } from '../api/client';
 import { logger } from '../utils/logger';
 
+// A non-sensitive localStorage hint that tells us a session *might* exist.
+// JS can never read the HttpOnly refresh cookie, so without this flag we'd
+// have to call /auth/refresh on every page load — even for first-time visitors
+// who have no cookie at all — producing a noisy 401 in the console.
+// The flag stores no secrets: the real auth is still the HttpOnly cookie.
+const SESSION_HINT_KEY = 'rb_has_session';
+const sessionHint = {
+  set: () => localStorage.setItem(SESSION_HINT_KEY, '1'),
+  clear: () => localStorage.removeItem(SESSION_HINT_KEY),
+  exists: () => localStorage.getItem(SESSION_HINT_KEY) === '1',
+};
+
+// Module-level guard: React 18 Strict Mode runs useEffect twice in development,
+// which would fire two concurrent /auth/refresh requests. The second call gets
+// 401 because the first one already rotated (revoked) the refresh token.
+// A module-level flag (reset on every real page load) ensures only one
+// rehydration attempt is ever made per page load, regardless of StrictMode.
+let _rehydrateInitiated = false;
+
 export interface AuthState {
   isLoggedIn: boolean;
   rehydrating: boolean;
@@ -17,20 +36,45 @@ export function useAuth(): AuthState {
   // HttpOnly refresh cookie exists. This avoids any flash of authenticated
   // content before the token is confirmed.
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [rehydrating, setRehydrating] = useState(true);
+  const [rehydrating, setRehydrating] = useState(() => {
+    // Google OAuth redirects back with ?oauth=1 — set the hint now so the
+    // effect below treats this as a session that needs rehydration.
+    if (new URLSearchParams(window.location.search).has('oauth')) {
+      sessionHint.set();
+    }
+    return sessionHint.exists();
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     setUnauthorizedHandler(() => {
       tokenStore.clear();
+      sessionHint.clear();
       setIsLoggedIn(false);
       logger.warn('Session expired — user signed out automatically');
     });
 
-    // On every page load, attempt to restore the session using the HttpOnly
-    // refresh cookie. The access token is in-memory only and does not survive
-    // page reloads — this is the spec-mandated rehydration path.
+    // Clean up the ?oauth=1 param Google OAuth adds — it's served its purpose.
+    if (new URLSearchParams(window.location.search).has('oauth')) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('oauth');
+      window.history.replaceState(null, '', url.toString());
+    }
+
+    // Only attempt rehydration if the hint flag says a session might exist.
+    // First-time visitors have no flag → skip the call entirely (no 401).
+    if (!sessionHint.exists()) {
+      setRehydrating(false);
+      return;
+    }
+
+    // StrictMode guard: don't fire a second concurrent refresh (would 401 due to rotation).
+    if (_rehydrateInitiated) return;
+    _rehydrateInitiated = true;
+
+    // The access token is in-memory only and does not survive page reloads —
+    // ask the server to issue a new one using the HttpOnly refresh cookie.
     api
       .rehydrate()
       .then((res) => {
@@ -39,7 +83,8 @@ export function useAuth(): AuthState {
         logger.info('Session rehydrated from refresh cookie');
       })
       .catch(() => {
-        // No valid cookie or cookie expired — stay logged out
+        // Cookie expired or revoked — clear the hint so we don't retry next load
+        sessionHint.clear();
         logger.info('No active session — showing login');
       })
       .finally(() => {
@@ -52,8 +97,8 @@ export function useAuth(): AuthState {
     setLoading(true);
     try {
       const res = await api.login({ email, password });
-      // Refresh token is set as HttpOnly cookie by the server — never touched here
       tokenStore.set(res.accessToken);
+      sessionHint.set();
       setIsLoggedIn(true);
       logger.info('User logged in', { userId: res.userId });
     } catch (e) {
@@ -69,8 +114,8 @@ export function useAuth(): AuthState {
     setLoading(true);
     try {
       const res = await api.register({ name, email, password });
-      // Refresh token is set as HttpOnly cookie by the server — never touched here
       tokenStore.set(res.accessToken);
+      sessionHint.set();
       setIsLoggedIn(true);
       logger.info('User registered', { userId: res.userId });
     } catch (e) {
@@ -85,6 +130,7 @@ export function useAuth(): AuthState {
     // Server reads the HttpOnly cookie, revokes the token DB-side, and clears the cookie
     await api.logout().catch((_e) => logger.warn('Logout request failed', { event: 'auth.logout.failure' }));
     tokenStore.clear();
+    sessionHint.clear();
     setIsLoggedIn(false);
     logger.info('User logged out');
   };

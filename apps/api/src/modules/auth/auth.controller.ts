@@ -71,7 +71,9 @@ export class AuthController {
     const { refreshToken } = req.user;
     res.cookie(REFRESH_COOKIE, refreshToken, COOKIE_OPTS);
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8080';
-    res.redirect(frontendUrl);
+    // ?oauth=1 tells the frontend to attempt rehydration even without the
+    // localStorage session hint (which only gets set via login/register flows).
+    res.redirect(`${frontendUrl}?oauth=1`);
   }
 
   @HttpCode(204)
