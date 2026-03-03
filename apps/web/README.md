@@ -312,17 +312,35 @@ During rehydration, `App.tsx` shows a loading spinner so the UI never flashes an
 
 ## State Management
 
-The application uses React's built-in hooks — no external state management library. Auth state (`isLoggedIn`, `rehydrating`) is lifted into `App.tsx` and passed down as props.
+The application uses **Redux Toolkit** for global state and React local state for page-scoped data. Custom hooks remain as the public API — they are thin wrappers that dispatch Redux actions and select from the store.
+
+### Redux store slices
+
+| Slice | Why global |
+|---|---|
+| `auth` | `isLoggedIn` / `rehydrating` needed by `Header`, `App`, `SearchPage`, `RoomDetailPage`, `GdprPage` — prop-drilling was unwieldy |
+| `profile` | Session-scoped cache — avoids a repeat fetch every time `UserProfilePage` mounts |
+| `search` | Preserves filters across navigations (back button from `RoomDetailPage` restores the previous search via `sessionStorage`) |
+| `recentlyViewed` | Shared across `RoomDetailPage` (write) and `RecentlyViewedSection` (read) |
+
+### Local state (page-scoped hooks, unchanged)
 
 | Concern | Location |
 |---|---|
-| Auth state | `useAuth` hook → `App.tsx` props |
-| Room search state | `useSearch` hook (local to `SearchPage`) |
 | Checkout / hold state | `useCheckout` + `useHold` hooks |
 | Bookings list | `useBookings` hook |
-| Profile data | `useProfile` hook |
-| Recently viewed rooms | `useRecentlyViewed` hook → `localStorage` |
+| Room detail data | `useRoomDetail` hook |
 | GDPR consent | `useGdpr` hook |
+
+### Global unauthorized handler
+
+When a mid-session silent token refresh fails (expired cookie while the tab was open), `api/client.ts` calls a registered handler that dispatches `forceLogout()` and `clearProfile()` synchronously — the Redux store reflects the logged-out state immediately, with no API call needed.
+
+### Session hint
+
+To avoid a noisy `POST /auth/refresh 401` on every visit by non-authenticated users, a non-sensitive `localStorage` flag (`rb_has_session`) is set on login/register and cleared on logout. The `rehydrateSession` thunk skips the network call entirely when the flag is absent.
+
+A module-level `_rehydrateInitiated` boolean prevents React 18 Strict Mode's double-`useEffect` from firing two concurrent refresh calls (the second would receive a 401 because the first already rotated the token).
 
 ---
 
@@ -330,31 +348,31 @@ The application uses React's built-in hooks — no external state management lib
 
 ### `useAuth()`
 
-Manages the authentication lifecycle. Call once in `App.tsx`.
+Thin wrapper over `authSlice`. Call once — `useEffect` inside dispatches `rehydrateSession` on mount.
 
 ```typescript
 const { isLoggedIn, rehydrating, login, register, logout } = useAuth();
 ```
 
-- `rehydrating` — true while `POST /auth/refresh` is in-flight on mount
-- `login(email, password)` — authenticates and updates `isLoggedIn`
-- `register(email, password, name?)` — creates account and logs in
-- `logout()` — revokes session and sets `isLoggedIn = false`
+- `rehydrating` — true while `POST /auth/refresh` is in-flight on mount (initial state comes from the `sessionHint` flag)
+- `login(email, password)` — dispatches `loginUser` thunk; re-throws on failure so the form can display the error
+- `register(name, email, password)` — dispatches `registerUser` thunk; re-throws on failure
+- `logout()` — dispatches `logoutUser` + `clearProfile`
 
 ---
 
 ### `useSearch()`
 
-Manages paginated room search with infinite scroll.
+Thin wrapper over `searchSlice`. Preserves filters in `sessionStorage` — navigating back from a room detail page restores the previous search exactly.
 
 ```typescript
-const { results, total, loading, error, hasMore, loadMore, setParams } = useSearch();
+const { params, setParam, results, total, loading, error, hasMore, search, loadMore } = useSearch(initialOverrides?);
 ```
 
-- Page 1 always replaces the results list
-- Pages 2+ are accumulated (append)
-- `loadMore()` increments the page and fetches the next batch
-- `setParams(newParams)` resets to page 1 with the new filters
+- `search(page)` — page 1 replaces results; pages 2+ accumulate (infinite scroll)
+- `setParam(key, value)` — updates a single filter in the store
+- `loadMore()` — stable reference safe for `IntersectionObserver` (uses refs internally)
+- `initialOverrides` — optional URL params merged into store on mount (used by `SearchPage`)
 
 ---
 
@@ -387,37 +405,40 @@ const { hold, secondsLeft, expired, confirming, error, confirm } = useCheckout(h
 
 ### `useRecentlyViewed()`
 
-Stores the last 6 viewed rooms in `localStorage`.
+Thin wrapper over `recentlyViewedSlice`. Stores the last **8** viewed rooms in `localStorage`.
 
 ```typescript
-const { rooms, addRoom } = useRecentlyViewed();
+const { rooms, addRoom, clearAll } = useRecentlyViewed();
 ```
 
-Called automatically by `RoomDetailPage` whenever a room is loaded.
+Called automatically by `RoomDetailPage` whenever a room is loaded. `clearAll()` is invoked on account deletion.
 
 ---
 
 ### `useProfile()`
 
-Fetches and updates the current user's profile.
+Thin wrapper over `profileSlice`. Profile data is fetched once per session and cached in the store — remounting the page does not refetch.
 
 ```typescript
 const { profile, loading, error, saveName, savePassword } = useProfile();
 ```
 
+- `saveName(name)` — optimistic update (store reflects the new name immediately); rolls back if the API call fails
+- `savePassword(current, newPassword)` — re-throws on failure so the form can display the error
+
 ---
 
 ### `useGdpr()`
 
-Manages GDPR consent and account actions.
+Manages GDPR consent and account actions. No longer requires a callback — account deletion dispatches `logoutUser`, `clearProfile`, and `clearRecentlyViewed` internally.
 
 ```typescript
 const { consent, updateConsent, exportData, exporting, exportError,
-        deleteAccount, deleting, deleteError } = useGdpr(onAccountDeleted);
+        deleteAccount, deleting, deleteError } = useGdpr();
 ```
 
 - `exportData()` — triggers a JSON download of all personal data
-- `deleteAccount()` — permanently deletes the account and calls `onAccountDeleted`
+- `deleteAccount()` — permanently deletes the account, clears all Redux state, and redirects to `/`
 
 ---
 
