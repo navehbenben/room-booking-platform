@@ -3,11 +3,16 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import * as request from 'supertest';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { HttpErrorFilter } from '../src/common/filters/http-error.filter';
+import { RoomEntity } from '../src/modules/rooms/entities/room.entity';
 
 describe('Room Booking API (e2e)', () => {
   let app: INestApplication;
+  let roomsRepo: Repository<RoomEntity>;
+  let seededRoomIds: string[] = [];
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -19,9 +24,26 @@ describe('Room Booking API (e2e)', () => {
     app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
     app.useGlobalFilters(new HttpErrorFilter());
     await app.init();
-  }, 60_000); // allow 60s for DB init + room seeding
+
+    // Seed a small set of rooms so room-related tests are self-contained.
+    // Rooms are NOT guaranteed to exist in the test DB (seed.ts is a separate script).
+    roomsRepo = moduleFixture.get<Repository<RoomEntity>>(getRepositoryToken(RoomEntity));
+    const existing = await roomsRepo.count();
+    if (existing === 0) {
+      const inserted = await roomsRepo.save([
+        { name: 'E2E Room Alpha', capacity: 4, features: ['projector'], images: [], timezone: 'UTC' },
+        { name: 'E2E Room Beta', capacity: 8, features: ['whiteboard'], images: [], timezone: 'UTC' },
+        { name: 'E2E Room Gamma', capacity: 2, features: [], images: [], timezone: 'UTC' },
+      ]);
+      seededRoomIds = inserted.map((r) => r.id);
+    }
+  }, 60_000); // allow 60s for DB init
 
   afterAll(async () => {
+    // Remove only the rooms we created so we don't clobber real data.
+    if (seededRoomIds.length > 0) {
+      await roomsRepo.delete(seededRoomIds);
+    }
     await app.close();
   });
 
