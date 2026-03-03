@@ -51,8 +51,7 @@ beforeEach(() => {
 // at store-creation time — after _store has been set for the test.
 function createWrapper() {
   const store = configureStore({ reducer: { recentlyViewed: recentlyViewedReducer } });
-  const Wrapper = ({ children }: { children: React.ReactNode }) =>
-    React.createElement(Provider, { store }, children);
+  const Wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(Provider, { store }, children);
   return Wrapper;
 }
 

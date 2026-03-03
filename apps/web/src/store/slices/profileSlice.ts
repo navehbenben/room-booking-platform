@@ -39,16 +39,13 @@ export const fetchProfile = createAsyncThunk(
 );
 
 /** Optimistically updates the display name. Rolls back on failure. */
-export const updateProfileName = createAsyncThunk(
-  'profile/updateName',
-  async (name: string, { rejectWithValue }) => {
-    try {
-      return await api.updateProfile({ name });
-    } catch (e) {
-      return rejectWithValue(e);
-    }
-  },
-);
+export const updateProfileName = createAsyncThunk('profile/updateName', async (name: string, { rejectWithValue }) => {
+  try {
+    return await api.updateProfile({ name });
+  } catch (e) {
+    return rejectWithValue(e);
+  }
+});
 
 export const changeProfilePassword = createAsyncThunk(
   'profile/changePassword',

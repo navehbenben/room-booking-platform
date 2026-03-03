@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { searchRooms, updateParams, applyUrlOverrides, selectSearchParams, selectSearchResults, selectSearchMeta } from '../store/slices/searchSlice';
+import {
+  searchRooms,
+  updateParams,
+  applyUrlOverrides,
+  selectSearchParams,
+  selectSearchResults,
+  selectSearchMeta,
+} from '../store/slices/searchSlice';
 import type { SearchParams } from '../types';
 import { friendlyError } from '../utils/errorMessages';
 

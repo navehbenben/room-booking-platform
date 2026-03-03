@@ -49,7 +49,6 @@ const recentlyViewedSlice = createSlice({
 export const { addRoom, clearAll } = recentlyViewedSlice.actions;
 
 // ── Selectors ─────────────────────────────────────────────────────────────────
-export const selectRecentlyViewed = (state: { recentlyViewed: RecentlyViewedState }) =>
-  state.recentlyViewed.rooms;
+export const selectRecentlyViewed = (state: { recentlyViewed: RecentlyViewedState }) => state.recentlyViewed.rooms;
 
 export default recentlyViewedSlice.reducer;

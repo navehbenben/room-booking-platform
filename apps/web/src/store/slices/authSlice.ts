@@ -46,33 +46,30 @@ const initialState: AuthState = {
 // ── Thunks ────────────────────────────────────────────────────────────────────
 
 /** Called once on app mount to restore a session from the HttpOnly cookie. */
-export const rehydrateSession = createAsyncThunk(
-  'auth/rehydrate',
-  async (_, { rejectWithValue }) => {
-    // Clean up the ?oauth=1 param added by the Google OAuth callback
-    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('oauth')) {
-      const url = new URL(window.location.href);
-      url.searchParams.delete('oauth');
-      window.history.replaceState(null, '', url.toString());
-    }
+export const rehydrateSession = createAsyncThunk('auth/rehydrate', async (_, { rejectWithValue }) => {
+  // Clean up the ?oauth=1 param added by the Google OAuth callback
+  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('oauth')) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('oauth');
+    window.history.replaceState(null, '', url.toString());
+  }
 
-    if (!sessionHint.exists()) return rejectWithValue('no_hint');
+  if (!sessionHint.exists()) return rejectWithValue('no_hint');
 
-    if (_rehydrateInitiated) return rejectWithValue('already_initiated');
-    _rehydrateInitiated = true;
+  if (_rehydrateInitiated) return rejectWithValue('already_initiated');
+  _rehydrateInitiated = true;
 
-    try {
-      const res = await api.rehydrate();
-      tokenStore.set(res.accessToken);
-      logger.info('Session rehydrated from refresh cookie');
-      return res;
-    } catch (e) {
-      sessionHint.clear();
-      logger.info('No active session — showing login');
-      return rejectWithValue(e);
-    }
-  },
-);
+  try {
+    const res = await api.rehydrate();
+    tokenStore.set(res.accessToken);
+    logger.info('Session rehydrated from refresh cookie');
+    return res;
+  } catch (e) {
+    sessionHint.clear();
+    logger.info('No active session — showing login');
+    return rejectWithValue(e);
+  }
+});
 
 export const loginUser = createAsyncThunk(
   'auth/login',

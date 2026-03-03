@@ -59,7 +59,7 @@ afterAll(() => {
 
 beforeEach(() => {
   // Ensure sessionHint is set so rehydrateSession thunk calls api.rehydrate()
-  _ls = { 'rb_has_session': '1' };
+  _ls = { rb_has_session: '1' };
   // Reset the StrictMode guard so each test gets a fresh attempt
   __resetRehydrateGuard();
   vi.clearAllMocks();
@@ -84,8 +84,7 @@ function makeStore() {
 
 function createWrapper() {
   const store = makeStore();
-  const Wrapper = ({ children }: { children: React.ReactNode }) =>
-    React.createElement(Provider, { store }, children);
+  const Wrapper = ({ children }: { children: React.ReactNode }) => React.createElement(Provider, { store }, children);
   return Wrapper;
 }
 
