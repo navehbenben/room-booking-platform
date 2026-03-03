@@ -87,9 +87,7 @@ export const RoomCard = React.memo(function RoomCard({ room, onView, disabled, d
               </span>
             ))}
             {extraCount > 0 && (
-              <span className={styles.featureTag}>
-                {t('roomCard.moreFeatures', { count: extraCount })}
-              </span>
+              <span className={styles.featureTag}>{t('roomCard.moreFeatures', { count: extraCount })}</span>
             )}
           </div>
         )}

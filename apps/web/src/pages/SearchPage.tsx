@@ -88,11 +88,7 @@ export function SearchPage({ isLoggedIn }: SearchPageProps) {
   return (
     <div className="main">
       {/* Mobile filter toggle */}
-      <button
-        className={styles.filterToggle}
-        onClick={() => setFiltersOpen((v) => !v)}
-        aria-expanded={filtersOpen}
-      >
+      <button className={styles.filterToggle} onClick={() => setFiltersOpen((v) => !v)} aria-expanded={filtersOpen}>
         {filtersOpen ? t('search.filterToggleClose') : t('search.filterToggleOpen')}
       </button>
 

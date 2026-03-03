@@ -100,7 +100,9 @@ export const SearchFilters = React.memo(function SearchFilters({
               <button
                 key={key}
                 type="button"
-                className={[styles.amenityPill, activeFeatures.includes(key) && styles.amenityPillActive].filter(Boolean).join(' ')}
+                className={[styles.amenityPill, activeFeatures.includes(key) && styles.amenityPillActive]
+                  .filter(Boolean)
+                  .join(' ')}
                 onClick={() => toggleFeature(key)}
               >
                 <span className={styles.amenityPillIcon}>{icon}</span>

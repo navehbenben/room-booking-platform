@@ -52,9 +52,7 @@ export const RecentlyViewedSection = React.memo(function RecentlyViewedSection({
                       {FEATURE_LABEL_KEYS[f] ? t(FEATURE_LABEL_KEYS[f]) : f}
                     </span>
                   ))}
-                  {room.features.length > 2 && (
-                    <span className={styles.tag}>+{room.features.length - 2}</span>
-                  )}
+                  {room.features.length > 2 && <span className={styles.tag}>+{room.features.length - 2}</span>}
                 </div>
               )}
             </div>

@@ -36,7 +36,10 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
         </Link>
 
         <nav className={styles.nav}>
-          <Link to="/search" className={[styles.navLink, isActive('/search') && styles.navLinkActive].filter(Boolean).join(' ')}>
+          <Link
+            to="/search"
+            className={[styles.navLink, isActive('/search') && styles.navLinkActive].filter(Boolean).join(' ')}
+          >
             {t('header.searchRooms')}
           </Link>
           {isLoggedIn && (
@@ -69,10 +72,7 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
               <Link to="/login" className={styles.authLink}>
                 {t('header.signIn')}
               </Link>
-              <Link
-                to="/register"
-                className={styles.authBtn}
-              >
+              <Link to="/register" className={styles.authBtn}>
                 {t('header.register')}
               </Link>
             </>
@@ -105,13 +105,17 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
             <>
               <Link
                 to="/bookings"
-                className={[styles.mobileLink, isActive('/bookings') && styles.mobileLinkActive].filter(Boolean).join(' ')}
+                className={[styles.mobileLink, isActive('/bookings') && styles.mobileLinkActive]
+                  .filter(Boolean)
+                  .join(' ')}
               >
                 {t('header.myBookings')}
               </Link>
               <Link
                 to="/userprofile"
-                className={[styles.mobileLink, isActive('/userprofile') && styles.mobileLinkActive].filter(Boolean).join(' ')}
+                className={[styles.mobileLink, isActive('/userprofile') && styles.mobileLinkActive]
+                  .filter(Boolean)
+                  .join(' ')}
               >
                 {t('header.myProfile')}
               </Link>

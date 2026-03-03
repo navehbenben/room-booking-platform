@@ -11,5 +11,9 @@ interface BadgeProps {
 
 export const Badge = React.memo(function Badge({ variant = 'neutral', children, className = '' }: BadgeProps) {
   const classes = [styles.badge, styles[variant], className].filter(Boolean).join(' ');
-  return <span className={classes} data-variant={variant}>{children}</span>;
+  return (
+    <span className={classes} data-variant={variant}>
+      {children}
+    </span>
+  );
 });

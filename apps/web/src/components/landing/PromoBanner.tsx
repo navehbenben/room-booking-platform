@@ -72,18 +72,10 @@ export function PromoBanner() {
       <div className={styles.header}>
         <h2 className={styles.title}>{t('landing.promo.sectionTitle')}</h2>
         <div className={styles.nav}>
-          <button
-            className={styles.arrow}
-            onClick={() => scroll('left')}
-            aria-label={t('landing.promo.scrollLeft')}
-          >
+          <button className={styles.arrow} onClick={() => scroll('left')} aria-label={t('landing.promo.scrollLeft')}>
             ‹
           </button>
-          <button
-            className={styles.arrow}
-            onClick={() => scroll('right')}
-            aria-label={t('landing.promo.scrollRight')}
-          >
+          <button className={styles.arrow} onClick={() => scroll('right')} aria-label={t('landing.promo.scrollRight')}>
             ›
           </button>
         </div>
