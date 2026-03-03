@@ -32,6 +32,18 @@ services:
       retries: 20
     labels:
       com.datadoghq.ad.logs: '[{"source":"postgresql","service":"postgres"}]'
+  api-seed:
+    build:
+      context: ./apps/api
+    command: ["node", "dist/seed.js"]
+    environment:
+      DATABASE_URL: postgres://app:app@postgres:5432/room_booking
+      SEED_ROOMS_COUNT: 500
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
   api1:
     build:
       context: ./apps/api
@@ -43,7 +55,6 @@ services:
       CORS_ORIGIN: http://localhost:8080
       REDIS_URL: redis://redis:6379
       INSTANCE_ID: api1
-      SEED_ROOMS_COUNT: 500
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-dev_placeholder}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-dev_placeholder}
       GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL:-http://localhost:3001/auth/google/callback}
@@ -53,6 +64,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+      api-seed:
+        condition: service_completed_successfully
     healthcheck:
       test:
       - CMD
@@ -76,7 +89,6 @@ services:
       CORS_ORIGIN: http://localhost:8080
       REDIS_URL: redis://redis:6379
       INSTANCE_ID: api2
-      SEED_ROOMS_COUNT: 500
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-dev_placeholder}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-dev_placeholder}
       GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL:-http://localhost:3001/auth/google/callback}
@@ -86,6 +98,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+      api-seed:
+        condition: service_completed_successfully
     healthcheck:
       test:
       - CMD
@@ -109,7 +123,6 @@ services:
       CORS_ORIGIN: http://localhost:8080
       REDIS_URL: redis://redis:6379
       INSTANCE_ID: api3
-      SEED_ROOMS_COUNT: 500
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-dev_placeholder}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-dev_placeholder}
       GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL:-http://localhost:3001/auth/google/callback}
@@ -119,6 +132,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+      api-seed:
+        condition: service_completed_successfully
     healthcheck:
       test:
       - CMD

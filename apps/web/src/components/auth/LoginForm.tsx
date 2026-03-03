@@ -33,9 +33,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
       const code = errorCode(e);
       const msg = friendlyError(e);
 
-      if (code === 'EMAIL_NOT_FOUND') {
-        setEmailError(msg);
-      } else if (code === 'WRONG_PASSWORD' || code === 'INVALID_CREDENTIALS') {
+      if (code === 'INVALID_CREDENTIALS') {
         setPasswordError(msg);
       } else if (code === 'GOOGLE_ACCOUNT_ONLY') {
         setEmailError(msg);
