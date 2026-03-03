@@ -1,5 +1,5 @@
 # Environment secrets — never commit
-.env
+#for now i only demonstrate with .env, but in production, we should use vault or something like that
 
 # IDEs
 .idea/
