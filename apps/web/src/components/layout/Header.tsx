@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectIsLoggedIn } from '../../store/slices/authSlice';
+import { logoutUser } from '../../store/slices/authSlice';
+import { clearProfile } from '../../store/slices/profileSlice';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import styles from './Header.module.scss';
 
-type HeaderProps = {
-  isLoggedIn: boolean;
-  onLogout: () => void;
-};
-
-export function Header({ isLoggedIn, onLogout }: HeaderProps) {
+export function Header() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
@@ -24,7 +25,8 @@ export function Header({ isLoggedIn, onLogout }: HeaderProps) {
 
   const handleLogout = async () => {
     setMenuOpen(false);
-    await onLogout();
+    await dispatch(logoutUser());
+    dispatch(clearProfile());
     navigate('/');
   };
 

@@ -2,7 +2,9 @@ import './i18n/index'; // MUST be first — initialises i18next before React ren
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { datadogLogs } from '@datadog/browser-logs';
+import { store } from './store';
 import { App } from './ui/App';
 import './styles/global.scss';
 
@@ -29,8 +31,10 @@ if (DD_CLIENT_TOKEN) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
 );

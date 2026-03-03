@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
+import { useAppSelector } from '../store/hooks';
+import { selectIsLoggedIn } from '../store/slices/authSlice';
 import { SearchFilters } from '../components/rooms/SearchFilters';
 import { RoomCard } from '../components/rooms/RoomCard';
 import { SkeletonCard } from '../components/ui/SkeletonCard';
@@ -13,11 +15,8 @@ import { sortRooms } from '../utils/room';
 import type { SortOption } from '../types';
 import styles from './SearchPage.module.scss';
 
-interface SearchPageProps {
-  isLoggedIn: boolean;
-}
-
-export function SearchPage({ isLoggedIn }: SearchPageProps) {
+export function SearchPage() {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

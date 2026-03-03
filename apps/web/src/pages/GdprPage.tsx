@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGdpr } from '../hooks/useGdpr';
+import { useAppSelector } from '../store/hooks';
+import { selectIsLoggedIn } from '../store/slices/authSlice';
 import styles from './GdprPage.module.scss';
-
-interface GdprPageProps {
-  isLoggedIn: boolean;
-  onAccountDeleted: () => void;
-}
 
 interface ToggleSwitchProps {
   checked: boolean;
@@ -33,10 +30,11 @@ function ToggleSwitch({ checked, onChange, label, id }: ToggleSwitchProps) {
   );
 }
 
-export function GdprPage({ isLoggedIn, onAccountDeleted }: GdprPageProps) {
+export function GdprPage() {
   const { t } = useTranslation();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { consent, updateConsent, exportData, exporting, exportError, deleteAccount, deleting, deleteError } =
-    useGdpr(onAccountDeleted);
+    useGdpr();
 
   const [confirmDelete, setConfirmDelete] = useState(false);
 

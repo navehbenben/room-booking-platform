@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api } from '../api/client';
 import { friendlyError } from '../utils/errorMessages';
+import { useAppDispatch } from '../store/hooks';
+import { logoutUser } from '../store/slices/authSlice';
+import { clearProfile } from '../store/slices/profileSlice';
+import { clearAll as clearRecentlyViewed } from '../store/slices/recentlyViewedSlice';
 
 const CONSENT_KEY = 'rb_gdpr_consent';
 
@@ -28,7 +32,8 @@ function loadConsent(): GdprConsent {
   }
 }
 
-export function useGdpr(onAccountDeleted?: () => void) {
+export function useGdpr() {
+  const dispatch = useAppDispatch();
   const [consent, setConsent] = useState<GdprConsent>(loadConsent);
   const [exporting, setExporting] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -73,12 +78,15 @@ export function useGdpr(onAccountDeleted?: () => void) {
     try {
       await api.deleteMyAccount();
       localStorage.removeItem(CONSENT_KEY);
-      onAccountDeleted?.();
+      // Clear all Redux state tied to this user
+      dispatch(clearProfile());
+      dispatch(clearRecentlyViewed());
+      await dispatch(logoutUser());
     } catch (err: any) {
       setDeleteError(friendlyError(err, 'Deletion failed. Please try again.'));
       setDeleting(false);
     }
-  }, [onAccountDeleted]);
+  }, [dispatch]);
 
   return {
     consent,

@@ -55,7 +55,7 @@ Browser
 | API | NestJS 10 · TypeORM 0.3 · Passport (JWT + Google OAuth) |
 | Database | PostgreSQL 16 (btree_gist extension for exclusion constraints) |
 | Cache / Holds | Redis 7 (optional — API continues without it) |
-| Frontend | React 18 · Vite 5 · React Router 6 · i18next (6 languages) |
+| Frontend | React 18 · Vite 5 · React Router 6 · Redux Toolkit 2 · i18next (6 languages) |
 | Load Balancer | Nginx 1.27 (least_conn) |
 | Metrics | Prometheus · Grafana |
 | Logs | Loki · Promtail · Grafana |

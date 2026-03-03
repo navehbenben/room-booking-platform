@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useRoomDetail } from '../hooks/useRoomDetail';
 import { useHold } from '../hooks/useHold';
 import { useRecentlyViewed } from '../hooks/useRecentlyViewed';
+import { useAppSelector } from '../store/hooks';
+import { selectIsLoggedIn } from '../store/slices/authSlice';
 import { ImageGallery } from '../components/rooms/ImageGallery';
 import { AmenitiesGrid } from '../components/rooms/AmenitiesGrid';
 import { Badge } from '../components/ui/Badge';
@@ -12,17 +14,14 @@ import { formatInTimezone, timezoneOffsetLabel } from '../utils/date';
 import type { RoomDetail } from '../types';
 import styles from './RoomDetailPage.module.scss';
 
-interface RoomDetailPageProps {
-  isLoggedIn: boolean;
-}
-
 function availabilityBadge(status: RoomDetail['availabilityStatus'], t: (key: string) => string) {
   if (status === 'AVAILABLE') return <Badge variant="success">{t('roomDetail.availabilityAvailable')}</Badge>;
   if (status === 'HELD') return <Badge variant="warning">{t('roomDetail.availabilityHeld')}</Badge>;
   return <Badge variant="cancelled">{t('roomDetail.availabilityBooked')}</Badge>;
 }
 
-export function RoomDetailPage({ isLoggedIn }: RoomDetailPageProps) {
+export function RoomDetailPage() {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();

@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
+import { useAppSelector } from '../store/hooks';
+import { selectIsLoggedIn, selectRehydrating } from '../store/slices/authSlice';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { LandingPage } from '../pages/LandingPage';
@@ -14,8 +16,9 @@ import { UserProfilePage } from '../pages/UserProfilePage';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
 
-function RequireAuth({ isLoggedIn, children }: { isLoggedIn: boolean; children: React.ReactElement }) {
+function RequireAuth({ children }: { children: React.ReactElement }) {
   const location = useLocation();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   if (!isLoggedIn) {
     return <Navigate to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`} replace />;
   }
@@ -24,12 +27,16 @@ function RequireAuth({ isLoggedIn, children }: { isLoggedIn: boolean; children: 
 
 export function App() {
   const { t } = useTranslation();
-  const { isLoggedIn, rehydrating, login, register, logout } = useAuth();
+  // useAuth is the single place that triggers rehydration on mount.
+  // Components read isLoggedIn / rehydrating directly from the Redux store.
+  const { login, register, logout } = useAuth();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const rehydrating = useAppSelector(selectRehydrating);
 
   if (rehydrating) {
     return (
       <div className="app">
-        <Header isLoggedIn={false} onLogout={logout} />
+        <Header />
         <main
           className="main"
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}
@@ -43,7 +50,7 @@ export function App() {
 
   return (
     <div className="app">
-      <Header isLoggedIn={isLoggedIn} onLogout={logout} />
+      <Header />
       <Routes>
         {/* Landing — always public */}
         <Route path="/" element={<LandingPage />} />
@@ -56,14 +63,14 @@ export function App() {
         />
 
         {/* Search & room detail — public; auth only required to checkout */}
-        <Route path="/search" element={<SearchPage isLoggedIn={isLoggedIn} />} />
-        <Route path="/rooms/:roomId" element={<RoomDetailPage isLoggedIn={isLoggedIn} />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/rooms/:roomId" element={<RoomDetailPage />} />
 
         {/* Protected routes */}
         <Route
           path="/bookings"
           element={
-            <RequireAuth isLoggedIn={isLoggedIn}>
+            <RequireAuth>
               <MyBookingsPage />
             </RequireAuth>
           }
@@ -71,7 +78,7 @@ export function App() {
         <Route
           path="/checkout/:holdId"
           element={
-            <RequireAuth isLoggedIn={isLoggedIn}>
+            <RequireAuth>
               <CheckoutPage />
             </RequireAuth>
           }
@@ -79,14 +86,14 @@ export function App() {
         <Route
           path="/userprofile"
           element={
-            <RequireAuth isLoggedIn={isLoggedIn}>
+            <RequireAuth>
               <UserProfilePage />
             </RequireAuth>
           }
         />
 
         {/* Always public */}
-        <Route path="/privacy" element={<GdprPage isLoggedIn={isLoggedIn} onAccountDeleted={logout} />} />
+        <Route path="/privacy" element={<GdprPage />} />
       </Routes>
       <Footer />
     </div>

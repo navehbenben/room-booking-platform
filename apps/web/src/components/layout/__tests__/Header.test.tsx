@@ -1,18 +1,39 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Header } from '../Header';
+import authReducer from '../../../store/slices/authSlice';
+import profileReducer from '../../../store/slices/profileSlice';
 
-const renderHeader = (isLoggedIn: boolean, onLogout = vi.fn()) =>
+// Build a minimal store with controlled auth state for testing
+function makeStore(isLoggedIn: boolean) {
+  return configureStore({
+    reducer: { auth: authReducer, profile: profileReducer },
+    preloadedState: {
+      auth: {
+        isLoggedIn,
+        rehydrating: false,
+        loading: false,
+        error: '',
+        userId: isLoggedIn ? 'user-1' : null,
+      },
+    },
+  });
+}
+
+const renderHeader = (isLoggedIn: boolean) =>
   render(
-    <MemoryRouter>
-      <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
-    </MemoryRouter>,
+    <Provider store={makeStore(isLoggedIn)}>
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    </Provider>,
   );
 
 describe('Header', () => {
   it('shows brand logo link', () => {
     renderHeader(false);
-    // Logo renders as "Room<span>Book</span>" — accessible name is "Room Book" (space-separated)
     expect(screen.getByRole('link', { name: /room\s*book/i })).toBeInTheDocument();
   });
 
@@ -26,13 +47,20 @@ describe('Header', () => {
     expect(screen.queryByRole('button', { name: /sign out/i })).not.toBeInTheDocument();
   });
 
-  it('calls onLogout when Sign out is clicked', async () => {
-    const onLogout = vi.fn().mockResolvedValue(undefined);
-    renderHeader(true, onLogout);
+  it('dispatches logout when Sign out is clicked', async () => {
+    const store = makeStore(true);
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Header />
+        </MemoryRouter>
+      </Provider>,
+    );
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /sign out/i }));
     });
-    expect(onLogout).toHaveBeenCalledTimes(1);
+    // After logout the auth state should reflect logged-out
+    expect(store.getState().auth.isLoggedIn).toBe(false);
   });
 
   it('shows nav links (Search Rooms, My Bookings) when logged in', () => {
@@ -43,9 +71,7 @@ describe('Header', () => {
 
   it('hides nav links when not logged in', () => {
     renderHeader(false);
-    // Search Rooms is a public link — always visible
     expect(screen.getByRole('link', { name: /search rooms/i })).toBeInTheDocument();
-    // My Bookings and My Profile are auth-gated
     expect(screen.queryByRole('link', { name: /my bookings/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: /my profile/i })).not.toBeInTheDocument();
   });

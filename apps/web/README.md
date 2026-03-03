@@ -30,10 +30,11 @@ The single-page application for the Room Booking Platform. Built with React 18, 
 | Build tool | Vite 5.4 |
 | Language | TypeScript 5.5 |
 | Routing | React Router 6.26 |
+| State management | Redux Toolkit 2 + react-redux |
 | i18n | i18next + react-i18next + i18next-browser-languagedetector |
 | HTTP | Fetch API (custom client with token refresh) |
 | Testing | Vitest + Testing Library + jsdom |
-| Styling | Plain CSS with CSS custom properties |
+| Styling | SCSS modules + global design tokens |
 
 ---
 
@@ -108,7 +109,7 @@ Unauthenticated users accessing protected routes are redirected to `/login?redir
 
 ```
 src/
-├── main.tsx                    # Entry point — i18n init (must be first import), React root
+├── main.tsx                    # Entry point — i18n init, Redux Provider, React root
 ├── i18n/
 │   ├── index.ts                # i18next configuration
 │   └── locales/
@@ -122,9 +123,23 @@ src/
 ├── api/
 │   └── client.ts               # Typed fetch wrapper, token management, auto-refresh
 │
+├── store/
+│   ├── index.ts                # configureStore, RootState, AppDispatch types
+│   ├── hooks.ts                # Typed useAppDispatch / useAppSelector
+│   └── slices/
+│       ├── authSlice.ts        # Auth state, sessionHint, StrictMode guard, thunks
+│       ├── profileSlice.ts     # Profile cache, optimistic name update
+│       ├── searchSlice.ts      # Search params + results, sessionStorage persistence
+│       └── recentlyViewedSlice.ts  # Last 8 viewed rooms, localStorage-backed
+│
 ├── ui/
-│   ├── App.tsx                 # Router, auth state, RequireAuth guard
-│   └── styles.css              # Global styles and CSS variables
+│   └── App.tsx                 # Router, RequireAuth guard (reads from Redux)
+│
+├── styles/
+│   ├── _tokens.scss            # CSS custom properties + SCSS variables
+│   ├── _reset.scss             # Base reset
+│   ├── _mixins.scss            # Reusable SCSS mixins
+│   └── global.scss             # App shell, .btn/alert utility classes
 │
 ├── pages/
 │   ├── LandingPage.tsx
@@ -136,6 +151,7 @@ src/
 │   ├── MyBookingsPage.tsx
 │   ├── UserProfilePage.tsx
 │   └── GdprPage.tsx
+│       # Each page has a co-located .module.scss file
 │
 ├── components/
 │   ├── auth/
@@ -154,7 +170,7 @@ src/
 │   │   ├── PromoBanner.tsx
 │   │   └── RecentlyViewedSection.tsx
 │   ├── layout/
-│   │   ├── Header.tsx
+│   │   ├── Header.tsx          # Reads isLoggedIn from Redux, dispatches logoutUser
 │   │   ├── Footer.tsx
 │   │   └── Nav.tsx
 │   ├── rooms/
@@ -172,25 +188,31 @@ src/
 │       └── Spinner.tsx
 │
 ├── hooks/
-│   ├── useAuth.ts
-│   ├── useBookings.ts
-│   ├── useCheckout.ts
-│   ├── useGdpr.ts
-│   ├── useHold.ts
-│   ├── useProfile.ts
-│   ├── useRecentlyViewed.ts
-│   ├── useRoomDetail.ts
-│   └── useSearch.ts
+│   ├── useAuth.ts              # Thin wrapper — dispatches authSlice thunks
+│   ├── useBookings.ts          # Local state (page-specific)
+│   ├── useCheckout.ts          # Local state (page-specific)
+│   ├── useGdpr.ts              # Local state; dispatches logout/clearProfile on delete
+│   ├── useHold.ts              # Local state (page-specific)
+│   ├── useProfile.ts           # Thin wrapper — dispatches profileSlice thunks
+│   ├── useRecentlyViewed.ts    # Thin wrapper — dispatches recentlyViewedSlice actions
+│   ├── useRoomDetail.ts        # Local state (page-specific)
+│   └── useSearch.ts            # Thin wrapper — dispatches searchSlice thunks
 │
 ├── constants/
 │   ├── amenities.ts            # Amenity options with i18n keys and icons
+│   ├── routes.ts               # Route path constants + helpers
 │   └── search.ts               # Sort options with i18n keys
 │
 ├── types/
-│   └── index.ts                # Shared TypeScript interfaces
+│   ├── room.types.ts
+│   ├── booking.types.ts
+│   ├── auth.types.ts
+│   ├── user.types.ts
+│   └── index.ts                # Re-exports all types
 │
 ├── utils/
-│   ├── date.ts                 # formatInTimezone, timezoneOffsetLabel
+│   ├── date.ts                 # formatInTimezone, timezoneOffsetLabel, localToday
+│   ├── room.ts                 # roomImageUrl, sortRooms, urgencyLabel
 │   └── errorMessages.ts        # Friendly error strings via i18next
 │
 └── setupTests.ts               # Vitest global setup (i18n init, testing-library matchers)

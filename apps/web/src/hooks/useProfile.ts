@@ -1,50 +1,47 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { api } from '../api/client';
-import { UserProfile } from '../types';
+import { useEffect, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import {
+  fetchProfile,
+  updateProfileName,
+  changeProfilePassword,
+  selectProfile,
+  selectProfileLoading,
+  selectProfileError,
+} from '../store/slices/profileSlice';
+import type { UserProfile } from '../types';
 
 export function useProfile() {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Ref so saveName always closes over the latest profile without being a dependency
-  const profileRef = useRef(profile);
-  profileRef.current = profile;
+  const dispatch = useAppDispatch();
+  const profile = useAppSelector(selectProfile);
+  const loading = useAppSelector(selectProfileLoading);
+  const error = useAppSelector(selectProfileError);
 
   useEffect(() => {
-    let cancelled = false;
-    api
-      .getProfile()
-      .then((data) => {
-        if (!cancelled) setProfile(data as UserProfile);
-      })
-      .catch(() => {
-        if (!cancelled) setError('Failed to load profile');
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    // fetchProfile thunk is a no-op when data is already in the store —
+    // navigating back to the profile page avoids a redundant round-trip.
+    dispatch(fetchProfile());
+  }, [dispatch]);
 
-  // Stable: no dependency on profile state — uses ref for rollback
-  const saveName = useCallback(async (name: string) => {
-    const previous = profileRef.current;
-    setProfile((p) => (p ? { ...p, name } : p));
-    try {
-      const updated = await api.updateProfile({ name });
-      setProfile(updated as UserProfile);
-    } catch (e) {
-      setProfile(previous);
-      throw e;
-    }
-  }, []);
+  /** Optimistically updates the display name. Throws on failure (for the form to catch). */
+  const saveName = useCallback(
+    async (name: string): Promise<void> => {
+      const result = await dispatch(updateProfileName(name));
+      if (updateProfileName.rejected.match(result)) {
+        throw result.payload;
+      }
+    },
+    [dispatch],
+  );
 
-  const savePassword = useCallback(async (currentPassword: string, newPassword: string) => {
-    await api.changePassword({ currentPassword, newPassword });
-  }, []);
+  const savePassword = useCallback(
+    async (currentPassword: string, newPassword: string): Promise<void> => {
+      const result = await dispatch(changeProfilePassword({ currentPassword, newPassword }));
+      if (changeProfilePassword.rejected.match(result)) {
+        throw result.payload;
+      }
+    },
+    [dispatch],
+  );
 
-  return { profile, loading, error, saveName, savePassword };
+  return { profile: profile as UserProfile | null, loading, error, saveName, savePassword };
 }

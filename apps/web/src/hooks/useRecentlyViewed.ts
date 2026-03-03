@@ -1,45 +1,25 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { addRoom, clearAll, selectRecentlyViewed } from '../store/slices/recentlyViewedSlice';
+import type { RecentlyViewedRoom } from '../store/slices/recentlyViewedSlice';
 
-export interface RecentlyViewedRoom {
-  roomId: string;
-  name: string;
-  capacity: number;
-  features: string[];
-}
-
-// GDPR note: stores only non-personal room metadata (no user data).
-// Keys are roomId + display fields. Users can clear via clearAll().
-const LS_KEY = 'rb_recently_viewed';
-const MAX_ITEMS = 8;
-
-function read(): RecentlyViewedRoom[] {
-  try {
-    return JSON.parse(localStorage.getItem(LS_KEY) ?? '[]');
-  } catch {
-    return [];
-  }
-}
+// Re-export so callers don't need to import from the slice directly
+export type { RecentlyViewedRoom };
 
 export function useRecentlyViewed() {
-  const [rooms, setRooms] = useState<RecentlyViewedRoom[]>(read);
+  const dispatch = useAppDispatch();
+  const rooms = useAppSelector(selectRecentlyViewed);
 
-  const addRoom = useCallback((room: RecentlyViewedRoom) => {
-    setRooms((prev) => {
-      const filtered = prev.filter((r) => r.roomId !== room.roomId);
-      const next = [room, ...filtered].slice(0, MAX_ITEMS);
-      try {
-        localStorage.setItem(LS_KEY, JSON.stringify(next));
-      } catch {}
-      return next;
-    });
-  }, []);
+  const addRoomFn = useCallback(
+    (room: RecentlyViewedRoom) => {
+      dispatch(addRoom(room));
+    },
+    [dispatch],
+  );
 
-  const clearAll = useCallback(() => {
-    try {
-      localStorage.removeItem(LS_KEY);
-    } catch {}
-    setRooms([]);
-  }, []);
+  const clearAllFn = useCallback(() => {
+    dispatch(clearAll());
+  }, [dispatch]);
 
-  return { rooms, addRoom, clearAll };
+  return { rooms, addRoom: addRoomFn, clearAll: clearAllFn };
 }
